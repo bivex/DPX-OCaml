@@ -1,0 +1,2288 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "DPX-OCaml",
+          "semanticVersion": "0.1.0",
+          "rules": [
+            {
+              "id": "DPX-OCAML-FUNCTOR_PARAMETRIC_MODULE",
+              "name": "functor_parametric_module",
+              "shortDescription": {
+                "text": "OCaml Pattern: Functor Parametric Module"
+              },
+              "fullDescription": {
+                "text": "Module 'M' implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection"
+              },
+              "properties": {
+                "category": "module_system"
+              }
+            },
+            {
+              "id": "DPX-OCAML-MODULE_INCLUSION_EXTENDER",
+              "name": "module_inclusion_extender",
+              "shortDescription": {
+                "text": "OCaml Pattern: Module Inclusion Extender"
+              },
+              "fullDescription": {
+                "text": "Module 'M' extends and composes functionality from 1 included module(s) (Yaml_bindings.M)"
+              },
+              "properties": {
+                "category": "module_system"
+              }
+            },
+            {
+              "id": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+              "name": "polymorphic_variants",
+              "shortDescription": {
+                "text": "OCaml Pattern: Polymorphic Variants"
+              },
+              "fullDescription": {
+                "text": "Module 'Yaml_bindings_types' adopts Polymorphic Variants (``Any, ``E) providing open tag subtyping without nominal declarations"
+              },
+              "properties": {
+                "category": "functional_idiom"
+              }
+            },
+            {
+              "id": "DPX-OCAML-RAILWAY_MONADIC_BIND",
+              "name": "railway_monadic_bind",
+              "shortDescription": {
+                "text": "OCaml Pattern: Railway Monadic Bind"
+              },
+              "fullDescription": {
+                "text": "Function 'v' implements Railway-oriented Monadic pipeline composing 20 sequential bind operation(s)"
+              },
+              "properties": {
+                "category": "functional_idiom"
+              }
+            },
+            {
+              "id": "DPX-OCAML-PIPELINE_OPERATOR",
+              "name": "pipeline_operator",
+              "shortDescription": {
+                "text": "OCaml Pattern: Pipeline Operator"
+              },
+              "fullDescription": {
+                "text": "Function 'v' composes functional data transformations across a 4-stage pipe (`|>`)"
+              },
+              "properties": {
+                "category": "functional_idiom"
+              }
+            },
+            {
+              "id": "DPX-OCAML-CLOSURE_CURRYING_STRATEGY",
+              "name": "closure_currying_strategy",
+              "shortDescription": {
+                "text": "OCaml Pattern: Closure Currying Strategy"
+              },
+              "fullDescription": {
+                "text": "Function 'check_file' accepts higher-order strategy parameter 'f' for dynamic algorithm injection"
+              },
+              "properties": {
+                "category": "behavioral"
+              }
+            },
+            {
+              "id": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+              "name": "unchecked_exception_raise",
+              "shortDescription": {
+                "text": "OCaml Pattern: Unchecked Exception Raise"
+              },
+              "fullDescription": {
+                "text": "Type Safety Audit: Function 'of_file_exn' in 'Yaml_unix' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+              },
+              "properties": {
+                "category": "type_safety"
+              }
+            },
+            {
+              "id": "DPX-OCAML-DEFENSIVE_CATCH_ALL_EXN",
+              "name": "defensive_catch_all_exn",
+              "shortDescription": {
+                "text": "OCaml Pattern: Defensive Catch All Exn"
+              },
+              "fullDescription": {
+                "text": "Resilience Smell (Defensive Catch-All): Function 'cflags' in 'Discover' swallows all exceptions (`with _ -> ...`); catch specific expected exceptions only"
+              },
+              "properties": {
+                "category": "resilience"
+              }
+            },
+            {
+              "id": "DPX-OCAML-GOD_MODULE_SRP",
+              "name": "god_module_srp",
+              "shortDescription": {
+                "text": "OCaml Pattern: God Module Srp"
+              },
+              "fullDescription": {
+                "text": "SRP Violation (God Module): Module 'Yaml_bindings_types' defines 46 functions across 424 lines of code, indicating multiple mixed domain responsibilities"
+              },
+              "properties": {
+                "category": "principle"
+              }
+            },
+            {
+              "id": "DPX-OCAML-DUPLICATE_CODE_DRY",
+              "name": "duplicate_code_dry",
+              "shortDescription": {
+                "text": "OCaml Pattern: Duplicate Code Dry"
+              },
+              "fullDescription": {
+                "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.enum, M.enum"
+              },
+              "properties": {
+                "category": "principle"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "DPX-OCAML-FUNCTOR_PARAMETRIC_MODULE",
+          "level": "note",
+          "message": {
+            "text": "Module 'M' implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 82,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-FUNCTOR_PARAMETRIC_MODULE",
+          "level": "note",
+          "message": {
+            "text": "Module 'M' implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MODULE_INCLUSION_EXTENDER",
+          "level": "note",
+          "message": {
+            "text": "Module 'M' extends and composes functionality from 1 included module(s) (Yaml_bindings.M)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/lib/m.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MODULE_INCLUSION_EXTENDER",
+          "level": "note",
+          "message": {
+            "text": "Module 'Yaml_bindings' extends and composes functionality from 1 included module(s) (Ctypes)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MODULE_INCLUSION_EXTENDER",
+          "level": "note",
+          "message": {
+            "text": "Module 'M' extends and composes functionality from 1 included module(s) (Ctypes)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Yaml_bindings_types' adopts Polymorphic Variants (``Any, ``E) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Test_sexp' adopts Polymorphic Variants (``Msg, ``Msg) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_sexp.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Test_util' adopts Polymorphic Variants (``Msg, ``Msg) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_util.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Test' adopts Polymorphic Variants (``Msg, ``Msg) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Yaml_sexp' adopts Polymorphic Variants (``Null, ``Bool) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib_sexp/yaml_sexp.mli"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Yaml' adopts Polymorphic Variants (``Null, ``Bool) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/yaml.mli"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Stream' adopts Polymorphic Variants (``None, ``Memory) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Types' adopts Polymorphic Variants (``V1_1, ``V1_2) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/types.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Util' adopts Polymorphic Variants (``O, ``Msg) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Fuzz' adopts Polymorphic Variants (``Msg, ``Msg) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/fuzz/fuzz.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Encoding' adopts Polymorphic Variants (``Any, ``E) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Error' adopts Polymorphic Variants (``None, ``Memory) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Scalar_style' adopts Polymorphic Variants (``Any, ``Plain) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 20,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Sequence_style' adopts Polymorphic Variants (``Any, ``Block) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Mapping_style' adopts Polymorphic Variants (``Any, ``Block) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 35,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Token_type' adopts Polymorphic Variants (``None, ``Stream_start) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 39,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Event_type' adopts Polymorphic Variants (``None, ``Stream_start) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 66,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'M' adopts Polymorphic Variants (``E, ``Any) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 82,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Event' adopts Polymorphic Variants (``Stream_start, ``Document_start) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml"
+                },
+                "region": {
+                  "startLine": 93,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-RAILWAY_MONADIC_BIND",
+          "level": "note",
+          "message": {
+            "text": "Function 'v' implements Railway-oriented Monadic pipeline composing 20 sequential bind operation(s)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_emit.ml"
+                },
+                "region": {
+                  "startLine": 11,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-RAILWAY_MONADIC_BIND",
+          "level": "note",
+          "message": {
+            "text": "Function 'v' implements Railway-oriented Monadic pipeline composing 3 sequential bind operation(s)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_reflect.ml"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-RAILWAY_MONADIC_BIND",
+          "level": "note",
+          "message": {
+            "text": "Function 'iter_until_done' implements Railway-oriented Monadic pipeline composing 3 sequential bind operation(s)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_reflect.ml"
+                },
+                "region": {
+                  "startLine": 12,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-RAILWAY_MONADIC_BIND",
+          "level": "note",
+          "message": {
+            "text": "Function 'v' implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_event_parse.ml"
+                },
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-RAILWAY_MONADIC_BIND",
+          "level": "note",
+          "message": {
+            "text": "Function 'v' implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_parse_sexp.ml"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-RAILWAY_MONADIC_BIND",
+          "level": "note",
+          "message": {
+            "text": "Function 'quoted_scalars' implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test.ml"
+                },
+                "region": {
+                  "startLine": 45,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-RAILWAY_MONADIC_BIND",
+          "level": "note",
+          "message": {
+            "text": "Function 'actual_value' implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test.ml"
+                },
+                "region": {
+                  "startLine": 50,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-RAILWAY_MONADIC_BIND",
+          "level": "note",
+          "message": {
+            "text": "Function 'v' implements Railway-oriented Monadic pipeline composing 4 sequential bind operation(s)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_parse.ml"
+                },
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'v' composes functional data transformations across a 4-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_parse_sexp.ml"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CLOSURE_CURRYING_STRATEGY",
+          "level": "note",
+          "message": {
+            "text": "Function 'check_file' accepts higher-order strategy parameter 'f' for dynamic algorithm injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_sexp.ml"
+                },
+                "region": {
+                  "startLine": 24,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CLOSURE_CURRYING_STRATEGY",
+          "level": "note",
+          "message": {
+            "text": "Function 'check_file' accepts higher-order strategy parameter 'f' for dynamic algorithm injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test.ml"
+                },
+                "region": {
+                  "startLine": 24,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CLOSURE_CURRYING_STRATEGY",
+          "level": "note",
+          "message": {
+            "text": "Function 'to_file' accepts higher-order strategy parameter 'f' for dynamic algorithm injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/unix/yaml_unix.ml"
+                },
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CLOSURE_CURRYING_STRATEGY",
+          "level": "note",
+          "message": {
+            "text": "Function 'to_file_exn' accepts higher-order strategy parameter 'f' for dynamic algorithm injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/unix/yaml_unix.ml"
+                },
+                "region": {
+                  "startLine": 11,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CLOSURE_CURRYING_STRATEGY",
+          "level": "note",
+          "message": {
+            "text": "Function 'list' accepts higher-order strategy parameter 'f' for dynamic algorithm injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml"
+                },
+                "region": {
+                  "startLine": 80,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'of_file_exn' in 'Yaml_unix' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/unix/yaml_unix.ml"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'to_file_exn' in 'Yaml_unix' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/unix/yaml_unix.ml"
+                },
+                "region": {
+                  "startLine": 11,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'prologue' in 'Ffi_stubgen' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/stubgen/ffi_stubgen.ml"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'scalar_style_of_ffi' in 'Stream' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml"
+                },
+                "region": {
+                  "startLine": 20,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'layout_style_of_ffi' in 'Stream' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml"
+                },
+                "region": {
+                  "startLine": 39,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'encoding_of_ffi' in 'Stream' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml"
+                },
+                "region": {
+                  "startLine": 47,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'anchor' in 'Stream' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml"
+                },
+                "region": {
+                  "startLine": 179,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'keys_exn' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml"
+                },
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'values_exn' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'combine_exn' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml"
+                },
+                "region": {
+                  "startLine": 24,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'find_exn' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml"
+                },
+                "region": {
+                  "startLine": 33,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'map_exn' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml"
+                },
+                "region": {
+                  "startLine": 41,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'filter_exn' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml"
+                },
+                "region": {
+                  "startLine": 49,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'to_string_exn' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml"
+                },
+                "region": {
+                  "startLine": 57,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'to_bool_exn' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml"
+                },
+                "region": {
+                  "startLine": 65,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'to_float_exn' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml"
+                },
+                "region": {
+                  "startLine": 73,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'r' in 'Fuzz' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/fuzz/fuzz.ml"
+                },
+                "region": {
+                  "startLine": 33,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'anchor' in 'Event' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml"
+                },
+                "region": {
+                  "startLine": 87,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DEFENSIVE_CATCH_ALL_EXN",
+          "level": "error",
+          "message": {
+            "text": "Resilience Smell (Defensive Catch-All): Function 'cflags' in 'Discover' swallows all exceptions (`with _ -> ...`); catch specific expected exceptions only"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/config/discover.ml"
+                },
+                "region": {
+                  "startLine": 4,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-GOD_MODULE_SRP",
+          "level": "error",
+          "message": {
+            "text": "SRP Violation (God Module): Module 'Yaml_bindings_types' defines 46 functions across 424 lines of code, indicating multiple mixed domain responsibilities"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-GOD_MODULE_SRP",
+          "level": "error",
+          "message": {
+            "text": "SRP Violation (God Module): Module 'Stream' defines 70 functions across 360 lines of code, indicating multiple mixed domain responsibilities"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-GOD_MODULE_SRP",
+          "level": "error",
+          "message": {
+            "text": "SRP Violation (God Module): Module 'M' defines 42 functions across 307 lines of code, indicating multiple mixed domain responsibilities"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 82,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.enum, M.enum"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 85,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.encoding_t, M.encoding_t"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 93,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.error_t, M.error_t"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 102,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.scalar_style_t, M.scalar_style_t"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 115,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.sequence_style_t, M.sequence_style_t"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 126,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.mapping_style_t, M.mapping_style_t"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 130,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.token_type_t, M.token_type_t"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 134,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.event_type_t, M.event_type_t"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 160,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.minor, M.minor"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 186,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.prefix, M.prefix"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 195,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.column, M.column"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 205,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.encoding, M.encoding"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 287,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.style, M.style"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 361,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.version, M.version"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 267,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types._end, M._end"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 297,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.version_directive, M.version_directive"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 305,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.mapping_start, M.mapping_start"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml"
+                },
+                "region": {
+                  "startLine": 376,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Test_sexp.files, Test.files"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_sexp.ml"
+                },
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.foreign, M.foreign"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.version, M.version"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.get_version, M.get_version"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 17,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.token_delete, M.token_delete"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 21,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.parser_init, M.parser_init"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 24,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.parser_delete, M.parser_delete"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.parser_set_input_string, M.parser_set_input_string"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 30,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.parser_parse, M.parser_parse"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 34,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_init, M.emitter_init"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 38,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_delete, M.emitter_delete"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 41,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_set_output_string, M.emitter_set_output_string"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 44,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_set_encoding, M.emitter_set_encoding"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 55,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_set_canonical, M.emitter_set_canonical"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 59,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_set_indent, M.emitter_set_indent"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 63,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_set_width, M.emitter_set_width"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 67,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_set_unicode, M.emitter_set_unicode"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 71,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_flush, M.emitter_flush"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 75,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_emit, M.emitter_emit"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 80,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.stream_start_event_init, M.stream_start_event_init"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 84,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.stream_end_event_init, M.stream_end_event_init"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 88,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.document_start_event_init, M.document_start_event_init"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 92,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.document_end_event_init, M.document_end_event_init"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 102,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.alias_event_init, M.alias_event_init"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 106,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.scalar_event_init, M.scalar_event_init"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 110,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.sequence_start_event_init, M.sequence_start_event_init"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 123,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.sequence_end_event_init, M.sequence_end_event_init"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 133,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.mapping_start_event_init, M.mapping_start_event_init"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml"
+                },
+                "region": {
+                  "startLine": 137,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Stream.encoding, Event.encoding"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml"
+                },
+                "region": {
+                  "startLine": 131,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Stream.style, Event.style"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml"
+                },
+                "region": {
+                  "startLine": 172,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

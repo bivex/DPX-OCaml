@@ -1,0 +1,315 @@
+{
+  "project_path": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples",
+  "scanned_files_count": 5,
+  "total_detections_count": 14,
+  "elapsed_seconds": 0.0012,
+  "summary_by_category": {
+    "module_system": 5,
+    "functional_idiom": 3,
+    "effect_concurrency": 2,
+    "type_safety": 3,
+    "resilience": 1
+  },
+  "summary_by_confidence_level": {
+    "low": 0,
+    "medium": 0,
+    "high": 6,
+    "very_high": 8
+  },
+  "detections": [
+    {
+      "pattern_type": "functor_parametric_module",
+      "pattern_category": "module_system",
+      "target_name": "Custom_map",
+      "target_kind": "functor_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Custom_map' implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection",
+          "weight": 0.85,
+          "rule_code": "FUNCTOR_PARAMETRIC_MODULE",
+          "location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "functor_parametric_module",
+      "pattern_category": "module_system",
+      "target_name": "Make",
+      "target_kind": "functor_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:6:1",
+      "evidences": [
+        {
+          "description": "Module 'Make' implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection",
+          "weight": 0.85,
+          "rule_code": "FUNCTOR_PARAMETRIC_MODULE",
+          "location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:6:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "abstract_data_type_interface",
+      "pattern_category": "module_system",
+      "target_name": "Custom_map",
+      "target_kind": "adt_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Custom_map' encapsulates Abstract Data Type (ADT) via primary type `t` with constructor 'create'",
+          "weight": 0.8,
+          "rule_code": "ABSTRACT_DATA_TYPE_SIGNATURE",
+          "location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "abstract_data_type_interface",
+      "pattern_category": "module_system",
+      "target_name": "Make",
+      "target_kind": "adt_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:6:1",
+      "evidences": [
+        {
+          "description": "Module 'Make' encapsulates Abstract Data Type (ADT) via primary type `t` with constructor 'create'",
+          "weight": 0.8,
+          "rule_code": "ABSTRACT_DATA_TYPE_SIGNATURE",
+          "location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:6:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "first_class_module",
+      "pattern_category": "module_system",
+      "target_name": "Expr_eval",
+      "target_kind": "first_class_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/expr_eval.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Expr_eval' utilizes First-Class Modules for dynamic runtime dispatch and pluggable strategy injection",
+          "weight": 0.85,
+          "rule_code": "FIRST_CLASS_MODULE_DISPATCH",
+          "location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/expr_eval.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "gadts_expression_eval",
+      "pattern_category": "functional_idiom",
+      "target_name": "Expr_eval.expr",
+      "target_kind": "gadt_type",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/expr_eval.ml:1:1",
+      "evidences": [
+        {
+          "description": "Type 'expr' in 'Expr_eval' implements Generalized Algebraic Data Type (GADT) ensuring compile-time type-safe AST evaluation",
+          "weight": 0.85,
+          "rule_code": "GADT_TYPE_SAFE_EVALUATOR",
+          "location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/expr_eval.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "railway_monadic_bind",
+      "pattern_category": "functional_idiom",
+      "target_name": "Pipeline_monad.execute_flow",
+      "target_kind": "railway_pipeline_function",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/pipeline_monad.ml:11:1",
+      "evidences": [
+        {
+          "description": "Function 'execute_flow' implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)",
+          "weight": 0.85,
+          "rule_code": "RAILWAY_MONADIC_BIND_PIPELINE",
+          "location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/pipeline_monad.ml:11:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Pipeline_monad.transform_data",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/pipeline_monad.ml:16:1",
+      "evidences": [
+        {
+          "description": "Function 'transform_data' composes functional data transformations across a 3-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/pipeline_monad.ml:16:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "effect_handlers",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Multicore_effect",
+      "target_kind": "effect_handler_module",
+      "confidence": {
+        "score": 0.9,
+        "level": "very_high",
+        "percentage": "90%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/multicore_effect.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Multicore_effect' adopts OCaml 5 Algebraic Effect Handlers for direct-style concurrency, state, and algebraic control flow",
+          "weight": 0.9,
+          "rule_code": "ALGEBRAIC_EFFECT_HANDLERS",
+          "location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/multicore_effect.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "domains_parallelism",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Multicore_effect",
+      "target_kind": "domains_parallel_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/multicore_effect.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Multicore_effect' leverages OCaml 5 Multicore Domains parallelism for shared-memory parallel thread execution",
+          "weight": 0.85,
+          "rule_code": "DOMAINS_MULTICORE_PARALLELISM",
+          "location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/multicore_effect.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Antipatterns.unsafe_division",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:1:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'unsafe_division' in 'Antipatterns' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Antipatterns.defensive_swallow_routine",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:5:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'defensive_swallow_routine' in 'Antipatterns' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:5:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "defensive_catch_all_exn",
+      "pattern_category": "resilience",
+      "target_name": "Antipatterns.defensive_swallow_routine",
+      "target_kind": "defensive_catch_function",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:5:1",
+      "evidences": [
+        {
+          "description": "Resilience Smell (Defensive Catch-All): Function 'defensive_swallow_routine' in 'Antipatterns' swallows all exceptions (`with _ -> ...`); catch specific expected exceptions only",
+          "weight": 0.85,
+          "rule_code": "DEFENSIVE_CATCH_ALL_SWALLOW",
+          "location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:5:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "physical_equality_smell",
+      "pattern_category": "type_safety",
+      "target_name": "Antipatterns.buggy_equality_check",
+      "target_kind": "physical_equality_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:12:1",
+      "evidences": [
+        {
+          "description": "Type Safety Hazard (Physical Equality): Function 'buggy_equality_check' in 'Antipatterns' uses physical pointer equality (`==` / `!=`); use structural value equality (`=` / `<>`) to avoid subtle value comparison bugs",
+          "weight": 0.8,
+          "rule_code": "PHYSICAL_EQUALITY_COMPARISON",
+          "location": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:12:1"
+        }
+      ],
+      "metadata": {}
+    }
+  ]
+}

@@ -1,0 +1,3825 @@
+{
+  "project_path": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream",
+  "scanned_files_count": 129,
+  "total_detections_count": 181,
+  "elapsed_seconds": 0.0584,
+  "summary_by_category": {
+    "module_system": 12,
+    "functional_idiom": 58,
+    "behavioral": 4,
+    "structural": 8,
+    "effect_concurrency": 26,
+    "type_safety": 23,
+    "resilience": 2,
+    "principle": 48
+  },
+  "summary_by_confidence_level": {
+    "low": 0,
+    "medium": 0,
+    "high": 113,
+    "very_high": 68
+  },
+  "detections": [
+    {
+      "pattern_type": "functor_parametric_module",
+      "pattern_category": "module_system",
+      "target_name": "Hello_world",
+      "target_kind": "functor_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-mirage/unikernel.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Hello_world' implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection",
+          "weight": 0.85,
+          "rule_code": "FUNCTOR_PARAMETRIC_MODULE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-mirage/unikernel.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "first_class_module",
+      "pattern_category": "module_system",
+      "target_name": "Cipher",
+      "target_kind": "first_class_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Cipher' utilizes First-Class Modules for dynamic runtime dispatch and pluggable strategy injection",
+          "weight": 0.85,
+          "rule_code": "FIRST_CLASS_MODULE_DISPATCH",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "first_class_module",
+      "pattern_category": "module_system",
+      "target_name": "Sql.eml",
+      "target_kind": "first_class_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/h-sql/sql.eml.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Sql.eml' utilizes First-Class Modules for dynamic runtime dispatch and pluggable strategy injection",
+          "weight": 0.85,
+          "rule_code": "FIRST_CLASS_MODULE_DISPATCH",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/h-sql/sql.eml.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "first_class_module",
+      "pattern_category": "module_system",
+      "target_name": "Postgres.eml",
+      "target_kind": "first_class_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-postgres/postgres.eml.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Postgres.eml' utilizes First-Class Modules for dynamic runtime dispatch and pluggable strategy injection",
+          "weight": 0.85,
+          "rule_code": "FIRST_CLASS_MODULE_DISPATCH",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-postgres/postgres.eml.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "first_class_module",
+      "pattern_category": "module_system",
+      "target_name": "Session",
+      "target_kind": "first_class_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/session.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Session' utilizes First-Class Modules for dynamic runtime dispatch and pluggable strategy injection",
+          "weight": 0.85,
+          "rule_code": "FIRST_CLASS_MODULE_DISPATCH",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/session.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "module_inclusion_extender",
+      "pattern_category": "module_system",
+      "target_name": "Dream",
+      "target_kind": "extended_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Dream' extends and composes functionality from 5 included module(s) (Dream__server.Log, Dream__server.Session, Method, Status, Formats)",
+          "weight": 0.8,
+          "rule_code": "MODULE_INCLUSION_EXTENSION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "module_inclusion_extender",
+      "pattern_category": "module_system",
+      "target_name": "Error_template.eml",
+      "target_kind": "extended_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/error_template.eml.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Error_template.eml' extends and composes functionality from 2 included module(s) (Dream_pure, Dream_pure.Formats)",
+          "weight": 0.8,
+          "rule_code": "MODULE_INCLUSION_EXTENSION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/error_template.eml.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "module_inclusion_extender",
+      "pattern_category": "module_system",
+      "target_name": "Tag.eml",
+      "target_kind": "extended_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/tag.eml.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Tag.eml' extends and composes functionality from 2 included module(s) (Dream_pure, Dream_pure.Formats)",
+          "weight": 0.8,
+          "rule_code": "MODULE_INCLUSION_EXTENSION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/tag.eml.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "module_inclusion_extender",
+      "pattern_category": "module_system",
+      "target_name": "Log",
+      "target_kind": "extended_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:37:1",
+      "evidences": [
+        {
+          "description": "Module 'Log' extends and composes functionality from 1 included module(s) (Dream__server.Log)",
+          "weight": 0.8,
+          "rule_code": "MODULE_INCLUSION_EXTENSION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:37:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "module_inclusion_extender",
+      "pattern_category": "module_system",
+      "target_name": "Session",
+      "target_kind": "extended_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:55:1",
+      "evidences": [
+        {
+          "description": "Module 'Session' extends and composes functionality from 1 included module(s) (Dream__server.Session)",
+          "weight": 0.8,
+          "rule_code": "MODULE_INCLUSION_EXTENSION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:55:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "module_inclusion_extender",
+      "pattern_category": "module_system",
+      "target_name": "Dream",
+      "target_kind": "extended_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/error_template.eml.ml:5:1",
+      "evidences": [
+        {
+          "description": "Module 'Dream' extends and composes functionality from 2 included module(s) (Dream_pure, Dream_pure.Formats)",
+          "weight": 0.8,
+          "rule_code": "MODULE_INCLUSION_EXTENSION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/error_template.eml.ml:5:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "module_inclusion_extender",
+      "pattern_category": "module_system",
+      "target_name": "Dream",
+      "target_kind": "extended_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/tag.eml.ml:5:1",
+      "evidences": [
+        {
+          "description": "Module 'Dream' extends and composes functionality from 2 included module(s) (Dream_pure, Dream_pure.Formats)",
+          "weight": 0.8,
+          "rule_code": "MODULE_INCLUSION_EXTENSION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/tag.eml.ml:5:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Request",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/unit/request.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Request' adopts Polymorphic Variants (``Quick, ``POST) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/unit/request.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Test.expect",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/ocamlformat/test.expect.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Test.expect' adopts Polymorphic Variants (``A, ``B) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/ocamlformat/test.expect.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Test",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/ocamlformat/test.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Test' adopts Polymorphic Variants (``A, ``B) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/ocamlformat/test.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Cookie",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/cookie.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Cookie' adopts Polymorphic Variants (``Host, ``Secure) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/cookie.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Stream",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Stream' adopts Polymorphic Variants (``Idle, ``Reader_waiting) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Message",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/message.mli:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Message' adopts Polymorphic Variants (``Text, ``Binary) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/message.mli:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Status",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/status.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Status' adopts Polymorphic Variants (``Continue, ``Switching_Protocols) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/status.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Method",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/method.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Method' adopts Polymorphic Variants (``GET, ``POST) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/method.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Playground",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Playground' adopts Polymorphic Variants (``OCaml, ``Reason) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Session",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/session.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Session' adopts Polymorphic Variants (``String, ``Assoc) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/session.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Static",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/unix/static.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Static' adopts Polymorphic Variants (``Not_Found, ``GET) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/unix/static.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Graphql",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/graphql/graphql.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Graphql' adopts Polymorphic Variants (``Assoc, ``List) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/graphql/graphql.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Log",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Log' adopts Polymorphic Variants (``Error, ``Warning) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Index",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/docs/web/postprocess/index.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Index' adopts Polymorphic Variants (``GET, ``POST) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/docs/web/postprocess/index.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Dream",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Dream' adopts Polymorphic Variants (``Text, ``Binary) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Flash",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/flash.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Flash' adopts Polymorphic Variants (``String, ``List) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/flash.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Form",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/form.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Form' adopts Polymorphic Variants (``Ok, ``Expired) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/form.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Helpers",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/helpers.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Helpers' adopts Polymorphic Variants (``See_Other, ``Not_Found) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/helpers.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Origin_referrer_check",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/origin_referrer_check.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Origin_referrer_check' adopts Polymorphic Variants (``GET, ``HEAD) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/origin_referrer_check.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Catch",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/catch.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Catch' adopts Polymorphic Variants (``Response, ``String) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/catch.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Upload",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/upload.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Upload' adopts Polymorphic Variants (``Parse, ``Wrong_content_type) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/upload.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Csrf",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Csrf' adopts Polymorphic Variants (``Assoc, ``String) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Mirage",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/mirage/mirage.mli:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Mirage' adopts Polymorphic Variants (``GET, ``POST) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/mirage/mirage.mli:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Eml",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Eml' adopts Polymorphic Variants (``Code_block, ``Options) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Main",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/main.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Main' adopts Polymorphic Variants (``OCaml, ``Reason) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/main.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Http",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Http' adopts Polymorphic Variants (``Exn, ``Exn) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Websocket",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/shared/websocket.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Websocket' adopts Polymorphic Variants (``Binary, ``Connection_close) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/shared/websocket.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Formats",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/formats.mli:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Formats' adopts Polymorphic Variants (``Strict, ``Lax) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/formats.mli:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "railway_monadic_bind",
+      "pattern_category": "functional_idiom",
+      "target_name": "Upload.filename",
+      "target_kind": "railway_pipeline_function",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/upload.ml:144:1",
+      "evidences": [
+        {
+          "description": "Function 'filename' implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)",
+          "weight": 0.85,
+          "rule_code": "RAILWAY_MONADIC_BIND_PIPELINE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/upload.ml:144:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Request.request",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/unit/request.ml:26:1",
+      "evidences": [
+        {
+          "description": "Function 'request' composes functional data transformations across a 4-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/unit/request.ml:26:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Cipher.derive_key",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:56:1",
+      "evidences": [
+        {
+          "description": "Function 'derive_key' composes functional data transformations across a 3-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:56:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Tokens.input_stream",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/expect/eml/tokens.ml:9:1",
+      "evidences": [
+        {
+          "description": "Function 'input_stream' composes functional data transformations across a 3-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/expect/eml/tokens.ml:9:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Path.decode",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/expect/pure/formats/path/path.ml:5:1",
+      "evidences": [
+        {
+          "description": "Function 'decode' composes functional data transformations across a 4-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/expect/pure/formats/path/path.ml:5:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Path.drop",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/expect/pure/formats/path/path.ml:49:1",
+      "evidences": [
+        {
+          "description": "Function 'drop' composes functional data transformations across a 4-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/expect/pure/formats/path/path.ml:49:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Query.all_queries",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/query.ml:15:1",
+      "evidences": [
+        {
+          "description": "Function 'all_queries' composes functional data transformations across a 3-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/query.ml:15:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Stress_websocket_send.eml.show_heap_size",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-stress-websocket-send/stress_websocket_send.eml.ml:29:1",
+      "evidences": [
+        {
+          "description": "Function 'show_heap_size' composes functional data transformations across a 3-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-stress-websocket-send/stress_websocket_send.eml.ml:29:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Stress_response.show_heap_size",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-stress-response/stress_response.ml:1:1",
+      "evidences": [
+        {
+          "description": "Function 'show_heap_size' composes functional data transformations across a 3-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-stress-response/stress_response.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Playground.container_id",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:287:1",
+      "evidences": [
+        {
+          "description": "Function 'container_id' composes functional data transformations across a 3-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:287:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Playground.next",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:391:1",
+      "evidences": [
+        {
+          "description": "Function 'next' composes functional data transformations across a 4-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:391:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Playground.images",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:420:1",
+      "evidences": [
+        {
+          "description": "Function 'images' composes functional data transformations across a 5-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:420:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Json.message_object",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/e-json/json.ml:17:1",
+      "evidences": [
+        {
+          "description": "Function 'message_object' composes functional data transformations across a 4-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/e-json/json.ml:17:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Common.add_backing_line",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/docs/web/postprocess/common.ml:45:1",
+      "evidences": [
+        {
+          "description": "Function 'add_backing_line' composes functional data transformations across a 4-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/docs/web/postprocess/common.ml:45:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Server_sent_events.eml.forward_messages",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-server-sent-events/server_sent_events.eml.ml:41:1",
+      "evidences": [
+        {
+          "description": "Function 'forward_messages' composes functional data transformations across a 4-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-server-sent-events/server_sent_events.eml.ml:41:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Session.serialize_payload",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/session.ml:19:1",
+      "evidences": [
+        {
+          "description": "Function 'serialize_payload' composes functional data transformations across a 3-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/session.ml:19:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Session.put",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/session.ml:115:1",
+      "evidences": [
+        {
+          "description": "Function 'put' composes functional data transformations across a 3-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/session.ml:115:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Graphql.query",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/graphql/graphql.ml:34:1",
+      "evidences": [
+        {
+          "description": "Function 'query' composes functional data transformations across a 6-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/graphql/graphql.ml:34:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Graphql.json",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/graphql/graphql.ml:278:1",
+      "evidences": [
+        {
+          "description": "Function 'json' composes functional data transformations across a 6-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/graphql/graphql.ml:278:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Log.iter_backtrace",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml:296:1",
+      "evidences": [
+        {
+          "description": "Function 'iter_backtrace' composes functional data transformations across a 3-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml:296:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Index.remove_stdlib",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/docs/web/postprocess/index.ml:2553:1",
+      "evidences": [
+        {
+          "description": "Function 'remove_stdlib' composes functional data transformations across a 3-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/docs/web/postprocess/index.ml:2553:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Livereload.soup",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/livereload.ml:67:1",
+      "evidences": [
+        {
+          "description": "Function 'soup' composes functional data transformations across a 6-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/livereload.ml:67:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Site_prefix.prefix",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/site_prefix.ml:27:1",
+      "evidences": [
+        {
+          "description": "Function 'prefix' composes functional data transformations across a 3-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/site_prefix.ml:27:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Eml.empty_lines_from_template",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:524:1",
+      "evidences": [
+        {
+          "description": "Function 'empty_lines_from_template' composes functional data transformations across a 5-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:524:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Eml.coalesce_template",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:553:1",
+      "evidences": [
+        {
+          "description": "Function 'coalesce_template' composes functional data transformations across a 5-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:553:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Eml.trim",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:568:1",
+      "evidences": [
+        {
+          "description": "Function 'trim' composes functional data transformations across a 3-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:568:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Eml.input_stream",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:749:1",
+      "evidences": [
+        {
+          "description": "Function 'input_stream' composes functional data transformations across a 6-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:749:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Http.set_fd",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml:36:1",
+      "evidences": [
+        {
+          "description": "Function 'set_fd' composes functional data transformations across a 3-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml:36:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "AEAD_AES_256_GCM.derive_key",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:12:1",
+      "evidences": [
+        {
+          "description": "Function 'derive_key' composes functional data transformations across a 3-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:12:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "cps_continuation_passing",
+      "pattern_category": "functional_idiom",
+      "target_name": "Websocket.drain_payload",
+      "target_kind": "cps_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/shared/websocket.ml:52:1",
+      "evidences": [
+        {
+          "description": "Function 'drain_payload' implements Continuation-Passing Style (CPS) ensuring stack-safe tail recursion via callback continuation",
+          "weight": 0.8,
+          "rule_code": "CPS_CONTINUATION_PASSING",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/shared/websocket.ml:52:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "closure_currying_strategy",
+      "pattern_category": "behavioral",
+      "target_name": "Playground.lock_sandbox",
+      "target_kind": "strategy_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:325:1",
+      "evidences": [
+        {
+          "description": "Function 'lock_sandbox' accepts higher-order strategy parameter 'f' for dynamic algorithm injection",
+          "weight": 0.75,
+          "rule_code": "CURRIED_STRATEGY_INJECTION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:325:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "closure_currying_strategy",
+      "pattern_category": "behavioral",
+      "target_name": "Common.if_expected",
+      "target_kind": "strategy_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/docs/web/postprocess/common.ml:7:1",
+      "evidences": [
+        {
+          "description": "Function 'if_expected' accepts higher-order strategy parameter 'f' for dynamic algorithm injection",
+          "weight": 0.75,
+          "rule_code": "CURRIED_STRATEGY_INJECTION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/docs/web/postprocess/common.ml:7:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "closure_currying_strategy",
+      "pattern_category": "behavioral",
+      "target_name": "Log.iter_backtrace",
+      "target_kind": "strategy_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml:296:1",
+      "evidences": [
+        {
+          "description": "Function 'iter_backtrace' accepts higher-order strategy parameter 'f' for dynamic algorithm injection",
+          "weight": 0.75,
+          "rule_code": "CURRIED_STRATEGY_INJECTION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml:296:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "closure_currying_strategy",
+      "pattern_category": "behavioral",
+      "target_name": "Eml.map_templates",
+      "target_kind": "strategy_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:448:1",
+      "evidences": [
+        {
+          "description": "Function 'map_templates' accepts higher-order strategy parameter 'f' for dynamic algorithm injection",
+          "weight": 0.75,
+          "rule_code": "CURRIED_STRATEGY_INJECTION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:448:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "lazy_memoization",
+      "pattern_category": "structural",
+      "target_name": "Cipher",
+      "target_kind": "lazy_memoized_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Cipher' integrates Lazy Memoization pattern for deferred on-demand computation and caching",
+          "weight": 0.8,
+          "rule_code": "LAZY_MEMOIZED_EVALUATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "lazy_memoization",
+      "pattern_category": "structural",
+      "target_name": "Graphql",
+      "target_kind": "lazy_memoized_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/graphql/graphql.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Graphql' integrates Lazy Memoization pattern for deferred on-demand computation and caching",
+          "weight": 0.8,
+          "rule_code": "LAZY_MEMOIZED_EVALUATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/graphql/graphql.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "lazy_memoization",
+      "pattern_category": "structural",
+      "target_name": "Log",
+      "target_kind": "lazy_memoized_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Log' integrates Lazy Memoization pattern for deferred on-demand computation and caching",
+          "weight": 0.8,
+          "rule_code": "LAZY_MEMOIZED_EVALUATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "lazy_memoization",
+      "pattern_category": "structural",
+      "target_name": "Random",
+      "target_kind": "lazy_memoized_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/random.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Random' integrates Lazy Memoization pattern for deferred on-demand computation and caching",
+          "weight": 0.8,
+          "rule_code": "LAZY_MEMOIZED_EVALUATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/random.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "record_function_vtable",
+      "pattern_category": "structural",
+      "target_name": "Stream.reader",
+      "target_kind": "record_vtable_type",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml:26:1",
+      "evidences": [
+        {
+          "description": "Record type 'reader' in 'Stream' implements explicit VTable Virtual Method Table containing 2 function method(s)",
+          "weight": 0.85,
+          "rule_code": "RECORD_VTABLE_METHODS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml:26:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "record_function_vtable",
+      "pattern_category": "structural",
+      "target_name": "Stream.writer",
+      "target_kind": "record_vtable_type",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml:32:1",
+      "evidences": [
+        {
+          "description": "Record type 'writer' in 'Stream' implements explicit VTable Virtual Method Table containing 5 function method(s)",
+          "weight": 0.85,
+          "rule_code": "RECORD_VTABLE_METHODS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml:32:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "record_function_vtable",
+      "pattern_category": "structural",
+      "target_name": "Stream.pipe",
+      "target_kind": "record_vtable_type",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml:166:1",
+      "evidences": [
+        {
+          "description": "Record type 'pipe' in 'Stream' implements explicit VTable Virtual Method Table containing 9 function method(s)",
+          "weight": 0.85,
+          "rule_code": "RECORD_VTABLE_METHODS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml:166:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "record_function_vtable",
+      "pattern_category": "structural",
+      "target_name": "Eml.output",
+      "target_kind": "record_vtable_type",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:584:1",
+      "evidences": [
+        {
+          "description": "Record type 'output' in 'Eml' implements explicit VTable Virtual Method Table containing 6 function method(s)",
+          "weight": 0.85,
+          "rule_code": "RECORD_VTABLE_METHODS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:584:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Error.eml",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/9-error/error.eml.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Error.eml' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/9-error/error.eml.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Promise",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/5-promise/promise.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Promise' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/5-promise/promise.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Stress_websocket_send.eml",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-stress-websocket-send/stress_websocket_send.eml.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Stress_websocket_send.eml' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-stress-websocket-send/stress_websocket_send.eml.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Stress_response",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-stress-response/stress_response.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Stress_response' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-stress-response/stress_response.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Playground",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Playground' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Graphql_subscription",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-graphql-subscription/graphql_subscription.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Graphql_subscription' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-graphql-subscription/graphql_subscription.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Server_sent_events.eml",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-server-sent-events/server_sent_events.eml.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Server_sent_events.eml' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-server-sent-events/server_sent_events.eml.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Echo",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/echo.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Echo' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/echo.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Session",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/session.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Session' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/session.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Static",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/unix/static.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Static' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/unix/static.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Graphql",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/graphql/graphql.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Graphql' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/graphql/graphql.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Log",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Log' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Dream",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Dream' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Flash",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/flash.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Flash' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/flash.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Form",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/form.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Form' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/form.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Livereload",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/livereload.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Livereload' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/livereload.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Helpers",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/helpers.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Helpers' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/helpers.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Origin_referrer_check",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/origin_referrer_check.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Origin_referrer_check' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/origin_referrer_check.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Catch",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/catch.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Catch' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/catch.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Upload",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/upload.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Upload' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/upload.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Csrf",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Csrf' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Site_prefix",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/site_prefix.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Site_prefix' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/site_prefix.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Mirage",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/mirage/mirage.mli:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Mirage' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/mirage/mirage.mli:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Eml",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Eml' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Http",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Http' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "async_lwt_promises",
+      "pattern_category": "effect_concurrency",
+      "target_name": "Sql",
+      "target_kind": "async_concurrency_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/sql.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Sql' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)",
+          "weight": 0.85,
+          "rule_code": "COOPERATIVE_PROMISE_ASYNC",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/sql.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Stream.no_reader",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml:49:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'no_reader' in 'Stream' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml:49:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Stream.no_writer",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml:59:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'no_writer' in 'Stream' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml:59:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Stream.write_ok_callback",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml:231:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'write_ok_callback' in 'Stream' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml:231:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Promise.count_requests",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/5-promise/promise.ml:4:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'count_requests' in 'Promise' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/5-promise/promise.ml:4:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Playground.create",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:89:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'create' in 'Playground' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:89:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Playground.listen",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:381:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'listen' in 'Playground' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:381:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Common.actual",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/docs/web/postprocess/common.ml:8:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'actual' in 'Common' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/docs/web/postprocess/common.ml:8:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Log.initialized",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml:223:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'initialized' in 'Log' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml:223:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Random.initialized",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/random.ml:9:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'initialized' in 'Random' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/random.ml:9:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Flash.unpack",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/flash.ml:36:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'unpack' in 'Flash' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/flash.ml:36:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Flash.message",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/flash.ml:55:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'message' in 'Flash' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/flash.ml:55:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Helpers.websocket",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/helpers.ml:121:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'websocket' in 'Helpers' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/helpers.ml:121:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Upload.message",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/upload.ml:104:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'message' in 'Upload' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/upload.ml:104:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Eml.output",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:713:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'output' in 'Eml' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:713:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Http.httpaf_connection_handler",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml:419:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'httpaf_connection_handler' in 'Http' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml:419:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Http.certificate_and_key",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml:496:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'certificate_and_key' in 'Http' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml:496:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Http.backtrace",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml:581:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'backtrace' in 'Http' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml:581:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Websocket.kind",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/shared/websocket.ml:171:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'kind' in 'Websocket' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/shared/websocket.ml:171:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Sql.message",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/sql.ml:80:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'message' in 'Sql' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/sql.ml:80:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "defensive_catch_all_exn",
+      "pattern_category": "resilience",
+      "target_name": "Tokens.input_stream",
+      "target_kind": "defensive_catch_function",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/expect/eml/tokens.ml:9:1",
+      "evidences": [
+        {
+          "description": "Resilience Smell (Defensive Catch-All): Function 'input_stream' in 'Tokens' swallows all exceptions (`with _ -> ...`); catch specific expected exceptions only",
+          "weight": 0.85,
+          "rule_code": "DEFENSIVE_CATCH_ALL_SWALLOW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/expect/eml/tokens.ml:9:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "defensive_catch_all_exn",
+      "pattern_category": "resilience",
+      "target_name": "Graphql.backtrace",
+      "target_kind": "defensive_catch_function",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/graphql/graphql.ml:219:1",
+      "evidences": [
+        {
+          "description": "Resilience Smell (Defensive Catch-All): Function 'backtrace' in 'Graphql' swallows all exceptions (`with _ -> ...`); catch specific expected exceptions only",
+          "weight": 0.85,
+          "rule_code": "DEFENSIVE_CATCH_ALL_SWALLOW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/graphql/graphql.ml:219:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "mutable_ref_overuse",
+      "pattern_category": "principle",
+      "target_name": "Stream",
+      "target_kind": "mutable_state_module",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml:1:1",
+      "evidences": [
+        {
+          "description": "Functional Purity Audit: Module 'Stream' defines 23 mutable references / fields, breaking immutability; favor pure recursive accumulators",
+          "weight": 0.75,
+          "rule_code": "MUTABLE_STATE_OVERUSE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "mutable_ref_overuse",
+      "pattern_category": "principle",
+      "target_name": "Playground",
+      "target_kind": "mutable_state_module",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:1:1",
+      "evidences": [
+        {
+          "description": "Functional Purity Audit: Module 'Playground' defines 7 mutable references / fields, breaking immutability; favor pure recursive accumulators",
+          "weight": 0.75,
+          "rule_code": "MUTABLE_STATE_OVERUSE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "mutable_ref_overuse",
+      "pattern_category": "principle",
+      "target_name": "Log",
+      "target_kind": "mutable_state_module",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml:1:1",
+      "evidences": [
+        {
+          "description": "Functional Purity Audit: Module 'Log' defines 11 mutable references / fields, breaking immutability; favor pure recursive accumulators",
+          "weight": 0.75,
+          "rule_code": "MUTABLE_STATE_OVERUSE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "mutable_ref_overuse",
+      "pattern_category": "principle",
+      "target_name": "Upload",
+      "target_kind": "mutable_state_module",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/upload.ml:1:1",
+      "evidences": [
+        {
+          "description": "Functional Purity Audit: Module 'Upload' defines 4 mutable references / fields, breaking immutability; favor pure recursive accumulators",
+          "weight": 0.75,
+          "rule_code": "MUTABLE_STATE_OVERUSE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/upload.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "mutable_ref_overuse",
+      "pattern_category": "principle",
+      "target_name": "Main",
+      "target_kind": "mutable_state_module",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/main.ml:1:1",
+      "evidences": [
+        {
+          "description": "Functional Purity Audit: Module 'Main' defines 4 mutable references / fields, breaking immutability; favor pure recursive accumulators",
+          "weight": 0.75,
+          "rule_code": "MUTABLE_STATE_OVERUSE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/main.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "mutable_ref_overuse",
+      "pattern_category": "principle",
+      "target_name": "Websocket",
+      "target_kind": "mutable_state_module",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/shared/websocket.ml:1:1",
+      "evidences": [
+        {
+          "description": "Functional Purity Audit: Module 'Websocket' defines 10 mutable references / fields, breaking immutability; favor pure recursive accumulators",
+          "weight": 0.75,
+          "rule_code": "MUTABLE_STATE_OVERUSE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/shared/websocket.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "physical_equality_smell",
+      "pattern_category": "type_safety",
+      "target_name": "Cipher.key",
+      "target_kind": "physical_equality_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:80:1",
+      "evidences": [
+        {
+          "description": "Type Safety Hazard (Physical Equality): Function 'key' in 'Cipher' uses physical pointer equality (`==` / `!=`); use structural value equality (`=` / `<>`) to avoid subtle value comparison bugs",
+          "weight": 0.8,
+          "rule_code": "PHYSICAL_EQUALITY_COMPARISON",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:80:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "physical_equality_smell",
+      "pattern_category": "type_safety",
+      "target_name": "Chat.eml.item",
+      "target_kind": "physical_equality_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-chat/chat.eml.ml:14:1",
+      "evidences": [
+        {
+          "description": "Type Safety Hazard (Physical Equality): Function 'item' in 'Chat.eml' uses physical pointer equality (`==` / `!=`); use structural value equality (`=` / `<>`) to avoid subtle value comparison bugs",
+          "weight": 0.8,
+          "rule_code": "PHYSICAL_EQUALITY_COMPARISON",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-chat/chat.eml.ml:14:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "physical_equality_smell",
+      "pattern_category": "type_safety",
+      "target_name": "Eml.whitespace_prefix",
+      "target_kind": "physical_equality_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:456:1",
+      "evidences": [
+        {
+          "description": "Type Safety Hazard (Physical Equality): Function 'whitespace_prefix' in 'Eml' uses physical pointer equality (`==` / `!=`); use structural value equality (`=` / `<>`) to avoid subtle value comparison bugs",
+          "weight": 0.8,
+          "rule_code": "PHYSICAL_EQUALITY_COMPARISON",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:456:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "physical_equality_smell",
+      "pattern_category": "type_safety",
+      "target_name": "AEAD_AES_256_GCM.key",
+      "target_kind": "physical_equality_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:36:1",
+      "evidences": [
+        {
+          "description": "Type Safety Hazard (Physical Equality): Function 'key' in 'AEAD_AES_256_GCM' uses physical pointer equality (`==` / `!=`); use structural value equality (`=` / `<>`) to avoid subtle value comparison bugs",
+          "weight": 0.8,
+          "rule_code": "PHYSICAL_EQUALITY_COMPARISON",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:36:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "god_module_srp",
+      "pattern_category": "principle",
+      "target_name": "Stream",
+      "target_kind": "god_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml:1:1",
+      "evidences": [
+        {
+          "description": "SRP Violation (God Module): Module 'Stream' defines 42 functions across 473 lines of code, indicating multiple mixed domain responsibilities",
+          "weight": 0.85,
+          "rule_code": "SRP_GOD_MODULE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "god_module_srp",
+      "pattern_category": "principle",
+      "target_name": "Playground",
+      "target_kind": "god_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:1:1",
+      "evidences": [
+        {
+          "description": "SRP Violation (God Module): Module 'Playground' defines 56 functions across 557 lines of code, indicating multiple mixed domain responsibilities",
+          "weight": 0.85,
+          "rule_code": "SRP_GOD_MODULE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "god_module_srp",
+      "pattern_category": "principle",
+      "target_name": "Log",
+      "target_kind": "god_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml:1:1",
+      "evidences": [
+        {
+          "description": "SRP Violation (God Module): Module 'Log' defines 60 functions across 574 lines of code, indicating multiple mixed domain responsibilities",
+          "weight": 0.85,
+          "rule_code": "SRP_GOD_MODULE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "god_module_srp",
+      "pattern_category": "principle",
+      "target_name": "Index",
+      "target_kind": "god_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/docs/web/postprocess/index.ml:1:1",
+      "evidences": [
+        {
+          "description": "SRP Violation (God Module): Module 'Index' defines 284 functions across 2621 lines of code, indicating multiple mixed domain responsibilities",
+          "weight": 0.85,
+          "rule_code": "SRP_GOD_MODULE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/docs/web/postprocess/index.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "god_module_srp",
+      "pattern_category": "principle",
+      "target_name": "Dream",
+      "target_kind": "god_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1",
+      "evidences": [
+        {
+          "description": "SRP Violation (God Module): Module 'Dream' defines 134 functions across 403 lines of code, indicating multiple mixed domain responsibilities",
+          "weight": 0.85,
+          "rule_code": "SRP_GOD_MODULE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "god_module_srp",
+      "pattern_category": "principle",
+      "target_name": "Mirage",
+      "target_kind": "god_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/mirage/mirage.mli:1:1",
+      "evidences": [
+        {
+          "description": "SRP Violation (God Module): Module 'Mirage' defines 0 functions across 2055 lines of code, indicating multiple mixed domain responsibilities",
+          "weight": 0.85,
+          "rule_code": "SRP_GOD_MODULE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/mirage/mirage.mli:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "god_module_srp",
+      "pattern_category": "principle",
+      "target_name": "Eml",
+      "target_kind": "god_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:1:1",
+      "evidences": [
+        {
+          "description": "SRP Violation (God Module): Module 'Eml' defines 65 functions across 820 lines of code, indicating multiple mixed domain responsibilities",
+          "weight": 0.85,
+          "rule_code": "SRP_GOD_MODULE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "god_module_srp",
+      "pattern_category": "principle",
+      "target_name": "Http",
+      "target_kind": "god_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml:1:1",
+      "evidences": [
+        {
+          "description": "SRP Violation (God Module): Module 'Http' defines 47 functions across 782 lines of code, indicating multiple mixed domain responsibilities",
+          "weight": 0.85,
+          "rule_code": "SRP_GOD_MODULE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Test.expect.list",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/ocamlformat/test.expect.ml:28:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Test.expect.list, Test.list",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/ocamlformat/test.expect.ml:28:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Test.expect.bool",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/ocamlformat/test.expect.ml:35:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Test.expect.bool, Test.bool",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/ocamlformat/test.expect.ml:35:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Test.expect.f",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/ocamlformat/test.expect.ml:59:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Test.expect.f, Test.f",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/ocamlformat/test.expect.ml:59:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Cipher.name",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:52:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Cipher.name, AEAD_AES_256_GCM.name",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:52:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Cipher.derive_key",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:56:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Cipher.derive_key, AEAD_AES_256_GCM.derive_key",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:56:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Cipher.key",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:80:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Cipher.key, AEAD_AES_256_GCM.key",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:80:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Cipher.ciphertext",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:66:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Cipher.ciphertext, AEAD_AES_256_GCM.ciphertext",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:66:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Cipher.test_encrypt",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:75:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Cipher.test_encrypt, AEAD_AES_256_GCM.test_encrypt",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml:75:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Upload.eml.home",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/g-upload/upload.eml.ml:1:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Upload.eml.home, Upload_stream.eml.home",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/g-upload/upload.eml.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Long_polling.eml.message_loop",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-long-polling/long_polling.eml.ml:37:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Long_polling.eml.message_loop, Server_sent_events.eml.message_loop",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-long-polling/long_polling.eml.ml:37:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Stress_websocket_send.eml.show_heap_size",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-stress-websocket-send/stress_websocket_send.eml.ml:29:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Stress_websocket_send.eml.show_heap_size, Stress_response.show_heap_size",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-stress-websocket-send/stress_websocket_send.eml.ml:29:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Sql.eml.query",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/h-sql/sql.eml.ml:14:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Sql.eml.query, Postgres.eml.query",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/h-sql/sql.eml.ml:14:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Csrf ⇄ Log ⇄ Dream",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Csrf ➔ Log ➔ Dream ➔ Csrf",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Csrf ⇄ Log ⇄ Dream ⇄ Form",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Csrf ➔ Log ➔ Dream ➔ Form ➔ Csrf",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Csrf ⇄ Log ⇄ Dream ⇄ Upload ⇄ Form",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Csrf ➔ Log ➔ Dream ➔ Upload ➔ Form ➔ Csrf",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Csrf ⇄ Session ⇄ Sql ⇄ Dream",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Csrf ➔ Session ➔ Sql ➔ Dream ➔ Csrf",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Csrf ⇄ Session ⇄ Sql ⇄ Dream ⇄ Form",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Csrf ➔ Session ➔ Sql ➔ Dream ➔ Form ➔ Csrf",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Csrf ⇄ Session ⇄ Sql ⇄ Dream ⇄ Upload ⇄ Form",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Csrf ➔ Session ➔ Sql ➔ Dream ➔ Upload ➔ Form ➔ Csrf",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Csrf ⇄ Session ⇄ Sql ⇄ Log ⇄ Dream",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Csrf ➔ Session ➔ Sql ➔ Log ➔ Dream ➔ Csrf",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Csrf ⇄ Session ⇄ Sql ⇄ Log ⇄ Dream ⇄ Form",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Csrf ➔ Session ➔ Sql ➔ Log ➔ Dream ➔ Form ➔ Csrf",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Csrf ⇄ Session ⇄ Sql ⇄ Log ⇄ Dream ⇄ Upload ⇄ Form",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Csrf ➔ Session ➔ Sql ➔ Log ➔ Dream ➔ Upload ➔ Form ➔ Csrf",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Dream ⇄ Flash ⇄ Log",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Dream ➔ Flash ➔ Log ➔ Dream",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Dream ⇄ Form ⇄ Log",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Dream ➔ Form ➔ Log ➔ Dream",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Dream ⇄ Graphql ⇄ Log",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Dream ➔ Graphql ➔ Log ➔ Dream",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Dream ⇄ Http",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Dream ➔ Http ➔ Dream",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Dream ⇄ Http ⇄ Log",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Dream ➔ Http ➔ Log ➔ Dream",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Dream ⇄ Log",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Dream ➔ Log ➔ Dream",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Dream ⇄ Origin_referrer_check ⇄ Log",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Dream ➔ Origin_referrer_check ➔ Log ➔ Dream",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Dream ⇄ Session ⇄ Sql",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Dream ➔ Session ➔ Sql ➔ Dream",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Dream ⇄ Session ⇄ Sql ⇄ Log",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Dream ➔ Session ➔ Sql ➔ Log ➔ Dream",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Dream ⇄ Sql",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Dream ➔ Sql ➔ Dream",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Dream ⇄ Sql ⇄ Log",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Dream ➔ Sql ➔ Log ➔ Dream",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Dream ⇄ Upload ⇄ Form ⇄ Log",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Dream ➔ Upload ➔ Form ➔ Log ➔ Dream",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "circular_module_dependency",
+      "pattern_category": "principle",
+      "target_name": "Dream ⇄ Upload ⇄ Log",
+      "target_kind": "module_cycle",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1",
+      "evidences": [
+        {
+          "description": "Circular Module Dependency detected: Dream ➔ Upload ➔ Log ➔ Dream",
+          "weight": 0.85,
+          "rule_code": "CIRCULAR_MODULE_CYCLE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    }
+  ]
+}

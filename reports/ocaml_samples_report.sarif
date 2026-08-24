@@ -1,0 +1,441 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "DPX-OCaml",
+          "semanticVersion": "0.1.0",
+          "rules": [
+            {
+              "id": "DPX-OCAML-FUNCTOR_PARAMETRIC_MODULE",
+              "name": "functor_parametric_module",
+              "shortDescription": {
+                "text": "OCaml Pattern: Functor Parametric Module"
+              },
+              "fullDescription": {
+                "text": "Module 'Custom_map' implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection"
+              },
+              "properties": {
+                "category": "module_system"
+              }
+            },
+            {
+              "id": "DPX-OCAML-ABSTRACT_DATA_TYPE_INTERFACE",
+              "name": "abstract_data_type_interface",
+              "shortDescription": {
+                "text": "OCaml Pattern: Abstract Data Type Interface"
+              },
+              "fullDescription": {
+                "text": "Module 'Custom_map' encapsulates Abstract Data Type (ADT) via primary type `t` with constructor 'create'"
+              },
+              "properties": {
+                "category": "module_system"
+              }
+            },
+            {
+              "id": "DPX-OCAML-FIRST_CLASS_MODULE",
+              "name": "first_class_module",
+              "shortDescription": {
+                "text": "OCaml Pattern: First Class Module"
+              },
+              "fullDescription": {
+                "text": "Module 'Expr_eval' utilizes First-Class Modules for dynamic runtime dispatch and pluggable strategy injection"
+              },
+              "properties": {
+                "category": "module_system"
+              }
+            },
+            {
+              "id": "DPX-OCAML-GADTS_EXPRESSION_EVAL",
+              "name": "gadts_expression_eval",
+              "shortDescription": {
+                "text": "OCaml Pattern: Gadts Expression Eval"
+              },
+              "fullDescription": {
+                "text": "Type 'expr' in 'Expr_eval' implements Generalized Algebraic Data Type (GADT) ensuring compile-time type-safe AST evaluation"
+              },
+              "properties": {
+                "category": "functional_idiom"
+              }
+            },
+            {
+              "id": "DPX-OCAML-RAILWAY_MONADIC_BIND",
+              "name": "railway_monadic_bind",
+              "shortDescription": {
+                "text": "OCaml Pattern: Railway Monadic Bind"
+              },
+              "fullDescription": {
+                "text": "Function 'execute_flow' implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)"
+              },
+              "properties": {
+                "category": "functional_idiom"
+              }
+            },
+            {
+              "id": "DPX-OCAML-PIPELINE_OPERATOR",
+              "name": "pipeline_operator",
+              "shortDescription": {
+                "text": "OCaml Pattern: Pipeline Operator"
+              },
+              "fullDescription": {
+                "text": "Function 'transform_data' composes functional data transformations across a 3-stage pipe (`|>`)"
+              },
+              "properties": {
+                "category": "functional_idiom"
+              }
+            },
+            {
+              "id": "DPX-OCAML-EFFECT_HANDLERS",
+              "name": "effect_handlers",
+              "shortDescription": {
+                "text": "OCaml Pattern: Effect Handlers"
+              },
+              "fullDescription": {
+                "text": "Module 'Multicore_effect' adopts OCaml 5 Algebraic Effect Handlers for direct-style concurrency, state, and algebraic control flow"
+              },
+              "properties": {
+                "category": "effect_concurrency"
+              }
+            },
+            {
+              "id": "DPX-OCAML-DOMAINS_PARALLELISM",
+              "name": "domains_parallelism",
+              "shortDescription": {
+                "text": "OCaml Pattern: Domains Parallelism"
+              },
+              "fullDescription": {
+                "text": "Module 'Multicore_effect' leverages OCaml 5 Multicore Domains parallelism for shared-memory parallel thread execution"
+              },
+              "properties": {
+                "category": "effect_concurrency"
+              }
+            },
+            {
+              "id": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+              "name": "unchecked_exception_raise",
+              "shortDescription": {
+                "text": "OCaml Pattern: Unchecked Exception Raise"
+              },
+              "fullDescription": {
+                "text": "Type Safety Audit: Function 'unsafe_division' in 'Antipatterns' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+              },
+              "properties": {
+                "category": "type_safety"
+              }
+            },
+            {
+              "id": "DPX-OCAML-DEFENSIVE_CATCH_ALL_EXN",
+              "name": "defensive_catch_all_exn",
+              "shortDescription": {
+                "text": "OCaml Pattern: Defensive Catch All Exn"
+              },
+              "fullDescription": {
+                "text": "Resilience Smell (Defensive Catch-All): Function 'defensive_swallow_routine' in 'Antipatterns' swallows all exceptions (`with _ -> ...`); catch specific expected exceptions only"
+              },
+              "properties": {
+                "category": "resilience"
+              }
+            },
+            {
+              "id": "DPX-OCAML-PHYSICAL_EQUALITY_SMELL",
+              "name": "physical_equality_smell",
+              "shortDescription": {
+                "text": "OCaml Pattern: Physical Equality Smell"
+              },
+              "fullDescription": {
+                "text": "Type Safety Hazard (Physical Equality): Function 'buggy_equality_check' in 'Antipatterns' uses physical pointer equality (`==` / `!=`); use structural value equality (`=` / `<>`) to avoid subtle value comparison bugs"
+              },
+              "properties": {
+                "category": "type_safety"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "DPX-OCAML-FUNCTOR_PARAMETRIC_MODULE",
+          "level": "note",
+          "message": {
+            "text": "Module 'Custom_map' implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-FUNCTOR_PARAMETRIC_MODULE",
+          "level": "note",
+          "message": {
+            "text": "Module 'Make' implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml"
+                },
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ABSTRACT_DATA_TYPE_INTERFACE",
+          "level": "note",
+          "message": {
+            "text": "Module 'Custom_map' encapsulates Abstract Data Type (ADT) via primary type `t` with constructor 'create'"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ABSTRACT_DATA_TYPE_INTERFACE",
+          "level": "note",
+          "message": {
+            "text": "Module 'Make' encapsulates Abstract Data Type (ADT) via primary type `t` with constructor 'create'"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml"
+                },
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-FIRST_CLASS_MODULE",
+          "level": "note",
+          "message": {
+            "text": "Module 'Expr_eval' utilizes First-Class Modules for dynamic runtime dispatch and pluggable strategy injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/expr_eval.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-GADTS_EXPRESSION_EVAL",
+          "level": "note",
+          "message": {
+            "text": "Type 'expr' in 'Expr_eval' implements Generalized Algebraic Data Type (GADT) ensuring compile-time type-safe AST evaluation"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/expr_eval.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-RAILWAY_MONADIC_BIND",
+          "level": "note",
+          "message": {
+            "text": "Function 'execute_flow' implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/pipeline_monad.ml"
+                },
+                "region": {
+                  "startLine": 11,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'transform_data' composes functional data transformations across a 3-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/pipeline_monad.ml"
+                },
+                "region": {
+                  "startLine": 16,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-EFFECT_HANDLERS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Multicore_effect' adopts OCaml 5 Algebraic Effect Handlers for direct-style concurrency, state, and algebraic control flow"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/multicore_effect.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DOMAINS_PARALLELISM",
+          "level": "note",
+          "message": {
+            "text": "Module 'Multicore_effect' leverages OCaml 5 Multicore Domains parallelism for shared-memory parallel thread execution"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/multicore_effect.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'unsafe_division' in 'Antipatterns' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'defensive_swallow_routine' in 'Antipatterns' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DEFENSIVE_CATCH_ALL_EXN",
+          "level": "error",
+          "message": {
+            "text": "Resilience Smell (Defensive Catch-All): Function 'defensive_swallow_routine' in 'Antipatterns' swallows all exceptions (`with _ -> ...`); catch specific expected exceptions only"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PHYSICAL_EQUALITY_SMELL",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Hazard (Physical Equality): Function 'buggy_equality_check' in 'Antipatterns' uses physical pointer equality (`==` / `!=`); use structural value equality (`=` / `<>`) to avoid subtle value comparison bugs"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml"
+                },
+                "region": {
+                  "startLine": 12,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

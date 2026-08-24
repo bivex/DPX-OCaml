@@ -1,0 +1,1007 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "DPX-OCaml",
+          "semanticVersion": "0.1.0",
+          "rules": [
+            {
+              "id": "DPX-OCAML-FUNCTOR_PARAMETRIC_MODULE",
+              "name": "functor_parametric_module",
+              "shortDescription": {
+                "text": "OCaml Pattern: Functor Parametric Module"
+              },
+              "fullDescription": {
+                "text": "Module 'Read' implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection"
+              },
+              "properties": {
+                "category": "module_system"
+              }
+            },
+            {
+              "id": "DPX-OCAML-ABSTRACT_DATA_TYPE_INTERFACE",
+              "name": "abstract_data_type_interface",
+              "shortDescription": {
+                "text": "OCaml Pattern: Abstract Data Type Interface"
+              },
+              "fullDescription": {
+                "text": "Module 'Mucppo' encapsulates Abstract Data Type (ADT) via primary type `t` with constructor 'empty'"
+              },
+              "properties": {
+                "category": "module_system"
+              }
+            },
+            {
+              "id": "DPX-OCAML-MODULE_INCLUSION_EXTENDER",
+              "name": "module_inclusion_extender",
+              "shortDescription": {
+                "text": "OCaml Pattern: Module Inclusion Extender"
+              },
+              "fullDescription": {
+                "text": "Module 'Yojson' extends and composes functionality from 2 included module(s) (Common, T)"
+              },
+              "properties": {
+                "category": "module_system"
+              }
+            },
+            {
+              "id": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+              "name": "polymorphic_variants",
+              "shortDescription": {
+                "text": "OCaml Pattern: Polymorphic Variants"
+              },
+              "fullDescription": {
+                "text": "Module 'Mocks' adopts Polymorphic Variants (``Int, ``Assoc) providing open tag subtyping without nominal declarations"
+              },
+              "properties": {
+                "category": "functional_idiom"
+              }
+            },
+            {
+              "id": "DPX-OCAML-RAILWAY_MONADIC_BIND",
+              "name": "railway_monadic_bind",
+              "shortDescription": {
+                "text": "OCaml Pattern: Railway Monadic Bind"
+              },
+              "fullDescription": {
+                "text": "Function 'pos' implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)"
+              },
+              "properties": {
+                "category": "functional_idiom"
+              }
+            },
+            {
+              "id": "DPX-OCAML-PIPELINE_OPERATOR",
+              "name": "pipeline_operator",
+              "shortDescription": {
+                "text": "OCaml Pattern: Pipeline Operator"
+              },
+              "fullDescription": {
+                "text": "Function 'extract_titles' composes functional data transformations across a 4-stage pipe (`|>`)"
+              },
+              "properties": {
+                "category": "functional_idiom"
+              }
+            },
+            {
+              "id": "DPX-OCAML-CLOSURE_CURRYING_STRATEGY",
+              "name": "closure_currying_strategy",
+              "shortDescription": {
+                "text": "OCaml Pattern: Closure Currying Strategy"
+              },
+              "fullDescription": {
+                "text": "Function 'map_f' accepts higher-order strategy parameter 'f' for dynamic algorithm injection"
+              },
+              "properties": {
+                "category": "behavioral"
+              }
+            },
+            {
+              "id": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+              "name": "unchecked_exception_raise",
+              "shortDescription": {
+                "text": "OCaml Pattern: Unchecked Exception Raise"
+              },
+              "fullDescription": {
+                "text": "Type Safety Audit: Function 'sum_json' in 'Introduction' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+              },
+              "properties": {
+                "category": "type_safety"
+              }
+            },
+            {
+              "id": "DPX-OCAML-DEFENSIVE_CATCH_ALL_EXN",
+              "name": "defensive_catch_all_exn",
+              "shortDescription": {
+                "text": "OCaml Pattern: Defensive Catch All Exn"
+              },
+              "fullDescription": {
+                "text": "Resilience Smell (Defensive Catch-All): Function 'filter_index' in 'Util' swallows all exceptions (`with _ -> ...`); catch specific expected exceptions only"
+              },
+              "properties": {
+                "category": "resilience"
+              }
+            },
+            {
+              "id": "DPX-OCAML-MUTABLE_REF_OVERUSE",
+              "name": "mutable_ref_overuse",
+              "shortDescription": {
+                "text": "OCaml Pattern: Mutable Ref Overuse"
+              },
+              "fullDescription": {
+                "text": "Functional Purity Audit: Module 'Ydump' defines 7 mutable references / fields, breaking immutability; favor pure recursive accumulators"
+              },
+              "properties": {
+                "category": "principle"
+              }
+            },
+            {
+              "id": "DPX-OCAML-PHYSICAL_EQUALITY_SMELL",
+              "name": "physical_equality_smell",
+              "shortDescription": {
+                "text": "OCaml Pattern: Physical Equality Smell"
+              },
+              "fullDescription": {
+                "text": "Type Safety Hazard (Physical Equality): Function 'finally' in 'Ydump' uses physical pointer equality (`==` / `!=`); use structural value equality (`=` / `<>`) to avoid subtle value comparison bugs"
+              },
+              "properties": {
+                "category": "type_safety"
+              }
+            },
+            {
+              "id": "DPX-OCAML-GOD_MODULE_SRP",
+              "name": "god_module_srp",
+              "shortDescription": {
+                "text": "OCaml Pattern: God Module Srp"
+              },
+              "fullDescription": {
+                "text": "SRP Violation (God Module): Module 'Util' defines 39 functions across 215 lines of code, indicating multiple mixed domain responsibilities"
+              },
+              "properties": {
+                "category": "principle"
+              }
+            },
+            {
+              "id": "DPX-OCAML-DUPLICATE_CODE_DRY",
+              "name": "duplicate_code_dry",
+              "shortDescription": {
+                "text": "OCaml Pattern: Duplicate Code Dry"
+              },
+              "fullDescription": {
+                "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Mucppo.start_conditional, State.start_conditional"
+              },
+              "properties": {
+                "category": "principle"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "DPX-OCAML-FUNCTOR_PARAMETRIC_MODULE",
+          "level": "note",
+          "message": {
+            "text": "Module 'Read' implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/json5/read.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ABSTRACT_DATA_TYPE_INTERFACE",
+          "level": "note",
+          "message": {
+            "text": "Module 'Mucppo' encapsulates Abstract Data Type (ADT) via primary type `t` with constructor 'empty'"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/mucppo/mucppo.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ABSTRACT_DATA_TYPE_INTERFACE",
+          "level": "note",
+          "message": {
+            "text": "Module 'State' encapsulates Abstract Data Type (ADT) via primary type `t` with constructor 'empty'"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/mucppo/mucppo.ml"
+                },
+                "region": {
+                  "startLine": 70,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MODULE_INCLUSION_EXTENDER",
+          "level": "note",
+          "message": {
+            "text": "Module 'Yojson' extends and composes functionality from 2 included module(s) (Common, T)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/yojson.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MODULE_INCLUSION_EXTENDER",
+          "level": "note",
+          "message": {
+            "text": "Module 'Basic' extends and composes functionality from 2 included module(s) (Yojson.Basic, Read.Make)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/json5/basic.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MODULE_INCLUSION_EXTENDER",
+          "level": "note",
+          "message": {
+            "text": "Module 'Safe' extends and composes functionality from 2 included module(s) (Yojson.Safe, Read.Make)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/json5/safe.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Mocks' adopts Polymorphic Variants (``Int, ``Assoc) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/bench/mocks.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Fixtures' adopts Polymorphic Variants (``Assoc, ``Null) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/test/fixtures.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Test_read' adopts Polymorphic Variants (``Quick, ``Quick) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/test/test_read.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Test_util' adopts Polymorphic Variants (``Int, ``Quick) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/test/test_util.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Test' adopts Polymorphic Variants (``Quick, ``Bool) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/test_json5/test.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Atd' adopts Polymorphic Variants (``List, ``Assoc) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/test/pretty/atd.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Ydump' adopts Polymorphic Variants (``AS, ``Stdin) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/bin/ydump.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Constructing' adopts Polymorphic Variants (``Assoc, ``String) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/examples/constructing.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Introduction' adopts Polymorphic Variants (``Float, ``Int) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/examples/introduction.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Raw.cppo' adopts Polymorphic Variants (``Intlit, ``Floatlit) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/raw.cppo.mli"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Monomorphic' adopts Polymorphic Variants (``Null, ``Null) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/monomorphic.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Prettyprint' adopts Polymorphic Variants (``Null, ``Bool) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/prettyprint.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Type' adopts Polymorphic Variants (``Null, ``Bool) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/type.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Util' adopts Polymorphic Variants (``Assoc, ``Bool) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/util.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Ast' adopts Polymorphic Variants (``Assoc, ``List) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/json5/ast.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-RAILWAY_MONADIC_BIND",
+          "level": "note",
+          "message": {
+            "text": "Function 'pos' implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/json5/parser.ml"
+                },
+                "region": {
+                  "startLine": 87,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'extract_titles' composes functional data transformations across a 4-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/examples/filtering.ml"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CLOSURE_CURRYING_STRATEGY",
+          "level": "note",
+          "message": {
+            "text": "Function 'map_f' accepts higher-order strategy parameter 'f' for dynamic algorithm injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/test/test_read.ml"
+                },
+                "region": {
+                  "startLine": 99,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CLOSURE_CURRYING_STRATEGY",
+          "level": "note",
+          "message": {
+            "text": "Function 'filter_map' accepts higher-order strategy parameter 'f' for dynamic algorithm injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/util.ml"
+                },
+                "region": {
+                  "startLine": 138,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'sum_json' in 'Introduction' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/examples/introduction.ml"
+                },
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'typerr' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/util.ml"
+                },
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'wrapped_index' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/util.ml"
+                },
+                "region": {
+                  "startLine": 43,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'combine' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/util.ml"
+                },
+                "region": {
+                  "startLine": 211,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'flip_top' in 'Mucppo' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/mucppo/mucppo.ml"
+                },
+                "region": {
+                  "startLine": 24,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'var' in 'Mucppo' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/mucppo/mucppo.ml"
+                },
+                "region": {
+                  "startLine": 142,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DEFENSIVE_CATCH_ALL_EXN",
+          "level": "error",
+          "message": {
+            "text": "Resilience Smell (Defensive Catch-All): Function 'filter_index' in 'Util' swallows all exceptions (`with _ -> ...`); catch specific expected exceptions only"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/util.ml"
+                },
+                "region": {
+                  "startLine": 150,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DEFENSIVE_CATCH_ALL_EXN",
+          "level": "error",
+          "message": {
+            "text": "Resilience Smell (Defensive Catch-All): Function 'filter_member' in 'Util' swallows all exceptions (`with _ -> ...`); catch specific expected exceptions only"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/util.ml"
+                },
+                "region": {
+                  "startLine": 158,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MUTABLE_REF_OVERUSE",
+          "level": "error",
+          "message": {
+            "text": "Functional Purity Audit: Module 'Ydump' defines 7 mutable references / fields, breaking immutability; favor pure recursive accumulators"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/bin/ydump.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MUTABLE_REF_OVERUSE",
+          "level": "error",
+          "message": {
+            "text": "Functional Purity Audit: Module 'Common' defines 6 mutable references / fields, breaking immutability; favor pure recursive accumulators"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/common.mli"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PHYSICAL_EQUALITY_SMELL",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Hazard (Physical Equality): Function 'finally' in 'Ydump' uses physical pointer equality (`==` / `!=`); use structural value equality (`=` / `<>`) to avoid subtle value comparison bugs"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/bin/ydump.ml"
+                },
+                "region": {
+                  "startLine": 30,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-GOD_MODULE_SRP",
+          "level": "error",
+          "message": {
+            "text": "SRP Violation (God Module): Module 'Util' defines 39 functions across 215 lines of code, indicating multiple mixed domain responsibilities"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/util.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-GOD_MODULE_SRP",
+          "level": "error",
+          "message": {
+            "text": "SRP Violation (God Module): Module 'Mucppo' defines 45 functions across 187 lines of code, indicating multiple mixed domain responsibilities"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/mucppo/mucppo.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-GOD_MODULE_SRP",
+          "level": "error",
+          "message": {
+            "text": "SRP Violation (God Module): Module 'Lexer' defines 59 functions across 259 lines of code, indicating multiple mixed domain responsibilities"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/json5/lexer.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Mucppo.start_conditional, State.start_conditional"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/mucppo/mucppo.ml"
+                },
+                "region": {
+                  "startLine": 80,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Lexer.signed_integer, Lexer.int_literal"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/yojson/lib/json5/lexer.ml"
+                },
+                "region": {
+                  "startLine": 66,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

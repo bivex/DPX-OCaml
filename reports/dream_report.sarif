@@ -1,0 +1,3872 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "DPX-OCaml",
+          "semanticVersion": "0.1.0",
+          "rules": [
+            {
+              "id": "DPX-OCAML-FUNCTOR_PARAMETRIC_MODULE",
+              "name": "functor_parametric_module",
+              "shortDescription": {
+                "text": "OCaml Pattern: Functor Parametric Module"
+              },
+              "fullDescription": {
+                "text": "Module 'Hello_world' implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection"
+              },
+              "properties": {
+                "category": "module_system"
+              }
+            },
+            {
+              "id": "DPX-OCAML-FIRST_CLASS_MODULE",
+              "name": "first_class_module",
+              "shortDescription": {
+                "text": "OCaml Pattern: First Class Module"
+              },
+              "fullDescription": {
+                "text": "Module 'Cipher' utilizes First-Class Modules for dynamic runtime dispatch and pluggable strategy injection"
+              },
+              "properties": {
+                "category": "module_system"
+              }
+            },
+            {
+              "id": "DPX-OCAML-MODULE_INCLUSION_EXTENDER",
+              "name": "module_inclusion_extender",
+              "shortDescription": {
+                "text": "OCaml Pattern: Module Inclusion Extender"
+              },
+              "fullDescription": {
+                "text": "Module 'Dream' extends and composes functionality from 5 included module(s) (Dream__server.Log, Dream__server.Session, Method, Status, Formats)"
+              },
+              "properties": {
+                "category": "module_system"
+              }
+            },
+            {
+              "id": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+              "name": "polymorphic_variants",
+              "shortDescription": {
+                "text": "OCaml Pattern: Polymorphic Variants"
+              },
+              "fullDescription": {
+                "text": "Module 'Request' adopts Polymorphic Variants (``Quick, ``POST) providing open tag subtyping without nominal declarations"
+              },
+              "properties": {
+                "category": "functional_idiom"
+              }
+            },
+            {
+              "id": "DPX-OCAML-RAILWAY_MONADIC_BIND",
+              "name": "railway_monadic_bind",
+              "shortDescription": {
+                "text": "OCaml Pattern: Railway Monadic Bind"
+              },
+              "fullDescription": {
+                "text": "Function 'filename' implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)"
+              },
+              "properties": {
+                "category": "functional_idiom"
+              }
+            },
+            {
+              "id": "DPX-OCAML-PIPELINE_OPERATOR",
+              "name": "pipeline_operator",
+              "shortDescription": {
+                "text": "OCaml Pattern: Pipeline Operator"
+              },
+              "fullDescription": {
+                "text": "Function 'request' composes functional data transformations across a 4-stage pipe (`|>`)"
+              },
+              "properties": {
+                "category": "functional_idiom"
+              }
+            },
+            {
+              "id": "DPX-OCAML-CPS_CONTINUATION_PASSING",
+              "name": "cps_continuation_passing",
+              "shortDescription": {
+                "text": "OCaml Pattern: Cps Continuation Passing"
+              },
+              "fullDescription": {
+                "text": "Function 'drain_payload' implements Continuation-Passing Style (CPS) ensuring stack-safe tail recursion via callback continuation"
+              },
+              "properties": {
+                "category": "functional_idiom"
+              }
+            },
+            {
+              "id": "DPX-OCAML-CLOSURE_CURRYING_STRATEGY",
+              "name": "closure_currying_strategy",
+              "shortDescription": {
+                "text": "OCaml Pattern: Closure Currying Strategy"
+              },
+              "fullDescription": {
+                "text": "Function 'lock_sandbox' accepts higher-order strategy parameter 'f' for dynamic algorithm injection"
+              },
+              "properties": {
+                "category": "behavioral"
+              }
+            },
+            {
+              "id": "DPX-OCAML-LAZY_MEMOIZATION",
+              "name": "lazy_memoization",
+              "shortDescription": {
+                "text": "OCaml Pattern: Lazy Memoization"
+              },
+              "fullDescription": {
+                "text": "Module 'Cipher' integrates Lazy Memoization pattern for deferred on-demand computation and caching"
+              },
+              "properties": {
+                "category": "structural"
+              }
+            },
+            {
+              "id": "DPX-OCAML-RECORD_FUNCTION_VTABLE",
+              "name": "record_function_vtable",
+              "shortDescription": {
+                "text": "OCaml Pattern: Record Function Vtable"
+              },
+              "fullDescription": {
+                "text": "Record type 'reader' in 'Stream' implements explicit VTable Virtual Method Table containing 2 function method(s)"
+              },
+              "properties": {
+                "category": "structural"
+              }
+            },
+            {
+              "id": "DPX-OCAML-ASYNC_LWT_PROMISES",
+              "name": "async_lwt_promises",
+              "shortDescription": {
+                "text": "OCaml Pattern: Async Lwt Promises"
+              },
+              "fullDescription": {
+                "text": "Module 'Error.eml' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+              },
+              "properties": {
+                "category": "effect_concurrency"
+              }
+            },
+            {
+              "id": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+              "name": "unchecked_exception_raise",
+              "shortDescription": {
+                "text": "OCaml Pattern: Unchecked Exception Raise"
+              },
+              "fullDescription": {
+                "text": "Type Safety Audit: Function 'no_reader' in 'Stream' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+              },
+              "properties": {
+                "category": "type_safety"
+              }
+            },
+            {
+              "id": "DPX-OCAML-DEFENSIVE_CATCH_ALL_EXN",
+              "name": "defensive_catch_all_exn",
+              "shortDescription": {
+                "text": "OCaml Pattern: Defensive Catch All Exn"
+              },
+              "fullDescription": {
+                "text": "Resilience Smell (Defensive Catch-All): Function 'input_stream' in 'Tokens' swallows all exceptions (`with _ -> ...`); catch specific expected exceptions only"
+              },
+              "properties": {
+                "category": "resilience"
+              }
+            },
+            {
+              "id": "DPX-OCAML-MUTABLE_REF_OVERUSE",
+              "name": "mutable_ref_overuse",
+              "shortDescription": {
+                "text": "OCaml Pattern: Mutable Ref Overuse"
+              },
+              "fullDescription": {
+                "text": "Functional Purity Audit: Module 'Stream' defines 23 mutable references / fields, breaking immutability; favor pure recursive accumulators"
+              },
+              "properties": {
+                "category": "principle"
+              }
+            },
+            {
+              "id": "DPX-OCAML-PHYSICAL_EQUALITY_SMELL",
+              "name": "physical_equality_smell",
+              "shortDescription": {
+                "text": "OCaml Pattern: Physical Equality Smell"
+              },
+              "fullDescription": {
+                "text": "Type Safety Hazard (Physical Equality): Function 'key' in 'Cipher' uses physical pointer equality (`==` / `!=`); use structural value equality (`=` / `<>`) to avoid subtle value comparison bugs"
+              },
+              "properties": {
+                "category": "type_safety"
+              }
+            },
+            {
+              "id": "DPX-OCAML-GOD_MODULE_SRP",
+              "name": "god_module_srp",
+              "shortDescription": {
+                "text": "OCaml Pattern: God Module Srp"
+              },
+              "fullDescription": {
+                "text": "SRP Violation (God Module): Module 'Stream' defines 42 functions across 473 lines of code, indicating multiple mixed domain responsibilities"
+              },
+              "properties": {
+                "category": "principle"
+              }
+            },
+            {
+              "id": "DPX-OCAML-DUPLICATE_CODE_DRY",
+              "name": "duplicate_code_dry",
+              "shortDescription": {
+                "text": "OCaml Pattern: Duplicate Code Dry"
+              },
+              "fullDescription": {
+                "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Test.expect.list, Test.list"
+              },
+              "properties": {
+                "category": "principle"
+              }
+            },
+            {
+              "id": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+              "name": "circular_module_dependency",
+              "shortDescription": {
+                "text": "OCaml Pattern: Circular Module Dependency"
+              },
+              "fullDescription": {
+                "text": "Circular Module Dependency detected: Csrf ➔ Log ➔ Dream ➔ Csrf"
+              },
+              "properties": {
+                "category": "principle"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "DPX-OCAML-FUNCTOR_PARAMETRIC_MODULE",
+          "level": "note",
+          "message": {
+            "text": "Module 'Hello_world' implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-mirage/unikernel.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-FIRST_CLASS_MODULE",
+          "level": "note",
+          "message": {
+            "text": "Module 'Cipher' utilizes First-Class Modules for dynamic runtime dispatch and pluggable strategy injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-FIRST_CLASS_MODULE",
+          "level": "note",
+          "message": {
+            "text": "Module 'Sql.eml' utilizes First-Class Modules for dynamic runtime dispatch and pluggable strategy injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/h-sql/sql.eml.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-FIRST_CLASS_MODULE",
+          "level": "note",
+          "message": {
+            "text": "Module 'Postgres.eml' utilizes First-Class Modules for dynamic runtime dispatch and pluggable strategy injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-postgres/postgres.eml.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-FIRST_CLASS_MODULE",
+          "level": "note",
+          "message": {
+            "text": "Module 'Session' utilizes First-Class Modules for dynamic runtime dispatch and pluggable strategy injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/session.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MODULE_INCLUSION_EXTENDER",
+          "level": "note",
+          "message": {
+            "text": "Module 'Dream' extends and composes functionality from 5 included module(s) (Dream__server.Log, Dream__server.Session, Method, Status, Formats)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MODULE_INCLUSION_EXTENDER",
+          "level": "note",
+          "message": {
+            "text": "Module 'Error_template.eml' extends and composes functionality from 2 included module(s) (Dream_pure, Dream_pure.Formats)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/error_template.eml.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MODULE_INCLUSION_EXTENDER",
+          "level": "note",
+          "message": {
+            "text": "Module 'Tag.eml' extends and composes functionality from 2 included module(s) (Dream_pure, Dream_pure.Formats)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/tag.eml.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MODULE_INCLUSION_EXTENDER",
+          "level": "note",
+          "message": {
+            "text": "Module 'Log' extends and composes functionality from 1 included module(s) (Dream__server.Log)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml"
+                },
+                "region": {
+                  "startLine": 37,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MODULE_INCLUSION_EXTENDER",
+          "level": "note",
+          "message": {
+            "text": "Module 'Session' extends and composes functionality from 1 included module(s) (Dream__server.Session)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml"
+                },
+                "region": {
+                  "startLine": 55,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MODULE_INCLUSION_EXTENDER",
+          "level": "note",
+          "message": {
+            "text": "Module 'Dream' extends and composes functionality from 2 included module(s) (Dream_pure, Dream_pure.Formats)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/error_template.eml.ml"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MODULE_INCLUSION_EXTENDER",
+          "level": "note",
+          "message": {
+            "text": "Module 'Dream' extends and composes functionality from 2 included module(s) (Dream_pure, Dream_pure.Formats)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/tag.eml.ml"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Request' adopts Polymorphic Variants (``Quick, ``POST) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/unit/request.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Test.expect' adopts Polymorphic Variants (``A, ``B) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/ocamlformat/test.expect.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Test' adopts Polymorphic Variants (``A, ``B) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/ocamlformat/test.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Cookie' adopts Polymorphic Variants (``Host, ``Secure) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/cookie.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Stream' adopts Polymorphic Variants (``Idle, ``Reader_waiting) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Message' adopts Polymorphic Variants (``Text, ``Binary) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/message.mli"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Status' adopts Polymorphic Variants (``Continue, ``Switching_Protocols) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/status.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Method' adopts Polymorphic Variants (``GET, ``POST) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/method.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Playground' adopts Polymorphic Variants (``OCaml, ``Reason) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Session' adopts Polymorphic Variants (``String, ``Assoc) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/session.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Static' adopts Polymorphic Variants (``Not_Found, ``GET) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/unix/static.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Graphql' adopts Polymorphic Variants (``Assoc, ``List) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/graphql/graphql.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Log' adopts Polymorphic Variants (``Error, ``Warning) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Index' adopts Polymorphic Variants (``GET, ``POST) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/docs/web/postprocess/index.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Dream' adopts Polymorphic Variants (``Text, ``Binary) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Flash' adopts Polymorphic Variants (``String, ``List) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/flash.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Form' adopts Polymorphic Variants (``Ok, ``Expired) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/form.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Helpers' adopts Polymorphic Variants (``See_Other, ``Not_Found) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/helpers.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Origin_referrer_check' adopts Polymorphic Variants (``GET, ``HEAD) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/origin_referrer_check.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Catch' adopts Polymorphic Variants (``Response, ``String) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/catch.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Upload' adopts Polymorphic Variants (``Parse, ``Wrong_content_type) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/upload.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Csrf' adopts Polymorphic Variants (``Assoc, ``String) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Mirage' adopts Polymorphic Variants (``GET, ``POST) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/mirage/mirage.mli"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Eml' adopts Polymorphic Variants (``Code_block, ``Options) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Main' adopts Polymorphic Variants (``OCaml, ``Reason) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/main.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Http' adopts Polymorphic Variants (``Exn, ``Exn) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Websocket' adopts Polymorphic Variants (``Binary, ``Connection_close) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/shared/websocket.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-POLYMORPHIC_VARIANTS",
+          "level": "note",
+          "message": {
+            "text": "Module 'Formats' adopts Polymorphic Variants (``Strict, ``Lax) providing open tag subtyping without nominal declarations"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/formats.mli"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-RAILWAY_MONADIC_BIND",
+          "level": "note",
+          "message": {
+            "text": "Function 'filename' implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/upload.ml"
+                },
+                "region": {
+                  "startLine": 144,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'request' composes functional data transformations across a 4-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/unit/request.ml"
+                },
+                "region": {
+                  "startLine": 26,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'derive_key' composes functional data transformations across a 3-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml"
+                },
+                "region": {
+                  "startLine": 56,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'input_stream' composes functional data transformations across a 3-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/expect/eml/tokens.ml"
+                },
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'decode' composes functional data transformations across a 4-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/expect/pure/formats/path/path.ml"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'drop' composes functional data transformations across a 4-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/expect/pure/formats/path/path.ml"
+                },
+                "region": {
+                  "startLine": 49,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'all_queries' composes functional data transformations across a 3-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/query.ml"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'show_heap_size' composes functional data transformations across a 3-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-stress-websocket-send/stress_websocket_send.eml.ml"
+                },
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'show_heap_size' composes functional data transformations across a 3-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-stress-response/stress_response.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'container_id' composes functional data transformations across a 3-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml"
+                },
+                "region": {
+                  "startLine": 287,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'next' composes functional data transformations across a 4-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml"
+                },
+                "region": {
+                  "startLine": 391,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'images' composes functional data transformations across a 5-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml"
+                },
+                "region": {
+                  "startLine": 420,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'message_object' composes functional data transformations across a 4-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/e-json/json.ml"
+                },
+                "region": {
+                  "startLine": 17,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'add_backing_line' composes functional data transformations across a 4-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/docs/web/postprocess/common.ml"
+                },
+                "region": {
+                  "startLine": 45,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'forward_messages' composes functional data transformations across a 4-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-server-sent-events/server_sent_events.eml.ml"
+                },
+                "region": {
+                  "startLine": 41,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'serialize_payload' composes functional data transformations across a 3-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/session.ml"
+                },
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'put' composes functional data transformations across a 3-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/session.ml"
+                },
+                "region": {
+                  "startLine": 115,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'query' composes functional data transformations across a 6-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/graphql/graphql.ml"
+                },
+                "region": {
+                  "startLine": 34,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'json' composes functional data transformations across a 6-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/graphql/graphql.ml"
+                },
+                "region": {
+                  "startLine": 278,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'iter_backtrace' composes functional data transformations across a 3-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml"
+                },
+                "region": {
+                  "startLine": 296,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'remove_stdlib' composes functional data transformations across a 3-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/docs/web/postprocess/index.ml"
+                },
+                "region": {
+                  "startLine": 2553,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'soup' composes functional data transformations across a 6-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/livereload.ml"
+                },
+                "region": {
+                  "startLine": 67,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'prefix' composes functional data transformations across a 3-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/site_prefix.ml"
+                },
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'empty_lines_from_template' composes functional data transformations across a 5-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml"
+                },
+                "region": {
+                  "startLine": 524,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'coalesce_template' composes functional data transformations across a 5-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml"
+                },
+                "region": {
+                  "startLine": 553,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'trim' composes functional data transformations across a 3-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml"
+                },
+                "region": {
+                  "startLine": 568,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'input_stream' composes functional data transformations across a 6-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml"
+                },
+                "region": {
+                  "startLine": 749,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'set_fd' composes functional data transformations across a 3-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml"
+                },
+                "region": {
+                  "startLine": 36,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PIPELINE_OPERATOR",
+          "level": "note",
+          "message": {
+            "text": "Function 'derive_key' composes functional data transformations across a 3-stage pipe (`|>`)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml"
+                },
+                "region": {
+                  "startLine": 12,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CPS_CONTINUATION_PASSING",
+          "level": "note",
+          "message": {
+            "text": "Function 'drain_payload' implements Continuation-Passing Style (CPS) ensuring stack-safe tail recursion via callback continuation"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/shared/websocket.ml"
+                },
+                "region": {
+                  "startLine": 52,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CLOSURE_CURRYING_STRATEGY",
+          "level": "note",
+          "message": {
+            "text": "Function 'lock_sandbox' accepts higher-order strategy parameter 'f' for dynamic algorithm injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml"
+                },
+                "region": {
+                  "startLine": 325,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CLOSURE_CURRYING_STRATEGY",
+          "level": "note",
+          "message": {
+            "text": "Function 'if_expected' accepts higher-order strategy parameter 'f' for dynamic algorithm injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/docs/web/postprocess/common.ml"
+                },
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CLOSURE_CURRYING_STRATEGY",
+          "level": "note",
+          "message": {
+            "text": "Function 'iter_backtrace' accepts higher-order strategy parameter 'f' for dynamic algorithm injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml"
+                },
+                "region": {
+                  "startLine": 296,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CLOSURE_CURRYING_STRATEGY",
+          "level": "note",
+          "message": {
+            "text": "Function 'map_templates' accepts higher-order strategy parameter 'f' for dynamic algorithm injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml"
+                },
+                "region": {
+                  "startLine": 448,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-LAZY_MEMOIZATION",
+          "level": "note",
+          "message": {
+            "text": "Module 'Cipher' integrates Lazy Memoization pattern for deferred on-demand computation and caching"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-LAZY_MEMOIZATION",
+          "level": "note",
+          "message": {
+            "text": "Module 'Graphql' integrates Lazy Memoization pattern for deferred on-demand computation and caching"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/graphql/graphql.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-LAZY_MEMOIZATION",
+          "level": "note",
+          "message": {
+            "text": "Module 'Log' integrates Lazy Memoization pattern for deferred on-demand computation and caching"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-LAZY_MEMOIZATION",
+          "level": "note",
+          "message": {
+            "text": "Module 'Random' integrates Lazy Memoization pattern for deferred on-demand computation and caching"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/random.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-RECORD_FUNCTION_VTABLE",
+          "level": "note",
+          "message": {
+            "text": "Record type 'reader' in 'Stream' implements explicit VTable Virtual Method Table containing 2 function method(s)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml"
+                },
+                "region": {
+                  "startLine": 26,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-RECORD_FUNCTION_VTABLE",
+          "level": "note",
+          "message": {
+            "text": "Record type 'writer' in 'Stream' implements explicit VTable Virtual Method Table containing 5 function method(s)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml"
+                },
+                "region": {
+                  "startLine": 32,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-RECORD_FUNCTION_VTABLE",
+          "level": "note",
+          "message": {
+            "text": "Record type 'pipe' in 'Stream' implements explicit VTable Virtual Method Table containing 9 function method(s)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml"
+                },
+                "region": {
+                  "startLine": 166,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-RECORD_FUNCTION_VTABLE",
+          "level": "note",
+          "message": {
+            "text": "Record type 'output' in 'Eml' implements explicit VTable Virtual Method Table containing 6 function method(s)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml"
+                },
+                "region": {
+                  "startLine": 584,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Error.eml' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/9-error/error.eml.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Promise' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/5-promise/promise.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Stress_websocket_send.eml' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-stress-websocket-send/stress_websocket_send.eml.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Stress_response' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-stress-response/stress_response.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Playground' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Graphql_subscription' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-graphql-subscription/graphql_subscription.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Server_sent_events.eml' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-server-sent-events/server_sent_events.eml.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Echo' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/echo.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Session' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/session.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Static' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/unix/static.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Graphql' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/graphql/graphql.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Log' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Dream' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Flash' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/flash.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Form' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/form.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Livereload' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/livereload.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Helpers' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/helpers.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Origin_referrer_check' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/origin_referrer_check.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Catch' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/catch.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Upload' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/upload.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Csrf' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Site_prefix' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/site_prefix.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Mirage' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/mirage/mirage.mli"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Eml' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Http' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-ASYNC_LWT_PROMISES",
+          "level": "note",
+          "message": {
+            "text": "Module 'Sql' coordinates non-blocking asynchronous event I/O via cooperative promise concurrency (Lwt / Async)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/sql.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'no_reader' in 'Stream' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml"
+                },
+                "region": {
+                  "startLine": 49,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'no_writer' in 'Stream' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml"
+                },
+                "region": {
+                  "startLine": 59,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'write_ok_callback' in 'Stream' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml"
+                },
+                "region": {
+                  "startLine": 231,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'count_requests' in 'Promise' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/5-promise/promise.ml"
+                },
+                "region": {
+                  "startLine": 4,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'create' in 'Playground' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml"
+                },
+                "region": {
+                  "startLine": 89,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'listen' in 'Playground' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml"
+                },
+                "region": {
+                  "startLine": 381,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'actual' in 'Common' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/docs/web/postprocess/common.ml"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'initialized' in 'Log' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml"
+                },
+                "region": {
+                  "startLine": 223,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'initialized' in 'Random' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/random.ml"
+                },
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'unpack' in 'Flash' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/flash.ml"
+                },
+                "region": {
+                  "startLine": 36,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'message' in 'Flash' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/flash.ml"
+                },
+                "region": {
+                  "startLine": 55,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'websocket' in 'Helpers' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/helpers.ml"
+                },
+                "region": {
+                  "startLine": 121,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'message' in 'Upload' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/upload.ml"
+                },
+                "region": {
+                  "startLine": 104,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'output' in 'Eml' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml"
+                },
+                "region": {
+                  "startLine": 713,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'httpaf_connection_handler' in 'Http' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml"
+                },
+                "region": {
+                  "startLine": 419,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'certificate_and_key' in 'Http' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml"
+                },
+                "region": {
+                  "startLine": 496,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'backtrace' in 'Http' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml"
+                },
+                "region": {
+                  "startLine": 581,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'kind' in 'Websocket' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/shared/websocket.ml"
+                },
+                "region": {
+                  "startLine": 171,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-UNCHECKED_EXCEPTION_RAISE",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Audit: Function 'message' in 'Sql' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/sql/sql.ml"
+                },
+                "region": {
+                  "startLine": 80,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DEFENSIVE_CATCH_ALL_EXN",
+          "level": "error",
+          "message": {
+            "text": "Resilience Smell (Defensive Catch-All): Function 'input_stream' in 'Tokens' swallows all exceptions (`with _ -> ...`); catch specific expected exceptions only"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/expect/eml/tokens.ml"
+                },
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DEFENSIVE_CATCH_ALL_EXN",
+          "level": "error",
+          "message": {
+            "text": "Resilience Smell (Defensive Catch-All): Function 'backtrace' in 'Graphql' swallows all exceptions (`with _ -> ...`); catch specific expected exceptions only"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/graphql/graphql.ml"
+                },
+                "region": {
+                  "startLine": 219,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MUTABLE_REF_OVERUSE",
+          "level": "error",
+          "message": {
+            "text": "Functional Purity Audit: Module 'Stream' defines 23 mutable references / fields, breaking immutability; favor pure recursive accumulators"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MUTABLE_REF_OVERUSE",
+          "level": "error",
+          "message": {
+            "text": "Functional Purity Audit: Module 'Playground' defines 7 mutable references / fields, breaking immutability; favor pure recursive accumulators"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MUTABLE_REF_OVERUSE",
+          "level": "error",
+          "message": {
+            "text": "Functional Purity Audit: Module 'Log' defines 11 mutable references / fields, breaking immutability; favor pure recursive accumulators"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MUTABLE_REF_OVERUSE",
+          "level": "error",
+          "message": {
+            "text": "Functional Purity Audit: Module 'Upload' defines 4 mutable references / fields, breaking immutability; favor pure recursive accumulators"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/upload.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MUTABLE_REF_OVERUSE",
+          "level": "error",
+          "message": {
+            "text": "Functional Purity Audit: Module 'Main' defines 4 mutable references / fields, breaking immutability; favor pure recursive accumulators"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/main.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-MUTABLE_REF_OVERUSE",
+          "level": "error",
+          "message": {
+            "text": "Functional Purity Audit: Module 'Websocket' defines 10 mutable references / fields, breaking immutability; favor pure recursive accumulators"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/shared/websocket.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PHYSICAL_EQUALITY_SMELL",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Hazard (Physical Equality): Function 'key' in 'Cipher' uses physical pointer equality (`==` / `!=`); use structural value equality (`=` / `<>`) to avoid subtle value comparison bugs"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml"
+                },
+                "region": {
+                  "startLine": 80,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PHYSICAL_EQUALITY_SMELL",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Hazard (Physical Equality): Function 'item' in 'Chat.eml' uses physical pointer equality (`==` / `!=`); use structural value equality (`=` / `<>`) to avoid subtle value comparison bugs"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-chat/chat.eml.ml"
+                },
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PHYSICAL_EQUALITY_SMELL",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Hazard (Physical Equality): Function 'whitespace_prefix' in 'Eml' uses physical pointer equality (`==` / `!=`); use structural value equality (`=` / `<>`) to avoid subtle value comparison bugs"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml"
+                },
+                "region": {
+                  "startLine": 456,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-PHYSICAL_EQUALITY_SMELL",
+          "level": "error",
+          "message": {
+            "text": "Type Safety Hazard (Physical Equality): Function 'key' in 'AEAD_AES_256_GCM' uses physical pointer equality (`==` / `!=`); use structural value equality (`=` / `<>`) to avoid subtle value comparison bugs"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml"
+                },
+                "region": {
+                  "startLine": 36,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-GOD_MODULE_SRP",
+          "level": "error",
+          "message": {
+            "text": "SRP Violation (God Module): Module 'Stream' defines 42 functions across 473 lines of code, indicating multiple mixed domain responsibilities"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/pure/stream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-GOD_MODULE_SRP",
+          "level": "error",
+          "message": {
+            "text": "SRP Violation (God Module): Module 'Playground' defines 56 functions across 557 lines of code, indicating multiple mixed domain responsibilities"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/z-playground/server/playground.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-GOD_MODULE_SRP",
+          "level": "error",
+          "message": {
+            "text": "SRP Violation (God Module): Module 'Log' defines 60 functions across 574 lines of code, indicating multiple mixed domain responsibilities"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/log.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-GOD_MODULE_SRP",
+          "level": "error",
+          "message": {
+            "text": "SRP Violation (God Module): Module 'Index' defines 284 functions across 2621 lines of code, indicating multiple mixed domain responsibilities"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/docs/web/postprocess/index.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-GOD_MODULE_SRP",
+          "level": "error",
+          "message": {
+            "text": "SRP Violation (God Module): Module 'Dream' defines 134 functions across 403 lines of code, indicating multiple mixed domain responsibilities"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-GOD_MODULE_SRP",
+          "level": "error",
+          "message": {
+            "text": "SRP Violation (God Module): Module 'Mirage' defines 0 functions across 2055 lines of code, indicating multiple mixed domain responsibilities"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/mirage/mirage.mli"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-GOD_MODULE_SRP",
+          "level": "error",
+          "message": {
+            "text": "SRP Violation (God Module): Module 'Eml' defines 65 functions across 820 lines of code, indicating multiple mixed domain responsibilities"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/eml/eml.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-GOD_MODULE_SRP",
+          "level": "error",
+          "message": {
+            "text": "SRP Violation (God Module): Module 'Http' defines 47 functions across 782 lines of code, indicating multiple mixed domain responsibilities"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/http/http.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Test.expect.list, Test.list"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/ocamlformat/test.expect.ml"
+                },
+                "region": {
+                  "startLine": 28,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Test.expect.bool, Test.bool"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/ocamlformat/test.expect.ml"
+                },
+                "region": {
+                  "startLine": 35,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Test.expect.f, Test.f"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/test/ocamlformat/test.expect.ml"
+                },
+                "region": {
+                  "startLine": 59,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Cipher.name, AEAD_AES_256_GCM.name"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml"
+                },
+                "region": {
+                  "startLine": 52,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Cipher.derive_key, AEAD_AES_256_GCM.derive_key"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml"
+                },
+                "region": {
+                  "startLine": 56,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Cipher.key, AEAD_AES_256_GCM.key"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml"
+                },
+                "region": {
+                  "startLine": 80,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Cipher.ciphertext, AEAD_AES_256_GCM.ciphertext"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml"
+                },
+                "region": {
+                  "startLine": 66,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Cipher.test_encrypt, AEAD_AES_256_GCM.test_encrypt"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/cipher/cipher.ml"
+                },
+                "region": {
+                  "startLine": 75,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Upload.eml.home, Upload_stream.eml.home"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/g-upload/upload.eml.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Long_polling.eml.message_loop, Server_sent_events.eml.message_loop"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-long-polling/long_polling.eml.ml"
+                },
+                "region": {
+                  "startLine": 37,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Stress_websocket_send.eml.show_heap_size, Stress_response.show_heap_size"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/w-stress-websocket-send/stress_websocket_send.eml.ml"
+                },
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-DUPLICATE_CODE_DRY",
+          "level": "error",
+          "message": {
+            "text": "DRY Violation: Identical function logic duplicated across 2 location(s): Sql.eml.query, Postgres.eml.query"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/example/h-sql/sql.eml.ml"
+                },
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Csrf ➔ Log ➔ Dream ➔ Csrf"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Csrf ➔ Log ➔ Dream ➔ Form ➔ Csrf"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Csrf ➔ Log ➔ Dream ➔ Upload ➔ Form ➔ Csrf"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Csrf ➔ Session ➔ Sql ➔ Dream ➔ Csrf"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Csrf ➔ Session ➔ Sql ➔ Dream ➔ Form ➔ Csrf"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Csrf ➔ Session ➔ Sql ➔ Dream ➔ Upload ➔ Form ➔ Csrf"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Csrf ➔ Session ➔ Sql ➔ Log ➔ Dream ➔ Csrf"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Csrf ➔ Session ➔ Sql ➔ Log ➔ Dream ➔ Form ➔ Csrf"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Csrf ➔ Session ➔ Sql ➔ Log ➔ Dream ➔ Upload ➔ Form ➔ Csrf"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/server/csrf.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Dream ➔ Flash ➔ Log ➔ Dream"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Dream ➔ Form ➔ Log ➔ Dream"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Dream ➔ Graphql ➔ Log ➔ Dream"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Dream ➔ Http ➔ Dream"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Dream ➔ Http ➔ Log ➔ Dream"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Dream ➔ Log ➔ Dream"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Dream ➔ Origin_referrer_check ➔ Log ➔ Dream"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Dream ➔ Session ➔ Sql ➔ Dream"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Dream ➔ Session ➔ Sql ➔ Log ➔ Dream"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Dream ➔ Sql ➔ Dream"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Dream ➔ Sql ➔ Log ➔ Dream"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Dream ➔ Upload ➔ Form ➔ Log ➔ Dream"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "DPX-OCAML-CIRCULAR_MODULE_DEPENDENCY",
+          "level": "error",
+          "message": {
+            "text": "Circular Module Dependency detected: Dream ➔ Upload ➔ Log ➔ Dream"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/Volumes/External/Code/DPX-OCaml/benchmarks/dream/src/dream.ml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

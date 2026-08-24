@@ -1,0 +1,2269 @@
+{
+  "project_path": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml",
+  "scanned_files_count": 27,
+  "total_detections_count": 107,
+  "elapsed_seconds": 0.0101,
+  "summary_by_category": {
+    "module_system": 5,
+    "functional_idiom": 28,
+    "behavioral": 5,
+    "type_safety": 18,
+    "resilience": 1,
+    "principle": 50
+  },
+  "summary_by_confidence_level": {
+    "low": 0,
+    "medium": 0,
+    "high": 93,
+    "very_high": 14
+  },
+  "detections": [
+    {
+      "pattern_type": "functor_parametric_module",
+      "pattern_category": "module_system",
+      "target_name": "M",
+      "target_kind": "functor_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:82:1",
+      "evidences": [
+        {
+          "description": "Module 'M' implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection",
+          "weight": 0.85,
+          "rule_code": "FUNCTOR_PARAMETRIC_MODULE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:82:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "functor_parametric_module",
+      "pattern_category": "module_system",
+      "target_name": "M",
+      "target_kind": "functor_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:5:1",
+      "evidences": [
+        {
+          "description": "Module 'M' implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection",
+          "weight": 0.85,
+          "rule_code": "FUNCTOR_PARAMETRIC_MODULE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:5:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "module_inclusion_extender",
+      "pattern_category": "module_system",
+      "target_name": "M",
+      "target_kind": "extended_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/lib/m.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'M' extends and composes functionality from 1 included module(s) (Yaml_bindings.M)",
+          "weight": 0.8,
+          "rule_code": "MODULE_INCLUSION_EXTENSION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/lib/m.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "module_inclusion_extender",
+      "pattern_category": "module_system",
+      "target_name": "Yaml_bindings",
+      "target_kind": "extended_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Yaml_bindings' extends and composes functionality from 1 included module(s) (Ctypes)",
+          "weight": 0.8,
+          "rule_code": "MODULE_INCLUSION_EXTENSION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "module_inclusion_extender",
+      "pattern_category": "module_system",
+      "target_name": "M",
+      "target_kind": "extended_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:5:1",
+      "evidences": [
+        {
+          "description": "Module 'M' extends and composes functionality from 1 included module(s) (Ctypes)",
+          "weight": 0.8,
+          "rule_code": "MODULE_INCLUSION_EXTENSION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:5:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Yaml_bindings_types",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Yaml_bindings_types' adopts Polymorphic Variants (``Any, ``E) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Test_sexp",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_sexp.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Test_sexp' adopts Polymorphic Variants (``Msg, ``Msg) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_sexp.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Test_util",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_util.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Test_util' adopts Polymorphic Variants (``Msg, ``Msg) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_util.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Test",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Test' adopts Polymorphic Variants (``Msg, ``Msg) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Yaml_sexp",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib_sexp/yaml_sexp.mli:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Yaml_sexp' adopts Polymorphic Variants (``Null, ``Bool) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib_sexp/yaml_sexp.mli:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Yaml",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/yaml.mli:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Yaml' adopts Polymorphic Variants (``Null, ``Bool) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/yaml.mli:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Stream",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Stream' adopts Polymorphic Variants (``None, ``Memory) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Types",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/types.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Types' adopts Polymorphic Variants (``V1_1, ``V1_2) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/types.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Util",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Util' adopts Polymorphic Variants (``O, ``Msg) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Fuzz",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/fuzz/fuzz.ml:1:1",
+      "evidences": [
+        {
+          "description": "Module 'Fuzz' adopts Polymorphic Variants (``Msg, ``Msg) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/fuzz/fuzz.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Encoding",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:3:1",
+      "evidences": [
+        {
+          "description": "Module 'Encoding' adopts Polymorphic Variants (``Any, ``E) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:3:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Error",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:7:1",
+      "evidences": [
+        {
+          "description": "Module 'Error' adopts Polymorphic Variants (``None, ``Memory) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:7:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Scalar_style",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:20:1",
+      "evidences": [
+        {
+          "description": "Module 'Scalar_style' adopts Polymorphic Variants (``Any, ``Plain) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:20:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Sequence_style",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:31:1",
+      "evidences": [
+        {
+          "description": "Module 'Sequence_style' adopts Polymorphic Variants (``Any, ``Block) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:31:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Mapping_style",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:35:1",
+      "evidences": [
+        {
+          "description": "Module 'Mapping_style' adopts Polymorphic Variants (``Any, ``Block) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:35:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Token_type",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:39:1",
+      "evidences": [
+        {
+          "description": "Module 'Token_type' adopts Polymorphic Variants (``None, ``Stream_start) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:39:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Event_type",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:66:1",
+      "evidences": [
+        {
+          "description": "Module 'Event_type' adopts Polymorphic Variants (``None, ``Stream_start) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:66:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "M",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:82:1",
+      "evidences": [
+        {
+          "description": "Module 'M' adopts Polymorphic Variants (``E, ``Any) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:82:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "polymorphic_variants",
+      "pattern_category": "functional_idiom",
+      "target_name": "Event",
+      "target_kind": "polymorphic_variant_module",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:93:1",
+      "evidences": [
+        {
+          "description": "Module 'Event' adopts Polymorphic Variants (``Stream_start, ``Document_start) providing open tag subtyping without nominal declarations",
+          "weight": 0.8,
+          "rule_code": "POLYMORPHIC_OPEN_VARIANTS",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:93:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "railway_monadic_bind",
+      "pattern_category": "functional_idiom",
+      "target_name": "Test_emit.v",
+      "target_kind": "railway_pipeline_function",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_emit.ml:11:1",
+      "evidences": [
+        {
+          "description": "Function 'v' implements Railway-oriented Monadic pipeline composing 20 sequential bind operation(s)",
+          "weight": 0.85,
+          "rule_code": "RAILWAY_MONADIC_BIND_PIPELINE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_emit.ml:11:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "railway_monadic_bind",
+      "pattern_category": "functional_idiom",
+      "target_name": "Test_reflect.v",
+      "target_kind": "railway_pipeline_function",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_reflect.ml:8:1",
+      "evidences": [
+        {
+          "description": "Function 'v' implements Railway-oriented Monadic pipeline composing 3 sequential bind operation(s)",
+          "weight": 0.85,
+          "rule_code": "RAILWAY_MONADIC_BIND_PIPELINE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_reflect.ml:8:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "railway_monadic_bind",
+      "pattern_category": "functional_idiom",
+      "target_name": "Test_reflect.iter_until_done",
+      "target_kind": "railway_pipeline_function",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_reflect.ml:12:1",
+      "evidences": [
+        {
+          "description": "Function 'iter_until_done' implements Railway-oriented Monadic pipeline composing 3 sequential bind operation(s)",
+          "weight": 0.85,
+          "rule_code": "RAILWAY_MONADIC_BIND_PIPELINE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_reflect.ml:12:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "railway_monadic_bind",
+      "pattern_category": "functional_idiom",
+      "target_name": "Test_event_parse.v",
+      "target_kind": "railway_pipeline_function",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_event_parse.ml:7:1",
+      "evidences": [
+        {
+          "description": "Function 'v' implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)",
+          "weight": 0.85,
+          "rule_code": "RAILWAY_MONADIC_BIND_PIPELINE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_event_parse.ml:7:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "railway_monadic_bind",
+      "pattern_category": "functional_idiom",
+      "target_name": "Test_parse_sexp.v",
+      "target_kind": "railway_pipeline_function",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_parse_sexp.ml:5:1",
+      "evidences": [
+        {
+          "description": "Function 'v' implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)",
+          "weight": 0.85,
+          "rule_code": "RAILWAY_MONADIC_BIND_PIPELINE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_parse_sexp.ml:5:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "railway_monadic_bind",
+      "pattern_category": "functional_idiom",
+      "target_name": "Test.quoted_scalars",
+      "target_kind": "railway_pipeline_function",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test.ml:45:1",
+      "evidences": [
+        {
+          "description": "Function 'quoted_scalars' implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)",
+          "weight": 0.85,
+          "rule_code": "RAILWAY_MONADIC_BIND_PIPELINE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test.ml:45:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "railway_monadic_bind",
+      "pattern_category": "functional_idiom",
+      "target_name": "Test.actual_value",
+      "target_kind": "railway_pipeline_function",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test.ml:50:1",
+      "evidences": [
+        {
+          "description": "Function 'actual_value' implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)",
+          "weight": 0.85,
+          "rule_code": "RAILWAY_MONADIC_BIND_PIPELINE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test.ml:50:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "railway_monadic_bind",
+      "pattern_category": "functional_idiom",
+      "target_name": "Test_parse.v",
+      "target_kind": "railway_pipeline_function",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_parse.ml:3:1",
+      "evidences": [
+        {
+          "description": "Function 'v' implements Railway-oriented Monadic pipeline composing 4 sequential bind operation(s)",
+          "weight": 0.85,
+          "rule_code": "RAILWAY_MONADIC_BIND_PIPELINE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_parse.ml:3:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "pipeline_operator",
+      "pattern_category": "functional_idiom",
+      "target_name": "Test_parse_sexp.v",
+      "target_kind": "pipeline_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_parse_sexp.ml:5:1",
+      "evidences": [
+        {
+          "description": "Function 'v' composes functional data transformations across a 4-stage pipe (`|>`)",
+          "weight": 0.75,
+          "rule_code": "PIPELINE_OPERATOR_CHAIN",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_parse_sexp.ml:5:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "closure_currying_strategy",
+      "pattern_category": "behavioral",
+      "target_name": "Test_sexp.check_file",
+      "target_kind": "strategy_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_sexp.ml:24:1",
+      "evidences": [
+        {
+          "description": "Function 'check_file' accepts higher-order strategy parameter 'f' for dynamic algorithm injection",
+          "weight": 0.75,
+          "rule_code": "CURRIED_STRATEGY_INJECTION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_sexp.ml:24:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "closure_currying_strategy",
+      "pattern_category": "behavioral",
+      "target_name": "Test.check_file",
+      "target_kind": "strategy_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test.ml:24:1",
+      "evidences": [
+        {
+          "description": "Function 'check_file' accepts higher-order strategy parameter 'f' for dynamic algorithm injection",
+          "weight": 0.75,
+          "rule_code": "CURRIED_STRATEGY_INJECTION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test.ml:24:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "closure_currying_strategy",
+      "pattern_category": "behavioral",
+      "target_name": "Yaml_unix.to_file",
+      "target_kind": "strategy_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/unix/yaml_unix.ml:6:1",
+      "evidences": [
+        {
+          "description": "Function 'to_file' accepts higher-order strategy parameter 'f' for dynamic algorithm injection",
+          "weight": 0.75,
+          "rule_code": "CURRIED_STRATEGY_INJECTION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/unix/yaml_unix.ml:6:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "closure_currying_strategy",
+      "pattern_category": "behavioral",
+      "target_name": "Yaml_unix.to_file_exn",
+      "target_kind": "strategy_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/unix/yaml_unix.ml:11:1",
+      "evidences": [
+        {
+          "description": "Function 'to_file_exn' accepts higher-order strategy parameter 'f' for dynamic algorithm injection",
+          "weight": 0.75,
+          "rule_code": "CURRIED_STRATEGY_INJECTION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/unix/yaml_unix.ml:11:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "closure_currying_strategy",
+      "pattern_category": "behavioral",
+      "target_name": "Util.list",
+      "target_kind": "strategy_function",
+      "confidence": {
+        "score": 0.75,
+        "level": "high",
+        "percentage": "75%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:80:1",
+      "evidences": [
+        {
+          "description": "Function 'list' accepts higher-order strategy parameter 'f' for dynamic algorithm injection",
+          "weight": 0.75,
+          "rule_code": "CURRIED_STRATEGY_INJECTION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:80:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Yaml_unix.of_file_exn",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/unix/yaml_unix.ml:8:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'of_file_exn' in 'Yaml_unix' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/unix/yaml_unix.ml:8:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Yaml_unix.to_file_exn",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/unix/yaml_unix.ml:11:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'to_file_exn' in 'Yaml_unix' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/unix/yaml_unix.ml:11:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Ffi_stubgen.prologue",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/stubgen/ffi_stubgen.ml:5:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'prologue' in 'Ffi_stubgen' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/stubgen/ffi_stubgen.ml:5:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Stream.scalar_style_of_ffi",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:20:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'scalar_style_of_ffi' in 'Stream' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:20:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Stream.layout_style_of_ffi",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:39:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'layout_style_of_ffi' in 'Stream' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:39:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Stream.encoding_of_ffi",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:47:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'encoding_of_ffi' in 'Stream' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:47:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Stream.anchor",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:179:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'anchor' in 'Stream' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:179:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Util.keys_exn",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:7:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'keys_exn' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:7:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Util.values_exn",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:15:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'values_exn' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:15:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Util.combine_exn",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:24:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'combine_exn' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:24:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Util.find_exn",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:33:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'find_exn' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:33:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Util.map_exn",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:41:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'map_exn' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:41:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Util.filter_exn",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:49:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'filter_exn' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:49:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Util.to_string_exn",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:57:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'to_string_exn' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:57:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Util.to_bool_exn",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:65:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'to_bool_exn' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:65:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Util.to_float_exn",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:73:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'to_float_exn' in 'Util' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/util.ml:73:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Fuzz.r",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/fuzz/fuzz.ml:33:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'r' in 'Fuzz' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/fuzz/fuzz.ml:33:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "unchecked_exception_raise",
+      "pattern_category": "type_safety",
+      "target_name": "Event.anchor",
+      "target_kind": "throwing_function",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:87:1",
+      "evidences": [
+        {
+          "description": "Type Safety Audit: Function 'anchor' in 'Event' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
+          "weight": 0.8,
+          "rule_code": "UNCHECKED_EXCEPTION_THROW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:87:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "defensive_catch_all_exn",
+      "pattern_category": "resilience",
+      "target_name": "Discover.cflags",
+      "target_kind": "defensive_catch_function",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/config/discover.ml:4:1",
+      "evidences": [
+        {
+          "description": "Resilience Smell (Defensive Catch-All): Function 'cflags' in 'Discover' swallows all exceptions (`with _ -> ...`); catch specific expected exceptions only",
+          "weight": 0.85,
+          "rule_code": "DEFENSIVE_CATCH_ALL_SWALLOW",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/config/discover.ml:4:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "god_module_srp",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings_types",
+      "target_kind": "god_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:1:1",
+      "evidences": [
+        {
+          "description": "SRP Violation (God Module): Module 'Yaml_bindings_types' defines 46 functions across 424 lines of code, indicating multiple mixed domain responsibilities",
+          "weight": 0.85,
+          "rule_code": "SRP_GOD_MODULE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "god_module_srp",
+      "pattern_category": "principle",
+      "target_name": "Stream",
+      "target_kind": "god_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:1:1",
+      "evidences": [
+        {
+          "description": "SRP Violation (God Module): Module 'Stream' defines 70 functions across 360 lines of code, indicating multiple mixed domain responsibilities",
+          "weight": 0.85,
+          "rule_code": "SRP_GOD_MODULE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:1:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "god_module_srp",
+      "pattern_category": "principle",
+      "target_name": "M",
+      "target_kind": "god_module",
+      "confidence": {
+        "score": 0.85,
+        "level": "very_high",
+        "percentage": "85%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:82:1",
+      "evidences": [
+        {
+          "description": "SRP Violation (God Module): Module 'M' defines 42 functions across 307 lines of code, indicating multiple mixed domain responsibilities",
+          "weight": 0.85,
+          "rule_code": "SRP_GOD_MODULE",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:82:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings_types.enum",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:85:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.enum, M.enum",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:85:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings_types.encoding_t",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:93:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.encoding_t, M.encoding_t",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:93:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings_types.error_t",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:102:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.error_t, M.error_t",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:102:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings_types.scalar_style_t",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:115:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.scalar_style_t, M.scalar_style_t",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:115:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings_types.sequence_style_t",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:126:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.sequence_style_t, M.sequence_style_t",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:126:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings_types.mapping_style_t",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:130:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.mapping_style_t, M.mapping_style_t",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:130:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings_types.token_type_t",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:134:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.token_type_t, M.token_type_t",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:134:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings_types.event_type_t",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:160:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.event_type_t, M.event_type_t",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:160:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings_types.minor",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:186:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.minor, M.minor",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:186:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings_types.prefix",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:195:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.prefix, M.prefix",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:195:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings_types.column",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:205:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.column, M.column",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:205:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings_types.encoding",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:287:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.encoding, M.encoding",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:287:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings_types.style",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:361:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.style, M.style",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:361:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings_types.version",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:267:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.version, M.version",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:267:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings_types._end",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:297:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types._end, M._end",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:297:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings_types.version_directive",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:305:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.version_directive, M.version_directive",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:305:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings_types.mapping_start",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:376:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings_types.mapping_start, M.mapping_start",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/types/bindings/yaml_bindings_types.ml:376:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Test_sexp.files",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_sexp.ml:3:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Test_sexp.files, Test.files",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/tests/test_sexp.ml:3:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.foreign",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:6:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.foreign, M.foreign",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:6:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.version",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:15:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.version, M.version",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:15:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.get_version",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:17:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.get_version, M.get_version",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:17:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.token_delete",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:21:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.token_delete, M.token_delete",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:21:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.parser_init",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:24:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.parser_init, M.parser_init",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:24:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.parser_delete",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:27:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.parser_delete, M.parser_delete",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:27:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.parser_set_input_string",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:30:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.parser_set_input_string, M.parser_set_input_string",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:30:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.parser_parse",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:34:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.parser_parse, M.parser_parse",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:34:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.emitter_init",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:38:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_init, M.emitter_init",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:38:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.emitter_delete",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:41:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_delete, M.emitter_delete",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:41:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.emitter_set_output_string",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:44:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_set_output_string, M.emitter_set_output_string",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:44:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.emitter_set_encoding",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:55:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_set_encoding, M.emitter_set_encoding",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:55:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.emitter_set_canonical",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:59:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_set_canonical, M.emitter_set_canonical",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:59:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.emitter_set_indent",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:63:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_set_indent, M.emitter_set_indent",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:63:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.emitter_set_width",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:67:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_set_width, M.emitter_set_width",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:67:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.emitter_set_unicode",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:71:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_set_unicode, M.emitter_set_unicode",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:71:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.emitter_flush",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:75:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_flush, M.emitter_flush",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:75:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.emitter_emit",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:80:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.emitter_emit, M.emitter_emit",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:80:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.stream_start_event_init",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:84:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.stream_start_event_init, M.stream_start_event_init",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:84:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.stream_end_event_init",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:88:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.stream_end_event_init, M.stream_end_event_init",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:88:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.document_start_event_init",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:92:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.document_start_event_init, M.document_start_event_init",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:92:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.document_end_event_init",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:102:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.document_end_event_init, M.document_end_event_init",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:102:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.alias_event_init",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:106:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.alias_event_init, M.alias_event_init",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:106:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.scalar_event_init",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:110:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.scalar_event_init, M.scalar_event_init",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:110:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.sequence_start_event_init",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:123:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.sequence_start_event_init, M.sequence_start_event_init",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:123:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.sequence_end_event_init",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:133:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.sequence_end_event_init, M.sequence_end_event_init",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:133:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Yaml_bindings.mapping_start_event_init",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:137:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Yaml_bindings.mapping_start_event_init, M.mapping_start_event_init",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/ffi/bindings/yaml_bindings.ml:137:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Stream.encoding",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:131:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Stream.encoding, Event.encoding",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:131:1"
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "pattern_type": "duplicate_code_dry",
+      "pattern_category": "principle",
+      "target_name": "Stream.style",
+      "target_kind": "dry_duplicated_code",
+      "confidence": {
+        "score": 0.8,
+        "level": "high",
+        "percentage": "80%"
+      },
+      "primary_location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:172:1",
+      "evidences": [
+        {
+          "description": "DRY Violation: Identical function logic duplicated across 2 location(s): Stream.style, Event.style",
+          "weight": 0.8,
+          "rule_code": "DRY_CODE_DUPLICATION",
+          "location": "/Volumes/External/Code/DPX-OCaml/benchmarks/ocaml-yaml/lib/stream.ml:172:1"
+        }
+      ],
+      "metadata": {}
+    }
+  ]
+}

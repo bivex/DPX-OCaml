@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐫 DPX-OCaml: Module Architecture & Functional Dashboard - ocaml_samples</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/semantic.min.css">
+    <style>
+        :root {
+            --bg-main: #0b0f19;
+            --bg-card: #151b2b;
+            --border-color: #232d42;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+        body {
+            background-color: var(--bg-main) !important;
+            color: var(--text-primary) !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            padding: 30px 15px;
+        }
+        .ui.container {
+            max-width: 1200px !important;
+        }
+        .header-box {
+            background: linear-gradient(135deg, #c2410c 0%, #1c1917 100%);
+            border: 1px solid #ea580c;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+        .kpi-card {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 10px !important;
+            padding: 16px !important;
+            text-align: center;
+        }
+        .pattern-card {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 10px !important;
+            margin-bottom: 16px !important;
+            padding: 20px !important;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .pattern-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            border-color: #f97316 !important;
+        }
+        .evidence-box {
+            background: #0b0f19;
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin-top: 12px;
+            border-left: 3px solid #f97316;
+            font-size: 13px;
+        }
+        .code-pill {
+            background: #1e293b;
+            color: #fb923c;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="ui container">
+        <!-- Header -->
+        <div class="header-box">
+            <div class="ui grid stackable middle aligned">
+                <div class="ten wide column">
+                    <h1 class="ui header inverted" style="margin: 0; font-size: 28px;">
+                        🐫 DPX-OCaml: Module Architecture & Functional Dashboard
+                        <div class="sub header" style="color: #fed7aa; margin-top: 6px;">
+                            Functors, GADTs, Effect Handlers & Type Safety for <strong>ocaml_samples</strong>
+                        </div>
+                    </h1>
+                </div>
+                <div class="six wide column right aligned">
+                    <button id="copyLlmBtn" class="ui orange button" onclick="copyArchMapForLlm()">
+                        <i class="copy icon"></i> Copy Architecture Map for LLM
+                    </button>
+                    <textarea id="llmArchMapRaw" style="display:none;"># 🐫 DPX-OCaml: Codebase Architecture Map &amp; Functional Analysis
+
+## 📌 Project Overview
+- **Target Project:** `ocaml_samples`
+- **Files Scanned:** `5`
+- **Total Architecture Findings:** `14`
+- **⚠️ Hazards &amp; Smells:** `4`
+- **🔷 Functors &amp; Patterns:** `10`
+- **✅ Clean Adherences:** `0`
+
+---
+
+## 🎯 Task for AI / LLM OCaml Architect
+&gt; **Prompt Instructions:**
+&gt; 1. **Analyze Module Architecture:** Review Functors (`module Make`), Abstract Data Types (`type t`), and First-Class Modules.
+&gt; 2. **Review Functional Pipelines:** Audit Railway Monadic error flows (`let*`, `Result.bind`) and GADT evaluators.
+&gt; 3. **OCaml 5 Multicore &amp; Effects:** Review Algebraic Effect Handlers (`Effect.perform`), Domains parallelism, and cooperative async.
+&gt; 4. **Safety Improvements:** Eliminate raw exceptions (`failwith`/`raise`), defensive `with _ -&gt;`, and physical equality (`==`) pitfalls.
+
+---
+
+## 🔷 Active OCaml Patterns &amp; Functional Idioms (10 instances)
+### Pattern: `ABSTRACT_DATA_TYPE_INTERFACE` (2 instances)
+- **Custom_map** (adt_module, confidence 80%) in `/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:1`
+  - *Summary:* Module &#x27;Custom_map&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;create&#x27;
+- **Make** (adt_module, confidence 80%) in `/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:6`
+  - *Summary:* Module &#x27;Make&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;create&#x27;
+### Pattern: `DOMAINS_PARALLELISM` (1 instances)
+- **Multicore_effect** (domains_parallel_module, confidence 85%) in `/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/multicore_effect.ml:1`
+  - *Summary:* Module &#x27;Multicore_effect&#x27; leverages OCaml 5 Multicore Domains parallelism for shared-memory parallel thread execution
+### Pattern: `EFFECT_HANDLERS` (1 instances)
+- **Multicore_effect** (effect_handler_module, confidence 90%) in `/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/multicore_effect.ml:1`
+  - *Summary:* Module &#x27;Multicore_effect&#x27; adopts OCaml 5 Algebraic Effect Handlers for direct-style concurrency, state, and algebraic control flow
+### Pattern: `FIRST_CLASS_MODULE` (1 instances)
+- **Expr_eval** (first_class_module, confidence 85%) in `/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/expr_eval.ml:1`
+  - *Summary:* Module &#x27;Expr_eval&#x27; utilizes First-Class Modules for dynamic runtime dispatch and pluggable strategy injection
+### Pattern: `FUNCTOR_PARAMETRIC_MODULE` (2 instances)
+- **Custom_map** (functor_module, confidence 85%) in `/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:1`
+  - *Summary:* Module &#x27;Custom_map&#x27; implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection
+- **Make** (functor_module, confidence 85%) in `/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:6`
+  - *Summary:* Module &#x27;Make&#x27; implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection
+### Pattern: `GADTS_EXPRESSION_EVAL` (1 instances)
+- **Expr_eval.expr** (gadt_type, confidence 85%) in `/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/expr_eval.ml:1`
+  - *Summary:* Type &#x27;expr&#x27; in &#x27;Expr_eval&#x27; implements Generalized Algebraic Data Type (GADT) ensuring compile-time type-safe AST evaluation
+### Pattern: `PIPELINE_OPERATOR` (1 instances)
+- **Pipeline_monad.transform_data** (pipeline_function, confidence 75%) in `/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/pipeline_monad.ml:16`
+  - *Summary:* Function &#x27;transform_data&#x27; composes functional data transformations across a 3-stage pipe (`|&gt;`)
+### Pattern: `RAILWAY_MONADIC_BIND` (1 instances)
+- **Pipeline_monad.execute_flow** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/pipeline_monad.ml:11`
+  - *Summary:* Function &#x27;execute_flow&#x27; implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)
+
+---
+
+## ⚠️ Type Safety Hazards &amp; Code Smells (4 instances)
+### Violation: `DEFENSIVE_CATCH_ALL_EXN` (1 occurrences)
+- **Antipatterns.defensive_swallow_routine** (85%) in `/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:5`
+  - *Risk / Smell:* Resilience Smell (Defensive Catch-All): Function &#x27;defensive_swallow_routine&#x27; in &#x27;Antipatterns&#x27; swallows all exceptions (`with _ -&gt; ...`); catch specific expected exceptions only
+  - *Evidence:* `+85%` [DEFENSIVE_CATCH_ALL_SWALLOW] Resilience Smell (Defensive Catch-All): Function &#x27;defensive_swallow_routine&#x27; in &#x27;Antipatterns&#x27; swallows all exceptions (`with _ -&gt; ...`); catch specific expected exceptions only
+### Violation: `PHYSICAL_EQUALITY_SMELL` (1 occurrences)
+- **Antipatterns.buggy_equality_check** (80%) in `/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:12`
+  - *Risk / Smell:* Type Safety Hazard (Physical Equality): Function &#x27;buggy_equality_check&#x27; in &#x27;Antipatterns&#x27; uses physical pointer equality (`==` / `!=`); use structural value equality (`=` / `&lt;&gt;`) to avoid subtle value comparison bugs
+  - *Evidence:* `+80%` [PHYSICAL_EQUALITY_COMPARISON] Type Safety Hazard (Physical Equality): Function &#x27;buggy_equality_check&#x27; in &#x27;Antipatterns&#x27; uses physical pointer equality (`==` / `!=`); use structural value equality (`=` / `&lt;&gt;`) to avoid subtle value comparison bugs
+### Violation: `UNCHECKED_EXCEPTION_RAISE` (2 occurrences)
+- **Antipatterns.unsafe_division** (80%) in `/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:1`
+  - *Risk / Smell:* Type Safety Audit: Function &#x27;unsafe_division&#x27; in &#x27;Antipatterns&#x27; throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead
+  - *Evidence:* `+80%` [UNCHECKED_EXCEPTION_THROW] Type Safety Audit: Function &#x27;unsafe_division&#x27; in &#x27;Antipatterns&#x27; throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead
+- **Antipatterns.defensive_swallow_routine** (80%) in `/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:5`
+  - *Risk / Smell:* Type Safety Audit: Function &#x27;defensive_swallow_routine&#x27; in &#x27;Antipatterns&#x27; throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead
+  - *Evidence:* `+80%` [UNCHECKED_EXCEPTION_THROW] Type Safety Audit: Function &#x27;defensive_swallow_routine&#x27; in &#x27;Antipatterns&#x27; throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead
+
+---
+
+## 🗺️ Module &amp; File Hotspots Distribution
+- **`custom_map.ml`**: 4 findings (0 hazards, 4 patterns, 0 adherences)
+- **`antipatterns.ml`**: 4 findings (4 hazards, 0 patterns, 0 adherences)
+- **`expr_eval.ml`**: 2 findings (0 hazards, 2 patterns, 0 adherences)
+- **`pipeline_monad.ml`**: 2 findings (0 hazards, 2 patterns, 0 adherences)
+- **`multicore_effect.ml`**: 2 findings (0 hazards, 2 patterns, 0 adherences)
+</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- KPI Metrics Grid -->
+        <div class="ui grid stackable four column" style="margin-bottom: 20px;">
+            <div class="column">
+                <div class="kpi-card">
+                    <div style="font-size: 28px; font-weight: 700; color: #fb923c;">14</div>
+                    <div style="color: #94a3b8; font-size: 13px; margin-top: 4px;">Total Findings</div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="kpi-card">
+                    <div style="font-size: 28px; font-weight: 700; color: #f87171;">4</div>
+                    <div style="color: #94a3b8; font-size: 13px; margin-top: 4px;">Safety Hazards & Smells</div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="kpi-card">
+                    <div style="font-size: 28px; font-weight: 700; color: #4ade80;">10</div>
+                    <div style="color: #94a3b8; font-size: 13px; margin-top: 4px;">Functors & Idioms</div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="kpi-card">
+                    <div style="font-size: 28px; font-weight: 700; color: #38bdf8;">5 files</div>
+                    <div style="color: #94a3b8; font-size: 13px; margin-top: 4px;">Scan Time: 0.001s</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Filter Pills -->
+        <div class="ui secondary pointing menu inverted" style="border-color: #232d42; margin-bottom: 16px; overflow-x: auto;">
+            <a class="item active cat-filter-btn" data-filter="all">
+                <i class="layer group icon"></i> All Findings
+            </a>
+            
+                    <a class="item cat-filter-btn" data-filter="module_system">
+                        <i class="cubes icon" style="color: #f97316;"></i>
+                        Module System & Functors
+                        <div class="ui mini orange label">5</div>
+                    </a>
+                    
+                    <a class="item cat-filter-btn" data-filter="functional_idiom">
+                        <i class="code branch icon" style="color: #14b8a6;"></i>
+                        Functional Idioms & GADTs
+                        <div class="ui mini teal label">3</div>
+                    </a>
+                    
+                    <a class="item cat-filter-btn" data-filter="effect_concurrency">
+                        <i class="bolt icon" style="color: #a855f7;"></i>
+                        Effects & Multicore 5.x
+                        <div class="ui mini purple label">2</div>
+                    </a>
+                    
+                    <a class="item cat-filter-btn" data-filter="resilience">
+                        <i class="shield alternate icon" style="color: #22c55e;"></i>
+                        Resilience & Catching
+                        <div class="ui mini green label">1</div>
+                    </a>
+                    
+                    <a class="item cat-filter-btn" data-filter="type_safety">
+                        <i class="exclamation triangle icon" style="color: #ef4444;"></i>
+                        Type Safety Hazards
+                        <div class="ui mini red label">3</div>
+                    </a>
+                    
+        </div>
+
+        <!-- Action Status Sub-Tabs Bar -->
+        <div class="ui inverted segment" style="background: #151b2b; border: 1px solid #232d42; border-radius: 8px; margin-bottom: 16px; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+            <div class="ui mini inverted basic buttons" id="statusFilterGroup">
+                <button class="ui button active status-filter-btn" data-status="all">
+                    <i class="eye icon"></i> All <span class="ui mini orange label" id="statusCountAll">14</span>
+                </button>
+                <button class="ui button status-filter-btn" data-status="violation" style="color: #f87171 !important;">
+                    <i class="exclamation triangle icon"></i> ⚠️ Hazards <span class="ui mini red label" id="statusCountViolation">4</span>
+                </button>
+                <button class="ui button status-filter-btn" data-status="adherence" style="color: #4ade80 !important;">
+                    <i class="check circle icon"></i> ✅ Clean Adherences <span class="ui mini green label" id="statusCountAdherence">0</span>
+                </button>
+                <button class="ui button status-filter-btn" data-status="pattern" style="color: #fb923c !important;">
+                    <i class="cubes icon"></i> 🔷 Functors & Idioms <span class="ui mini orange label" id="statusCountPattern">10</span>
+                </button>
+            </div>
+            <div>
+                <button id="principlesToggleBtn" class="ui mini inverted basic button" onclick="togglePrinciplesVisibility()" style="border-color: #ea580c; color: #fed7aa; font-weight: 600;">
+                    <i class="shield alternate icon" style="color: #fb923c;"></i> <span id="principlesToggleText">Hide Principles & Smells</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="ui fluid icon inverted input" style="margin-bottom: 20px;">
+            <input type="text" id="searchInput" placeholder="🔎 Instant search by module, functor, GADT, effect handler, monadic bind..." style="background: #151b2b; border: 1px solid #232d42; color: #f8fafc; padding: 12px 16px;">
+            <i class="search icon"></i>
+        </div>
+
+        <!-- Zero Violations Alert -->
+        <div id="noViolationsAlert" class="ui positive icon message" style="display: none; background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.35); color: #86efac; margin-bottom: 20px; border-radius: 8px;">
+            <i class="check circle outline icon" style="color: #4ade80;"></i>
+            <div class="content">
+                <div class="header" style="color: #4ade80; font-size: 16px; font-weight: 700;">Zero Safety Hazards Found!</div>
+                <p style="color: #cbd5e1; margin-top: 4px;">All evaluated OCaml modules adhere to functional purity, typed Result monads, and effect safety guidelines.</p>
+            </div>
+        </div>
+
+        <!-- No Matching Results Message -->
+        <div id="noResultsMessage" class="ui inverted segment" style="display: none; background: #151b2b; border: 1px solid #232d42; text-align: center; padding: 30px; border-radius: 8px;">
+            <i class="search icon" style="font-size: 24px; color: #64748b; margin-bottom: 10px;"></i>
+            <div style="color: #94a3b8; font-size: 15px;">No findings match the selected category, action status, or search query.</div>
+        </div>
+
+        <!-- Cards Container -->
+        <div id="cardsContainer">
+            
+                <div class="pattern-card" data-category="module_system" data-pattern="functor_parametric_module" data-status="pattern" data-target="custom_map">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini orange label">#1 FUNCTOR_PARAMETRIC_MODULE</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Custom_map</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(functor_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Custom_map&#x27; implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[FUNCTOR_PARAMETRIC_MODULE]</span>
+                        Module &#x27;Custom_map&#x27; implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection <span class='code-pill'>/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="module_system" data-pattern="functor_parametric_module" data-status="pattern" data-target="make">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini orange label">#2 FUNCTOR_PARAMETRIC_MODULE</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Make</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(functor_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Make&#x27; implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:6:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[FUNCTOR_PARAMETRIC_MODULE]</span>
+                        Module &#x27;Make&#x27; implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection <span class='code-pill'>/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:6:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="module_system" data-pattern="abstract_data_type_interface" data-status="pattern" data-target="custom_map">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini orange label">#3 ABSTRACT_DATA_TYPE_INTERFACE</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Custom_map</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(adt_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Custom_map&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;create&#x27;
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[ABSTRACT_DATA_TYPE_SIGNATURE]</span>
+                        Module &#x27;Custom_map&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;create&#x27; <span class='code-pill'>/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="module_system" data-pattern="abstract_data_type_interface" data-status="pattern" data-target="make">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini orange label">#4 ABSTRACT_DATA_TYPE_INTERFACE</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Make</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(adt_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Make&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;create&#x27;
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:6:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[ABSTRACT_DATA_TYPE_SIGNATURE]</span>
+                        Module &#x27;Make&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;create&#x27; <span class='code-pill'>/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/custom_map.ml:6:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="module_system" data-pattern="first_class_module" data-status="pattern" data-target="expr_eval">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini orange label">#5 FIRST_CLASS_MODULE</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Expr_eval</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(first_class_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Expr_eval&#x27; utilizes First-Class Modules for dynamic runtime dispatch and pluggable strategy injection
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/expr_eval.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[FIRST_CLASS_MODULE_DISPATCH]</span>
+                        Module &#x27;Expr_eval&#x27; utilizes First-Class Modules for dynamic runtime dispatch and pluggable strategy injection <span class='code-pill'>/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/expr_eval.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="gadts_expression_eval" data-status="pattern" data-target="expr_eval.expr">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#6 GADTS_EXPRESSION_EVAL</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Expr_eval.expr</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(gadt_type)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Type &#x27;expr&#x27; in &#x27;Expr_eval&#x27; implements Generalized Algebraic Data Type (GADT) ensuring compile-time type-safe AST evaluation
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/expr_eval.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[GADT_TYPE_SAFE_EVALUATOR]</span>
+                        Type &#x27;expr&#x27; in &#x27;Expr_eval&#x27; implements Generalized Algebraic Data Type (GADT) ensuring compile-time type-safe AST evaluation <span class='code-pill'>/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/expr_eval.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="pipeline_monad.execute_flow">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#7 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pipeline_monad.execute_flow</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;execute_flow&#x27; implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/pipeline_monad.ml:11:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;execute_flow&#x27; implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/pipeline_monad.ml:11:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="pipeline_operator" data-status="pattern" data-target="pipeline_monad.transform_data">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#8 PIPELINE_OPERATOR</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pipeline_monad.transform_data</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                75% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;transform_data&#x27; composes functional data transformations across a 3-stage pipe (`|&gt;`)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/pipeline_monad.ml:16:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+75%</span>
+                        <span class="code-pill">[PIPELINE_OPERATOR_CHAIN]</span>
+                        Function &#x27;transform_data&#x27; composes functional data transformations across a 3-stage pipe (`|&gt;`) <span class='code-pill'>/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/pipeline_monad.ml:16:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="effect_concurrency" data-pattern="effect_handlers" data-status="pattern" data-target="multicore_effect">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini purple label">#9 EFFECT_HANDLERS</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Multicore_effect</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(effect_handler_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4);">
+                                90% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Multicore_effect&#x27; adopts OCaml 5 Algebraic Effect Handlers for direct-style concurrency, state, and algebraic control flow
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/multicore_effect.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+90%</span>
+                        <span class="code-pill">[ALGEBRAIC_EFFECT_HANDLERS]</span>
+                        Module &#x27;Multicore_effect&#x27; adopts OCaml 5 Algebraic Effect Handlers for direct-style concurrency, state, and algebraic control flow <span class='code-pill'>/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/multicore_effect.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="effect_concurrency" data-pattern="domains_parallelism" data-status="pattern" data-target="multicore_effect">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini purple label">#10 DOMAINS_PARALLELISM</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Multicore_effect</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(domains_parallel_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Multicore_effect&#x27; leverages OCaml 5 Multicore Domains parallelism for shared-memory parallel thread execution
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/multicore_effect.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[DOMAINS_MULTICORE_PARALLELISM]</span>
+                        Module &#x27;Multicore_effect&#x27; leverages OCaml 5 Multicore Domains parallelism for shared-memory parallel thread execution <span class='code-pill'>/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/multicore_effect.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="type_safety" data-pattern="unchecked_exception_raise" data-status="violation" data-target="antipatterns.unsafe_division">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini red label">#11 UNCHECKED_EXCEPTION_RAISE</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Antipatterns.unsafe_division</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(throwing_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Type Safety Audit: Function &#x27;unsafe_division&#x27; in &#x27;Antipatterns&#x27; throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[UNCHECKED_EXCEPTION_THROW]</span>
+                        Type Safety Audit: Function &#x27;unsafe_division&#x27; in &#x27;Antipatterns&#x27; throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead <span class='code-pill'>/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="type_safety" data-pattern="unchecked_exception_raise" data-status="violation" data-target="antipatterns.defensive_swallow_routine">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini red label">#12 UNCHECKED_EXCEPTION_RAISE</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Antipatterns.defensive_swallow_routine</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(throwing_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Type Safety Audit: Function &#x27;defensive_swallow_routine&#x27; in &#x27;Antipatterns&#x27; throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:5:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[UNCHECKED_EXCEPTION_THROW]</span>
+                        Type Safety Audit: Function &#x27;defensive_swallow_routine&#x27; in &#x27;Antipatterns&#x27; throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead <span class='code-pill'>/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:5:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="resilience" data-pattern="defensive_catch_all_exn" data-status="violation" data-target="antipatterns.defensive_swallow_routine">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini green label">#13 DEFENSIVE_CATCH_ALL_EXN</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Antipatterns.defensive_swallow_routine</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(defensive_catch_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Resilience Smell (Defensive Catch-All): Function &#x27;defensive_swallow_routine&#x27; in &#x27;Antipatterns&#x27; swallows all exceptions (`with _ -&gt; ...`); catch specific expected exceptions only
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:5:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[DEFENSIVE_CATCH_ALL_SWALLOW]</span>
+                        Resilience Smell (Defensive Catch-All): Function &#x27;defensive_swallow_routine&#x27; in &#x27;Antipatterns&#x27; swallows all exceptions (`with _ -&gt; ...`); catch specific expected exceptions only <span class='code-pill'>/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:5:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="type_safety" data-pattern="physical_equality_smell" data-status="violation" data-target="antipatterns.buggy_equality_check">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini red label">#14 PHYSICAL_EQUALITY_SMELL</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Antipatterns.buggy_equality_check</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(physical_equality_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Type Safety Hazard (Physical Equality): Function &#x27;buggy_equality_check&#x27; in &#x27;Antipatterns&#x27; uses physical pointer equality (`==` / `!=`); use structural value equality (`=` / `&lt;&gt;`) to avoid subtle value comparison bugs
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:12:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[PHYSICAL_EQUALITY_COMPARISON]</span>
+                        Type Safety Hazard (Physical Equality): Function &#x27;buggy_equality_check&#x27; in &#x27;Antipatterns&#x27; uses physical pointer equality (`==` / `!=`); use structural value equality (`=` / `&lt;&gt;`) to avoid subtle value comparison bugs <span class='code-pill'>/Volumes/External/Code/DPX-OCaml/examples/ocaml_samples/antipatterns.ml:12:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const cards = document.querySelectorAll('.pattern-card');
+        const categoryBtns = document.querySelectorAll('.cat-filter-btn');
+        const statusBtns = document.querySelectorAll('.status-filter-btn');
+        const noViolationsAlert = document.getElementById('noViolationsAlert');
+        const noResultsMessage = document.getElementById('noResultsMessage');
+
+        let selectedCategory = 'all';
+        let selectedStatus = 'all';
+        let hidePrinciples = false;
+
+        function togglePrinciplesVisibility() {
+            hidePrinciples = !hidePrinciples;
+            const btn = document.getElementById('principlesToggleBtn');
+            const btnText = document.getElementById('principlesToggleText');
+            if (hidePrinciples) {
+                btn.classList.remove('basic');
+                btn.classList.add('orange');
+                btnText.textContent = 'Show Principles & Smells';
+            } else {
+                btn.classList.remove('orange');
+                btn.classList.add('basic');
+                btnText.textContent = 'Hide Principles & Smells';
+            }
+            updateStatusCounts();
+            filterCards();
+        }
+
+        function updateStatusCounts() {
+            let total = 0, violations = 0, adherences = 0, patterns = 0;
+            cards.forEach(card => {
+                const category = card.dataset.category || '';
+                const status = card.dataset.status || '';
+                if (hidePrinciples && category === 'principle') {
+                    return;
+                }
+                if (selectedCategory === 'all' || category === selectedCategory) {
+                    total++;
+                    if (status === 'violation') violations++;
+                    if (status === 'adherence') adherences++;
+                    if (status === 'pattern') patterns++;
+                }
+            });
+            document.getElementById('statusCountAll').textContent = total;
+            document.getElementById('statusCountViolation').textContent = violations;
+            document.getElementById('statusCountAdherence').textContent = adherences;
+            document.getElementById('statusCountPattern').textContent = patterns;
+        }
+
+        function filterCards() {
+            const query = searchInput.value.toLowerCase();
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                const pattern = card.dataset.pattern || '';
+                const category = card.dataset.category || '';
+                const target = card.dataset.target || '';
+                const status = card.dataset.status || '';
+
+                if (hidePrinciples && category === 'principle') {
+                    card.style.display = 'none';
+                    return;
+                }
+
+                const matchesCategory = (selectedCategory === 'all' || category === selectedCategory);
+                const matchesStatus = (selectedStatus === 'all' || status === selectedStatus);
+                const matchesSearch = (!query || text.includes(query) || pattern.includes(query) || category.includes(query) || target.includes(query));
+
+                if (matchesCategory && matchesStatus && matchesSearch) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (selectedStatus === 'violation' && visibleCount === 0) {
+                noViolationsAlert.style.display = 'flex';
+                noResultsMessage.style.display = 'none';
+            } else if (visibleCount === 0) {
+                noViolationsAlert.style.display = 'none';
+                noResultsMessage.style.display = 'block';
+            } else {
+                noViolationsAlert.style.display = 'none';
+                noResultsMessage.style.display = 'none';
+            }
+        }
+
+        searchInput.addEventListener('input', filterCards);
+
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedCategory = btn.dataset.filter;
+                updateStatusCounts();
+                filterCards();
+            });
+        });
+
+        statusBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                statusBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedStatus = btn.dataset.status;
+                filterCards();
+            });
+        });
+
+        function copyArchMapForLlm() {
+            const rawText = document.getElementById('llmArchMapRaw').value;
+            const btn = document.getElementById('copyLlmBtn');
+            const originalHtml = btn.innerHTML;
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(rawText).then(() => {
+                    btn.innerHTML = '<i class="check icon"></i> Copied to Clipboard!';
+                    setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
+                });
+            }
+        }
+
+        updateStatusCounts();
+    </script>
+</body>
+</html>
