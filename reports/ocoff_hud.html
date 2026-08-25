@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐫 DPX-OCaml: Module Architecture & Functional Dashboard - ocoff</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/semantic.min.css">
+    <style>
+        :root {
+            --bg-main: #0b0f19;
+            --bg-card: #151b2b;
+            --border-color: #232d42;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+        body {
+            background-color: var(--bg-main) !important;
+            color: var(--text-primary) !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            padding: 30px 15px;
+        }
+        .ui.container {
+            max-width: 1200px !important;
+        }
+        .header-box {
+            background: linear-gradient(135deg, #c2410c 0%, #1c1917 100%);
+            border: 1px solid #ea580c;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+        .kpi-card {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 10px !important;
+            padding: 16px !important;
+            text-align: center;
+        }
+        .pattern-card {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 10px !important;
+            margin-bottom: 16px !important;
+            padding: 20px !important;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .pattern-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            border-color: #f97316 !important;
+        }
+        .evidence-box {
+            background: #0b0f19;
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin-top: 12px;
+            border-left: 3px solid #f97316;
+            font-size: 13px;
+        }
+        .code-pill {
+            background: #1e293b;
+            color: #fb923c;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="ui container">
+        <!-- Header -->
+        <div class="header-box">
+            <div class="ui grid stackable middle aligned">
+                <div class="ten wide column">
+                    <h1 class="ui header inverted" style="margin: 0; font-size: 28px;">
+                        🐫 DPX-OCaml: Module Architecture & Functional Dashboard
+                        <div class="sub header" style="color: #fed7aa; margin-top: 6px;">
+                            Functors, GADTs, Effect Handlers & Type Safety for <strong>ocoff</strong>
+                        </div>
+                    </h1>
+                </div>
+                <div class="six wide column right aligned">
+                    <button id="copyLlmBtn" class="ui orange button" onclick="copyArchMapForLlm()">
+                        <i class="copy icon"></i> Copy Architecture Map for LLM
+                    </button>
+                    <textarea id="llmArchMapRaw" style="display:none;"># 🐫 DPX-OCaml: Codebase Architecture Map &amp; Functional Analysis
+
+## 📌 Project Overview
+- **Target Project:** `ocoff`
+- **Files Scanned:** `55`
+- **Total Architecture Findings:** `39`
+- **⚠️ Hazards &amp; Smells:** `0`
+- **🔷 Functors &amp; Patterns:** `39`
+- **✅ Clean Adherences:** `0`
+
+---
+
+## 🎯 Task for AI / LLM OCaml Architect
+&gt; **Prompt Instructions:**
+&gt; 1. **Analyze Module Architecture:** Review Functors (`module Make`), Abstract Data Types (`type t`), and First-Class Modules.
+&gt; 2. **Review Functional Pipelines:** Audit Railway Monadic error flows (`let*`, `Result.bind`) and GADT evaluators.
+&gt; 3. **OCaml 5 Multicore &amp; Effects:** Review Algebraic Effect Handlers (`Effect.perform`), Domains parallelism, and cooperative async.
+&gt; 4. **Safety Improvements:** Eliminate raw exceptions (`failwith`/`raise`), defensive `with _ -&gt;`, and physical equality (`==`) pitfalls.
+
+---
+
+## 🔷 Active OCaml Patterns &amp; Functional Idioms (39 instances)
+### Pattern: `ABSTRACT_DATA_TYPE_INTERFACE` (7 instances)
+- **Binary_writer** (adt_module, confidence 80%) in `/Volumes/External/Code/ocoff/lib/adapters/binary/binary_writer.ml:1`
+  - *Summary:* Module &#x27;Binary_writer&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;create&#x27;
+- **Archive** (adt_module, confidence 80%) in `/Volumes/External/Code/ocoff/lib/domain/model/archive.ml:1`
+  - *Summary:* Module &#x27;Archive&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;make&#x27;
+- **Coff_symbol** (adt_module, confidence 80%) in `/Volumes/External/Code/ocoff/lib/domain/model/coff_symbol.ml:1`
+  - *Summary:* Module &#x27;Coff_symbol&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;make&#x27;
+- **Data_directory** (adt_module, confidence 80%) in `/Volumes/External/Code/ocoff/lib/domain/model/data_directory.ml:1`
+  - *Summary:* Module &#x27;Data_directory&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;make&#x27;
+- **Optional_header** (adt_module, confidence 80%) in `/Volumes/External/Code/ocoff/lib/domain/model/optional_header.ml:1`
+  - *Summary:* Module &#x27;Optional_header&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;make&#x27;
+- **Dos_stub** (adt_module, confidence 80%) in `/Volumes/External/Code/ocoff/lib/domain/model/dos_stub.ml:1`
+  - *Summary:* Module &#x27;Dos_stub&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;make&#x27;
+- **Coff_relocation** (adt_module, confidence 80%) in `/Volumes/External/Code/ocoff/lib/domain/model/coff_relocation.ml:1`
+  - *Summary:* Module &#x27;Coff_relocation&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;make&#x27;
+### Pattern: `CLOSURE_CURRYING_STRATEGY` (2 instances)
+- **Pe_printer.pp_pe_file** (strategy_function, confidence 75%) in `/Volumes/External/Code/ocoff/lib/adapters/analysis/pe_printer.ml:78`
+  - *Summary:* Function &#x27;pp_pe_file&#x27; accepts higher-order strategy parameter &#x27;f&#x27; for dynamic algorithm injection
+- **Binary_reader.at_offset** (strategy_function, confidence 75%) in `/Volumes/External/Code/ocoff/lib/adapters/binary/binary_reader.ml:119`
+  - *Summary:* Function &#x27;at_offset&#x27; accepts higher-order strategy parameter &#x27;f&#x27; for dynamic algorithm injection
+### Pattern: `FUNCTOR_PARAMETRIC_MODULE` (2 instances)
+- **Flag_set** (functor_module, confidence 85%) in `/Volumes/External/Code/ocoff/lib/domain/types/flag_set.ml:1`
+  - *Summary:* Module &#x27;Flag_set&#x27; implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection
+- **Make** (functor_module, confidence 85%) in `/Volumes/External/Code/ocoff/lib/domain/types/flag_set.ml:30`
+  - *Summary:* Module &#x27;Make&#x27; implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection
+### Pattern: `MODULE_INCLUSION_EXTENDER` (2 instances)
+- **Dll_characteristics** (extended_module, confidence 80%) in `/Volumes/External/Code/ocoff/lib/domain/types/dll_characteristics.ml:1`
+  - *Summary:* Module &#x27;Dll_characteristics&#x27; extends and composes functionality from 1 included module(s) (Flag_set.Make)
+- **Characteristics** (extended_module, confidence 80%) in `/Volumes/External/Code/ocoff/lib/domain/types/characteristics.ml:1`
+  - *Summary:* Module &#x27;Characteristics&#x27; extends and composes functionality from 1 included module(s) (Flag_set.Make)
+### Pattern: `PIPELINE_OPERATOR` (1 instances)
+- **Error.hex_bytes** (pipeline_function, confidence 75%) in `/Volumes/External/Code/ocoff/lib/domain/types/error.ml:25`
+  - *Summary:* Function &#x27;hex_bytes&#x27; composes functional data transformations across a 3-stage pipe (`|&gt;`)
+### Pattern: `POLYMORPHIC_VARIANTS` (6 instances)
+- **Test_real_binaries** (polymorphic_variant_module, confidence 80%) in `/Volumes/External/Code/ocoff/test/test_real_binaries.ml:1`
+  - *Summary:* Module &#x27;Test_real_binaries&#x27; adopts Polymorphic Variants (``Pe, ``Pe) providing open tag subtyping without nominal declarations
+- **Test_domain_types** (polymorphic_variant_module, confidence 80%) in `/Volumes/External/Code/ocoff/test/test_domain_types.ml:1`
+  - *Summary:* Module &#x27;Test_domain_types&#x27; adopts Polymorphic Variants (``Quick, ``Quick) providing open tag subtyping without nominal declarations
+- **Main** (polymorphic_variant_module, confidence 80%) in `/Volumes/External/Code/ocoff/bin/main.ml:1`
+  - *Summary:* Module &#x27;Main&#x27; adopts Polymorphic Variants (``Error, ``Pe) providing open tag subtyping without nominal declarations
+- **File_io** (polymorphic_variant_module, confidence 80%) in `/Volumes/External/Code/ocoff/lib/adapters/file/file_io.ml:1`
+  - *Summary:* Module &#x27;File_io&#x27; adopts Polymorphic Variants (``File_not_found, ``Io_error) providing open tag subtyping without nominal declarations
+- **Pe_parser** (polymorphic_variant_module, confidence 80%) in `/Volumes/External/Code/ocoff/lib/application/pe_parser.ml:1`
+  - *Summary:* Module &#x27;Pe_parser&#x27; adopts Polymorphic Variants (``Pe, ``Archive) providing open tag subtyping without nominal declarations
+- **Pe_parser_port** (polymorphic_variant_module, confidence 80%) in `/Volumes/External/Code/ocoff/lib/ports/inbound/pe_parser_port.ml:1`
+  - *Summary:* Module &#x27;Pe_parser_port&#x27; adopts Polymorphic Variants (``Pe, ``Coff) providing open tag subtyping without nominal declarations
+### Pattern: `RAILWAY_MONADIC_BIND` (19 instances)
+- **Pe_symbol_parser.parse_aux_function_def** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:5`
+  - *Summary:* Function &#x27;parse_aux_function_def&#x27; implements Railway-oriented Monadic pipeline composing 5 sequential bind operation(s)
+- **Pe_symbol_parser.parse_aux_bf_ef** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:17`
+  - *Summary:* Function &#x27;parse_aux_bf_ef&#x27; implements Railway-oriented Monadic pipeline composing 5 sequential bind operation(s)
+- **Pe_symbol_parser.parse_aux_weak_external** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:25`
+  - *Summary:* Function &#x27;parse_aux_weak_external&#x27; implements Railway-oriented Monadic pipeline composing 3 sequential bind operation(s)
+- **Pe_symbol_parser.parse_aux_section_def** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:40`
+  - *Summary:* Function &#x27;parse_aux_section_def&#x27; implements Railway-oriented Monadic pipeline composing 7 sequential bind operation(s)
+- **Pe_symbol_parser.parse_aux_clr_token** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:53`
+  - *Summary:* Function &#x27;parse_aux_clr_token&#x27; implements Railway-oriented Monadic pipeline composing 4 sequential bind operation(s)
+- **Pe_symbol_parser.name** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:83`
+  - *Summary:* Function &#x27;name&#x27; implements Railway-oriented Monadic pipeline composing 4 sequential bind operation(s)
+- **Pe_symbol_parser.hi** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:92`
+  - *Summary:* Function &#x27;hi&#x27; implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)
+- **Pe_symbol_parser.parse_aux_list** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:101`
+  - *Summary:* Function &#x27;parse_aux_list&#x27; implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)
+- **Pe_parser.parse_coff_header** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/ocoff/lib/application/pe_parser.ml:7`
+  - *Summary:* Function &#x27;parse_coff_header&#x27; implements Railway-oriented Monadic pipeline composing 7 sequential bind operation(s)
+- **Pe_parser.kind** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/ocoff/lib/application/pe_parser.ml:28`
+  - *Summary:* Function &#x27;kind&#x27; implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)
+- **Pe_parser.format** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/ocoff/lib/application/pe_parser.ml:55`
+  - *Summary:* Function &#x27;format&#x27; implements Railway-oriented Monadic pipeline composing 9 sequential bind operation(s)
+- **Pe_parser.standard** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/ocoff/lib/application/pe_parser.ml:72`
+  - *Summary:* Function &#x27;standard&#x27; implements Railway-oriented Monadic pipeline composing 26 sequential bind operation(s)
+- **Pe_parser.parse_section_header** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/ocoff/lib/application/pe_parser.ml:161`
+  - *Summary:* Function &#x27;parse_section_header&#x27; implements Railway-oriented Monadic pipeline composing 10 sequential bind operation(s)
+- **Pe_parser.r** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/ocoff/lib/application/pe_parser.ml:254`
+  - *Summary:* Function &#x27;r&#x27; implements Railway-oriented Monadic pipeline composing 3 sequential bind operation(s)
+- **Pe_parser.dos_stub** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/ocoff/lib/application/pe_parser.ml:218`
+  - *Summary:* Function &#x27;dos_stub&#x27; implements Railway-oriented Monadic pipeline composing 5 sequential bind operation(s)
+- **Pe_parser.sym_count** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/ocoff/lib/application/pe_parser.ml:258`
+  - *Summary:* Function &#x27;sym_count&#x27; implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)
+- **Archive_parser.parse_archive_member_header** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/ocoff/lib/application/archive_parser.ml:7`
+  - *Summary:* Function &#x27;parse_archive_member_header&#x27; implements Railway-oriented Monadic pipeline composing 7 sequential bind operation(s)
+- **Export_resolver.r** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/ocoff/lib/domain/services/export_resolver.ml:115`
+  - *Summary:* Function &#x27;r&#x27; implements Railway-oriented Monadic pipeline composing 11 sequential bind operation(s)
+- **Import_resolver.read_descriptors** (railway_pipeline_function, confidence 85%) in `/Volumes/External/Code/ocoff/lib/domain/services/import_resolver.ml:129`
+  - *Summary:* Function &#x27;read_descriptors&#x27; implements Railway-oriented Monadic pipeline composing 5 sequential bind operation(s)
+
+---
+
+## 🗺️ Module &amp; File Hotspots Distribution
+- **`pe_parser.ml`**: 9 findings (0 hazards, 9 patterns, 0 adherences)
+- **`pe_symbol_parser.ml`**: 8 findings (0 hazards, 8 patterns, 0 adherences)
+- **`flag_set.ml`**: 2 findings (0 hazards, 2 patterns, 0 adherences)
+- **`binary_writer.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+- **`archive.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+- **`coff_symbol.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+- **`data_directory.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+- **`optional_header.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+- **`dos_stub.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+- **`coff_relocation.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+- **`dll_characteristics.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+- **`characteristics.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+- **`test_real_binaries.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+- **`test_domain_types.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+- **`main.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+- **`file_io.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+- **`pe_parser_port.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+- **`archive_parser.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+- **`export_resolver.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+- **`import_resolver.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+- **`error.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+- **`pe_printer.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+- **`binary_reader.ml`**: 1 findings (0 hazards, 1 patterns, 0 adherences)
+</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- KPI Metrics Grid -->
+        <div class="ui grid stackable four column" style="margin-bottom: 20px;">
+            <div class="column">
+                <div class="kpi-card">
+                    <div style="font-size: 28px; font-weight: 700; color: #fb923c;">39</div>
+                    <div style="color: #94a3b8; font-size: 13px; margin-top: 4px;">Total Findings</div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="kpi-card">
+                    <div style="font-size: 28px; font-weight: 700; color: #f87171;">0</div>
+                    <div style="color: #94a3b8; font-size: 13px; margin-top: 4px;">Safety Hazards & Smells</div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="kpi-card">
+                    <div style="font-size: 28px; font-weight: 700; color: #4ade80;">39</div>
+                    <div style="color: #94a3b8; font-size: 13px; margin-top: 4px;">Functors & Idioms</div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="kpi-card">
+                    <div style="font-size: 28px; font-weight: 700; color: #38bdf8;">55 files</div>
+                    <div style="color: #94a3b8; font-size: 13px; margin-top: 4px;">Scan Time: 0.015s</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Filter Pills -->
+        <div class="ui secondary pointing menu inverted" style="border-color: #232d42; margin-bottom: 16px; overflow-x: auto;">
+            <a class="item active cat-filter-btn" data-filter="all">
+                <i class="layer group icon"></i> All Findings
+            </a>
+            
+                    <a class="item cat-filter-btn" data-filter="module_system">
+                        <i class="cubes icon" style="color: #f97316;"></i>
+                        Module System & Functors
+                        <div class="ui mini orange label">11</div>
+                    </a>
+                    
+                    <a class="item cat-filter-btn" data-filter="functional_idiom">
+                        <i class="code branch icon" style="color: #14b8a6;"></i>
+                        Functional Idioms & GADTs
+                        <div class="ui mini teal label">26</div>
+                    </a>
+                    
+                    <a class="item cat-filter-btn" data-filter="behavioral">
+                        <i class="random icon" style="color: #ec4899;"></i>
+                        Curried Strategies & CPS
+                        <div class="ui mini pink label">2</div>
+                    </a>
+                    
+        </div>
+
+        <!-- Action Status Sub-Tabs Bar -->
+        <div class="ui inverted segment" style="background: #151b2b; border: 1px solid #232d42; border-radius: 8px; margin-bottom: 16px; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+            <div class="ui mini inverted basic buttons" id="statusFilterGroup">
+                <button class="ui button active status-filter-btn" data-status="all">
+                    <i class="eye icon"></i> All <span class="ui mini orange label" id="statusCountAll">39</span>
+                </button>
+                <button class="ui button status-filter-btn" data-status="violation" style="color: #f87171 !important;">
+                    <i class="exclamation triangle icon"></i> ⚠️ Hazards <span class="ui mini red label" id="statusCountViolation">0</span>
+                </button>
+                <button class="ui button status-filter-btn" data-status="adherence" style="color: #4ade80 !important;">
+                    <i class="check circle icon"></i> ✅ Clean Adherences <span class="ui mini green label" id="statusCountAdherence">0</span>
+                </button>
+                <button class="ui button status-filter-btn" data-status="pattern" style="color: #fb923c !important;">
+                    <i class="cubes icon"></i> 🔷 Functors & Idioms <span class="ui mini orange label" id="statusCountPattern">39</span>
+                </button>
+            </div>
+            <div>
+                <button id="principlesToggleBtn" class="ui mini inverted basic button" onclick="togglePrinciplesVisibility()" style="border-color: #ea580c; color: #fed7aa; font-weight: 600;">
+                    <i class="shield alternate icon" style="color: #fb923c;"></i> <span id="principlesToggleText">Hide Principles & Smells</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="ui fluid icon inverted input" style="margin-bottom: 20px;">
+            <input type="text" id="searchInput" placeholder="🔎 Instant search by module, functor, GADT, effect handler, monadic bind..." style="background: #151b2b; border: 1px solid #232d42; color: #f8fafc; padding: 12px 16px;">
+            <i class="search icon"></i>
+        </div>
+
+        <!-- Zero Violations Alert -->
+        <div id="noViolationsAlert" class="ui positive icon message" style="display: none; background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.35); color: #86efac; margin-bottom: 20px; border-radius: 8px;">
+            <i class="check circle outline icon" style="color: #4ade80;"></i>
+            <div class="content">
+                <div class="header" style="color: #4ade80; font-size: 16px; font-weight: 700;">Zero Safety Hazards Found!</div>
+                <p style="color: #cbd5e1; margin-top: 4px;">All evaluated OCaml modules adhere to functional purity, typed Result monads, and effect safety guidelines.</p>
+            </div>
+        </div>
+
+        <!-- No Matching Results Message -->
+        <div id="noResultsMessage" class="ui inverted segment" style="display: none; background: #151b2b; border: 1px solid #232d42; text-align: center; padding: 30px; border-radius: 8px;">
+            <i class="search icon" style="font-size: 24px; color: #64748b; margin-bottom: 10px;"></i>
+            <div style="color: #94a3b8; font-size: 15px;">No findings match the selected category, action status, or search query.</div>
+        </div>
+
+        <!-- Cards Container -->
+        <div id="cardsContainer">
+            
+                <div class="pattern-card" data-category="module_system" data-pattern="functor_parametric_module" data-status="pattern" data-target="flag_set">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini orange label">#1 FUNCTOR_PARAMETRIC_MODULE</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Flag_set</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(functor_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Flag_set&#x27; implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/domain/types/flag_set.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[FUNCTOR_PARAMETRIC_MODULE]</span>
+                        Module &#x27;Flag_set&#x27; implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection <span class='code-pill'>/Volumes/External/Code/ocoff/lib/domain/types/flag_set.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="module_system" data-pattern="functor_parametric_module" data-status="pattern" data-target="make">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini orange label">#2 FUNCTOR_PARAMETRIC_MODULE</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Make</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(functor_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Make&#x27; implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/domain/types/flag_set.ml:30:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[FUNCTOR_PARAMETRIC_MODULE]</span>
+                        Module &#x27;Make&#x27; implements Functor Parametric Module pattern enabling compile-time type parameterization and dependency injection <span class='code-pill'>/Volumes/External/Code/ocoff/lib/domain/types/flag_set.ml:30:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="module_system" data-pattern="abstract_data_type_interface" data-status="pattern" data-target="binary_writer">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini orange label">#3 ABSTRACT_DATA_TYPE_INTERFACE</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Binary_writer</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(adt_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Binary_writer&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;create&#x27;
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/adapters/binary/binary_writer.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[ABSTRACT_DATA_TYPE_SIGNATURE]</span>
+                        Module &#x27;Binary_writer&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;create&#x27; <span class='code-pill'>/Volumes/External/Code/ocoff/lib/adapters/binary/binary_writer.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="module_system" data-pattern="abstract_data_type_interface" data-status="pattern" data-target="archive">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini orange label">#4 ABSTRACT_DATA_TYPE_INTERFACE</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Archive</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(adt_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Archive&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;make&#x27;
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/domain/model/archive.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[ABSTRACT_DATA_TYPE_SIGNATURE]</span>
+                        Module &#x27;Archive&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;make&#x27; <span class='code-pill'>/Volumes/External/Code/ocoff/lib/domain/model/archive.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="module_system" data-pattern="abstract_data_type_interface" data-status="pattern" data-target="coff_symbol">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini orange label">#5 ABSTRACT_DATA_TYPE_INTERFACE</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Coff_symbol</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(adt_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Coff_symbol&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;make&#x27;
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/domain/model/coff_symbol.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[ABSTRACT_DATA_TYPE_SIGNATURE]</span>
+                        Module &#x27;Coff_symbol&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;make&#x27; <span class='code-pill'>/Volumes/External/Code/ocoff/lib/domain/model/coff_symbol.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="module_system" data-pattern="abstract_data_type_interface" data-status="pattern" data-target="data_directory">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini orange label">#6 ABSTRACT_DATA_TYPE_INTERFACE</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Data_directory</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(adt_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Data_directory&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;make&#x27;
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/domain/model/data_directory.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[ABSTRACT_DATA_TYPE_SIGNATURE]</span>
+                        Module &#x27;Data_directory&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;make&#x27; <span class='code-pill'>/Volumes/External/Code/ocoff/lib/domain/model/data_directory.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="module_system" data-pattern="abstract_data_type_interface" data-status="pattern" data-target="optional_header">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini orange label">#7 ABSTRACT_DATA_TYPE_INTERFACE</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Optional_header</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(adt_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Optional_header&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;make&#x27;
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/domain/model/optional_header.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[ABSTRACT_DATA_TYPE_SIGNATURE]</span>
+                        Module &#x27;Optional_header&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;make&#x27; <span class='code-pill'>/Volumes/External/Code/ocoff/lib/domain/model/optional_header.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="module_system" data-pattern="abstract_data_type_interface" data-status="pattern" data-target="dos_stub">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini orange label">#8 ABSTRACT_DATA_TYPE_INTERFACE</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Dos_stub</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(adt_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Dos_stub&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;make&#x27;
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/domain/model/dos_stub.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[ABSTRACT_DATA_TYPE_SIGNATURE]</span>
+                        Module &#x27;Dos_stub&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;make&#x27; <span class='code-pill'>/Volumes/External/Code/ocoff/lib/domain/model/dos_stub.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="module_system" data-pattern="abstract_data_type_interface" data-status="pattern" data-target="coff_relocation">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini orange label">#9 ABSTRACT_DATA_TYPE_INTERFACE</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Coff_relocation</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(adt_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Coff_relocation&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;make&#x27;
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/domain/model/coff_relocation.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[ABSTRACT_DATA_TYPE_SIGNATURE]</span>
+                        Module &#x27;Coff_relocation&#x27; encapsulates Abstract Data Type (ADT) via primary type `t` with constructor &#x27;make&#x27; <span class='code-pill'>/Volumes/External/Code/ocoff/lib/domain/model/coff_relocation.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="module_system" data-pattern="module_inclusion_extender" data-status="pattern" data-target="dll_characteristics">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini orange label">#10 MODULE_INCLUSION_EXTENDER</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Dll_characteristics</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(extended_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Dll_characteristics&#x27; extends and composes functionality from 1 included module(s) (Flag_set.Make)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/domain/types/dll_characteristics.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[MODULE_INCLUSION_EXTENSION]</span>
+                        Module &#x27;Dll_characteristics&#x27; extends and composes functionality from 1 included module(s) (Flag_set.Make) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/domain/types/dll_characteristics.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="module_system" data-pattern="module_inclusion_extender" data-status="pattern" data-target="characteristics">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini orange label">#11 MODULE_INCLUSION_EXTENDER</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Characteristics</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(extended_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Characteristics&#x27; extends and composes functionality from 1 included module(s) (Flag_set.Make)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/domain/types/characteristics.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[MODULE_INCLUSION_EXTENSION]</span>
+                        Module &#x27;Characteristics&#x27; extends and composes functionality from 1 included module(s) (Flag_set.Make) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/domain/types/characteristics.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="polymorphic_variants" data-status="pattern" data-target="test_real_binaries">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#12 POLYMORPHIC_VARIANTS</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Test_real_binaries</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(polymorphic_variant_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Test_real_binaries&#x27; adopts Polymorphic Variants (``Pe, ``Pe) providing open tag subtyping without nominal declarations
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/test/test_real_binaries.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[POLYMORPHIC_OPEN_VARIANTS]</span>
+                        Module &#x27;Test_real_binaries&#x27; adopts Polymorphic Variants (``Pe, ``Pe) providing open tag subtyping without nominal declarations <span class='code-pill'>/Volumes/External/Code/ocoff/test/test_real_binaries.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="polymorphic_variants" data-status="pattern" data-target="test_domain_types">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#13 POLYMORPHIC_VARIANTS</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Test_domain_types</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(polymorphic_variant_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Test_domain_types&#x27; adopts Polymorphic Variants (``Quick, ``Quick) providing open tag subtyping without nominal declarations
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/test/test_domain_types.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[POLYMORPHIC_OPEN_VARIANTS]</span>
+                        Module &#x27;Test_domain_types&#x27; adopts Polymorphic Variants (``Quick, ``Quick) providing open tag subtyping without nominal declarations <span class='code-pill'>/Volumes/External/Code/ocoff/test/test_domain_types.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="polymorphic_variants" data-status="pattern" data-target="main">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#14 POLYMORPHIC_VARIANTS</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Main</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(polymorphic_variant_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Main&#x27; adopts Polymorphic Variants (``Error, ``Pe) providing open tag subtyping without nominal declarations
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/bin/main.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[POLYMORPHIC_OPEN_VARIANTS]</span>
+                        Module &#x27;Main&#x27; adopts Polymorphic Variants (``Error, ``Pe) providing open tag subtyping without nominal declarations <span class='code-pill'>/Volumes/External/Code/ocoff/bin/main.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="polymorphic_variants" data-status="pattern" data-target="file_io">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#15 POLYMORPHIC_VARIANTS</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">File_io</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(polymorphic_variant_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;File_io&#x27; adopts Polymorphic Variants (``File_not_found, ``Io_error) providing open tag subtyping without nominal declarations
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/adapters/file/file_io.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[POLYMORPHIC_OPEN_VARIANTS]</span>
+                        Module &#x27;File_io&#x27; adopts Polymorphic Variants (``File_not_found, ``Io_error) providing open tag subtyping without nominal declarations <span class='code-pill'>/Volumes/External/Code/ocoff/lib/adapters/file/file_io.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="polymorphic_variants" data-status="pattern" data-target="pe_parser">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#16 POLYMORPHIC_VARIANTS</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pe_parser</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(polymorphic_variant_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Pe_parser&#x27; adopts Polymorphic Variants (``Pe, ``Archive) providing open tag subtyping without nominal declarations
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/application/pe_parser.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[POLYMORPHIC_OPEN_VARIANTS]</span>
+                        Module &#x27;Pe_parser&#x27; adopts Polymorphic Variants (``Pe, ``Archive) providing open tag subtyping without nominal declarations <span class='code-pill'>/Volumes/External/Code/ocoff/lib/application/pe_parser.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="polymorphic_variants" data-status="pattern" data-target="pe_parser_port">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#17 POLYMORPHIC_VARIANTS</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pe_parser_port</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(polymorphic_variant_module)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                80% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Module &#x27;Pe_parser_port&#x27; adopts Polymorphic Variants (``Pe, ``Coff) providing open tag subtyping without nominal declarations
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/ports/inbound/pe_parser_port.ml:1:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+80%</span>
+                        <span class="code-pill">[POLYMORPHIC_OPEN_VARIANTS]</span>
+                        Module &#x27;Pe_parser_port&#x27; adopts Polymorphic Variants (``Pe, ``Coff) providing open tag subtyping without nominal declarations <span class='code-pill'>/Volumes/External/Code/ocoff/lib/ports/inbound/pe_parser_port.ml:1:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="pe_symbol_parser.parse_aux_function_def">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#18 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pe_symbol_parser.parse_aux_function_def</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;parse_aux_function_def&#x27; implements Railway-oriented Monadic pipeline composing 5 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:5:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;parse_aux_function_def&#x27; implements Railway-oriented Monadic pipeline composing 5 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:5:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="pe_symbol_parser.parse_aux_bf_ef">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#19 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pe_symbol_parser.parse_aux_bf_ef</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;parse_aux_bf_ef&#x27; implements Railway-oriented Monadic pipeline composing 5 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:17:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;parse_aux_bf_ef&#x27; implements Railway-oriented Monadic pipeline composing 5 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:17:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="pe_symbol_parser.parse_aux_weak_external">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#20 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pe_symbol_parser.parse_aux_weak_external</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;parse_aux_weak_external&#x27; implements Railway-oriented Monadic pipeline composing 3 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:25:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;parse_aux_weak_external&#x27; implements Railway-oriented Monadic pipeline composing 3 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:25:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="pe_symbol_parser.parse_aux_section_def">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#21 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pe_symbol_parser.parse_aux_section_def</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;parse_aux_section_def&#x27; implements Railway-oriented Monadic pipeline composing 7 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:40:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;parse_aux_section_def&#x27; implements Railway-oriented Monadic pipeline composing 7 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:40:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="pe_symbol_parser.parse_aux_clr_token">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#22 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pe_symbol_parser.parse_aux_clr_token</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;parse_aux_clr_token&#x27; implements Railway-oriented Monadic pipeline composing 4 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:53:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;parse_aux_clr_token&#x27; implements Railway-oriented Monadic pipeline composing 4 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:53:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="pe_symbol_parser.name">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#23 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pe_symbol_parser.name</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;name&#x27; implements Railway-oriented Monadic pipeline composing 4 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:83:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;name&#x27; implements Railway-oriented Monadic pipeline composing 4 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:83:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="pe_symbol_parser.hi">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#24 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pe_symbol_parser.hi</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;hi&#x27; implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:92:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;hi&#x27; implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:92:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="pe_symbol_parser.parse_aux_list">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#25 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pe_symbol_parser.parse_aux_list</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;parse_aux_list&#x27; implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:101:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;parse_aux_list&#x27; implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/application/pe_symbol_parser.ml:101:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="pe_parser.parse_coff_header">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#26 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pe_parser.parse_coff_header</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;parse_coff_header&#x27; implements Railway-oriented Monadic pipeline composing 7 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/application/pe_parser.ml:7:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;parse_coff_header&#x27; implements Railway-oriented Monadic pipeline composing 7 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/application/pe_parser.ml:7:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="pe_parser.kind">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#27 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pe_parser.kind</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;kind&#x27; implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/application/pe_parser.ml:28:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;kind&#x27; implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/application/pe_parser.ml:28:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="pe_parser.format">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#28 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pe_parser.format</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;format&#x27; implements Railway-oriented Monadic pipeline composing 9 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/application/pe_parser.ml:55:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;format&#x27; implements Railway-oriented Monadic pipeline composing 9 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/application/pe_parser.ml:55:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="pe_parser.standard">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#29 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pe_parser.standard</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;standard&#x27; implements Railway-oriented Monadic pipeline composing 26 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/application/pe_parser.ml:72:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;standard&#x27; implements Railway-oriented Monadic pipeline composing 26 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/application/pe_parser.ml:72:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="pe_parser.parse_section_header">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#30 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pe_parser.parse_section_header</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;parse_section_header&#x27; implements Railway-oriented Monadic pipeline composing 10 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/application/pe_parser.ml:161:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;parse_section_header&#x27; implements Railway-oriented Monadic pipeline composing 10 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/application/pe_parser.ml:161:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="pe_parser.r">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#31 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pe_parser.r</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;r&#x27; implements Railway-oriented Monadic pipeline composing 3 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/application/pe_parser.ml:254:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;r&#x27; implements Railway-oriented Monadic pipeline composing 3 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/application/pe_parser.ml:254:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="pe_parser.dos_stub">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#32 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pe_parser.dos_stub</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;dos_stub&#x27; implements Railway-oriented Monadic pipeline composing 5 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/application/pe_parser.ml:218:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;dos_stub&#x27; implements Railway-oriented Monadic pipeline composing 5 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/application/pe_parser.ml:218:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="pe_parser.sym_count">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#33 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pe_parser.sym_count</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;sym_count&#x27; implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/application/pe_parser.ml:258:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;sym_count&#x27; implements Railway-oriented Monadic pipeline composing 2 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/application/pe_parser.ml:258:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="archive_parser.parse_archive_member_header">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#34 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Archive_parser.parse_archive_member_header</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;parse_archive_member_header&#x27; implements Railway-oriented Monadic pipeline composing 7 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/application/archive_parser.ml:7:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;parse_archive_member_header&#x27; implements Railway-oriented Monadic pipeline composing 7 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/application/archive_parser.ml:7:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="export_resolver.r">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#35 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Export_resolver.r</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;r&#x27; implements Railway-oriented Monadic pipeline composing 11 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/domain/services/export_resolver.ml:115:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;r&#x27; implements Railway-oriented Monadic pipeline composing 11 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/domain/services/export_resolver.ml:115:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="railway_monadic_bind" data-status="pattern" data-target="import_resolver.read_descriptors">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#36 RAILWAY_MONADIC_BIND</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Import_resolver.read_descriptors</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(railway_pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                85% [VERY_HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;read_descriptors&#x27; implements Railway-oriented Monadic pipeline composing 5 sequential bind operation(s)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/domain/services/import_resolver.ml:129:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+85%</span>
+                        <span class="code-pill">[RAILWAY_MONADIC_BIND_PIPELINE]</span>
+                        Function &#x27;read_descriptors&#x27; implements Railway-oriented Monadic pipeline composing 5 sequential bind operation(s) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/domain/services/import_resolver.ml:129:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="functional_idiom" data-pattern="pipeline_operator" data-status="pattern" data-target="error.hex_bytes">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini teal label">#37 PIPELINE_OPERATOR</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Error.hex_bytes</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(pipeline_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4);">
+                                75% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;hex_bytes&#x27; composes functional data transformations across a 3-stage pipe (`|&gt;`)
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/domain/types/error.ml:25:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+75%</span>
+                        <span class="code-pill">[PIPELINE_OPERATOR_CHAIN]</span>
+                        Function &#x27;hex_bytes&#x27; composes functional data transformations across a 3-stage pipe (`|&gt;`) <span class='code-pill'>/Volumes/External/Code/ocoff/lib/domain/types/error.ml:25:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="behavioral" data-pattern="closure_currying_strategy" data-status="pattern" data-target="pe_printer.pp_pe_file">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini pink label">#38 CLOSURE_CURRYING_STRATEGY</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Pe_printer.pp_pe_file</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(strategy_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(236, 72, 153, 0.15); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.4);">
+                                75% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;pp_pe_file&#x27; accepts higher-order strategy parameter &#x27;f&#x27; for dynamic algorithm injection
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/adapters/analysis/pe_printer.ml:78:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+75%</span>
+                        <span class="code-pill">[CURRIED_STRATEGY_INJECTION]</span>
+                        Function &#x27;pp_pe_file&#x27; accepts higher-order strategy parameter &#x27;f&#x27; for dynamic algorithm injection <span class='code-pill'>/Volumes/External/Code/ocoff/lib/adapters/analysis/pe_printer.ml:78:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+                <div class="pattern-card" data-category="behavioral" data-pattern="closure_currying_strategy" data-status="pattern" data-target="binary_reader.at_offset">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="ui mini pink label">#39 CLOSURE_CURRYING_STRATEGY</span>
+                            <strong style="font-size: 16px; margin-left: 8px; color: #f8fafc;">Binary_reader.at_offset</strong>
+                            <span style="color: #94a3b8; font-size: 13px;">(strategy_function)</span>
+                        </div>
+                        <div>
+                            <span class="ui mini label" style="background: rgba(236, 72, 153, 0.15); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.4);">
+                                75% [HIGH]
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 13px; color: #e2e8f0;">
+                        Function &#x27;at_offset&#x27; accepts higher-order strategy parameter &#x27;f&#x27; for dynamic algorithm injection
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12px; color: #64748b;">
+                        <i class="map marker alternate icon"></i> /Volumes/External/Code/ocoff/lib/adapters/binary/binary_reader.ml:119:1
+                    </div>
+                    <div class="evidence-box">
+                        <strong>Evidence Trail (1 heuristics):</strong>
+                        
+                    <div style="margin-top: 4px;">
+                        <span style="color: #f97316; font-weight: 600;">+75%</span>
+                        <span class="code-pill">[CURRIED_STRATEGY_INJECTION]</span>
+                        Function &#x27;at_offset&#x27; accepts higher-order strategy parameter &#x27;f&#x27; for dynamic algorithm injection <span class='code-pill'>/Volumes/External/Code/ocoff/lib/adapters/binary/binary_reader.ml:119:1</span>
+                    </div>
+                    
+                    </div>
+                </div>
+                
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const cards = document.querySelectorAll('.pattern-card');
+        const categoryBtns = document.querySelectorAll('.cat-filter-btn');
+        const statusBtns = document.querySelectorAll('.status-filter-btn');
+        const noViolationsAlert = document.getElementById('noViolationsAlert');
+        const noResultsMessage = document.getElementById('noResultsMessage');
+
+        let selectedCategory = 'all';
+        let selectedStatus = 'all';
+        let hidePrinciples = false;
+
+        function togglePrinciplesVisibility() {
+            hidePrinciples = !hidePrinciples;
+            const btn = document.getElementById('principlesToggleBtn');
+            const btnText = document.getElementById('principlesToggleText');
+            if (hidePrinciples) {
+                btn.classList.remove('basic');
+                btn.classList.add('orange');
+                btnText.textContent = 'Show Principles & Smells';
+            } else {
+                btn.classList.remove('orange');
+                btn.classList.add('basic');
+                btnText.textContent = 'Hide Principles & Smells';
+            }
+            updateStatusCounts();
+            filterCards();
+        }
+
+        function updateStatusCounts() {
+            let total = 0, violations = 0, adherences = 0, patterns = 0;
+            cards.forEach(card => {
+                const category = card.dataset.category || '';
+                const status = card.dataset.status || '';
+                if (hidePrinciples && category === 'principle') {
+                    return;
+                }
+                if (selectedCategory === 'all' || category === selectedCategory) {
+                    total++;
+                    if (status === 'violation') violations++;
+                    if (status === 'adherence') adherences++;
+                    if (status === 'pattern') patterns++;
+                }
+            });
+            document.getElementById('statusCountAll').textContent = total;
+            document.getElementById('statusCountViolation').textContent = violations;
+            document.getElementById('statusCountAdherence').textContent = adherences;
+            document.getElementById('statusCountPattern').textContent = patterns;
+        }
+
+        function filterCards() {
+            const query = searchInput.value.toLowerCase();
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                const pattern = card.dataset.pattern || '';
+                const category = card.dataset.category || '';
+                const target = card.dataset.target || '';
+                const status = card.dataset.status || '';
+
+                if (hidePrinciples && category === 'principle') {
+                    card.style.display = 'none';
+                    return;
+                }
+
+                const matchesCategory = (selectedCategory === 'all' || category === selectedCategory);
+                const matchesStatus = (selectedStatus === 'all' || status === selectedStatus);
+                const matchesSearch = (!query || text.includes(query) || pattern.includes(query) || category.includes(query) || target.includes(query));
+
+                if (matchesCategory && matchesStatus && matchesSearch) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (selectedStatus === 'violation' && visibleCount === 0) {
+                noViolationsAlert.style.display = 'flex';
+                noResultsMessage.style.display = 'none';
+            } else if (visibleCount === 0) {
+                noViolationsAlert.style.display = 'none';
+                noResultsMessage.style.display = 'block';
+            } else {
+                noViolationsAlert.style.display = 'none';
+                noResultsMessage.style.display = 'none';
+            }
+        }
+
+        searchInput.addEventListener('input', filterCards);
+
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedCategory = btn.dataset.filter;
+                updateStatusCounts();
+                filterCards();
+            });
+        });
+
+        statusBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                statusBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedStatus = btn.dataset.status;
+                filterCards();
+            });
+        });
+
+        function copyArchMapForLlm() {
+            const rawText = document.getElementById('llmArchMapRaw').value;
+            const btn = document.getElementById('copyLlmBtn');
+            const originalHtml = btn.innerHTML;
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(rawText).then(() => {
+                    btn.innerHTML = '<i class="check icon"></i> Copied to Clipboard!';
+                    setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
+                });
+            }
+        }
+
+        updateStatusCounts();
+    </script>
+</body>
+</html>
