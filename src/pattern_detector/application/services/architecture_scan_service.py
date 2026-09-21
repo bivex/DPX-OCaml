@@ -23,6 +23,7 @@ from pattern_detector.domain.architecture.models import (
     ArchEdge,
     ArchIssue,
     ArchIssueKind,
+    ArchLayer,
     ArchitectureScanResult,
     ComponentGraph,
     CycleGroup,
@@ -507,14 +508,27 @@ class ArchitectureScanService(ScanArchitectureUseCase):
                 and m.abstractness <= self.PAIN_ZONE_MAX_A
                 and node.loc >= self.PAIN_ZONE_MIN_LOC
             ):
+                # Distinguish pure Domain AST / Schema / Data Model modules from implementation logic.
+                # In functional compilers and clean architecture, core data structures (ASTs, IR,
+                # register definitions, domain types) are non-volatile concrete ADTs by design.
+                is_ast_or_data_model = (
+                    node.has_interface
+                    and node.exported_types > 0
+                    and (
+                        node.layer == ArchLayer.DOMAIN
+                        or bool(re.search(r"(ast|ir|types?|spec|grammar|register|flags|opcode|mba|syntax)", node.name.lower()))
+                    )
+                )
+                severity = IssueSeverity.INFO if is_ast_or_data_model else IssueSeverity.WARNING
+                msg_suffix = " (domain AST / data model: benign by design)" if is_ast_or_data_model else ""
                 issues.append(
                     ArchIssue(
-                        severity=IssueSeverity.WARNING,
+                        severity=severity,
                         kind=ArchIssueKind.ZONE_OF_PAIN,
                         subject=node_id,
                         message=(
                             f"zone of pain: {node.name} is rigidly concrete (A={m.abstractness:.2f}) "
-                            f"yet heavily depended on by {ca} modules (I={m.instability:.2f}, D={m.main_sequence_distance:.2f})"
+                            f"yet heavily depended on by {ca} modules (I={m.instability:.2f}, D={m.main_sequence_distance:.2f}){msg_suffix}"
                         ),
                     )
                 )

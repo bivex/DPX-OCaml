@@ -48,6 +48,7 @@ from pattern_detector.domain.architecture.models import (
     ArchEdge,
     ArchLayer,
     ComponentGraph,
+    IssueSeverity,
     EdgeKind,
     ModuleNode,
     infer_layer,
@@ -710,6 +711,34 @@ def test_zone_of_pain_issue_detected(tmp_path: Path) -> None:
     pain_issues = [i for i in result.issues if i.kind.value == "zone_of_pain"]
     assert len(pain_issues) == 1
     assert pain_issues[0].subject == "My_lib.Core_config"
+    assert pain_issues[0].severity == IssueSeverity.WARNING
+
+
+def test_zone_of_pain_domain_ast_info(tmp_path: Path) -> None:
+    """A domain AST module with an .mli contract is reported as INFO, not WARNING."""
+    (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")
+    (tmp_path / "lib").mkdir()
+    (tmp_path / "lib" / "dune").write_text("(library (name my_lib))\n")
+    # An AST definition with >= 50 lines and an .mli contract
+    types_body = "type ast = Mov | Add | Ret\n" + "\n".join(f"let c{i} = {i}" for i in range(55))
+    (tmp_path / "lib" / "ast.ml").write_text(types_body + "\n")
+    (tmp_path / "lib" / "ast.mli").write_text("type ast = Mov | Add | Ret\n")
+
+    # 5 clients depend on Ast
+    for i in range(5):
+        (tmp_path / "lib" / f"client_{i}.ml").write_text(f"let x = Ast.c{i}\n")
+
+    service = ArchitectureScanService(
+        source_provider=FileSourceProvider(),
+        dune_parser=DuneManifestParser(),
+        extractor=ModuleDependencyExtractor(),
+    )
+    result = service.scan_architecture(str(tmp_path))
+    pain_issues = [i for i in result.issues if i.kind.value == "zone_of_pain"]
+    assert len(pain_issues) == 1
+    assert pain_issues[0].subject == "My_lib.Ast"
+    assert pain_issues[0].severity == IssueSeverity.INFO
+    assert "benign by design" in pain_issues[0].message
 
 
 def test_zone_of_uselessness_issue_detected(tmp_path: Path) -> None:
