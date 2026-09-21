@@ -585,7 +585,7 @@ myDiagram.groupTemplate =
     {
       layout: $(go.LayeredDigraphLayout, { direction: 90, layerSpacing: 25, columnSpacing: 20 }),
       isSubGraphExpanded: true,
-      computesBoundsAfterParent: true
+      computesBoundsIncludingLinks: false
     },
     $(go.Shape, "RoundedRectangle",
       {
@@ -692,7 +692,7 @@ function changeLayout(type) {
       layerSpacing: 50,
       columnSpacing: 25,
       setsPortSpots: false,
-      aggressiveOption: go.LayeredDigraphLayout.AggressiveMore
+      aggressiveOption: 2  /* AggressiveMore */
     });
   } else if (type === "force") {
     myDiagram.layout = $(go.ForceDirectedLayout, {
