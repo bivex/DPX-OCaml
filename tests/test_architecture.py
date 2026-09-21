@@ -569,12 +569,13 @@ def test_dot_formatter_clusters() -> None:
     assert '#d63c3c' in text
 
 
-def test_html_formatter_self_contained() -> None:
+def test_html_formatter_gojs() -> None:
     result = scan_fixture()
     text = HtmlGraphFormatter().format(result, _view())
     assert "const DATA =" in text
-    assert "http://" not in text and "https://" not in text  # no CDN
-    assert "<canvas" in text
+    assert "go.GraphLinksModel" in text
+    assert "diagramDiv" in text
+    assert "overviewDiv" in text
     # The JSON payload lives on a single line after `const DATA = `.
     payload = text.split("const DATA = ", 1)[1].split("\n", 1)[0]
     assert "Arch_domain.Order" in payload

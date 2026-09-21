@@ -1,8 +1,8 @@
-"""Self-contained interactive HTML exporter: force-directed module graph, zero external dependencies.
+"""Self-contained interactive HTML exporter powered by GoJS.
 
-The produced artifact embeds the full scan payload as JSON plus a vanilla-JS
-canvas renderer with zoom, pan, node dragging, click-to-highlight and a module
-details side panel. No CDN / network access is required to view it.
+Produces a rich interactive diagram with hierarchical and force-directed layouts,
+collapsible library groups, Martin metrics inspection, live search, minimap overview,
+and side panel inspectors.
 """
 
 from __future__ import annotations
@@ -36,22 +36,19 @@ _GROUP_PALETTE = [
 
 
 class HtmlGraphFormatter(ArchitectureExporterPort):
-    """Renders the component graph as a standalone interactive HTML page."""
+    """Renders the component graph as a rich GoJS interactive HTML page."""
 
     extension = "html"
 
     def format(self, result: ArchitectureScanResult, options: GraphViewOptions | None = None) -> str:
         options = options or GraphViewOptions()
         payload = self._payload(result, options)
-        # "</" would terminate the enclosing <script> block; break it defensively.
         data_json = json.dumps(payload, ensure_ascii=False).replace("</", "<\\/")
         return (
             _TEMPLATE
             .replace("__DATA__", data_json)
             .replace("__TITLE__", html.escape(result.project_path))
         )
-
-    # ------------------------------------------------------------------
 
     def _payload(self, result: ArchitectureScanResult, options: GraphViewOptions) -> dict[str, object]:
         cycle_pairs = cycle_edge_pairs(result)
@@ -83,9 +80,9 @@ class HtmlGraphFormatter(ArchitectureExporterPort):
                         "cycle": node.cycle_id is not None,
                         "ca": m.ca if m else 0,
                         "ce": m.ce if m else 0,
-                        "i": m.instability if m else 0.0,
-                        "a": m.abstractness if m else 0.0,
-                        "d": m.main_sequence_distance if m else 0.0,
+                        "i": round(m.instability, 3) if m else 0.0,
+                        "a": round(m.abstractness, 3) if m else 0.0,
+                        "d": round(m.main_sequence_distance, 3) if m else 0.0,
                         "zone": m.zone if m else "—",
                     }
                 )
@@ -123,230 +120,692 @@ _TEMPLATE = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>dpx arch — __TITLE__</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dpx arch (GoJS) — __TITLE__</title>
+<script src="https://cdn.jsdelivr.net/npm/gojs/release/go.js"></script>
 <style>
-  :root { --bg:#14181f; --panel:#1c222c; --line:#2b3442; --text:#dbe4ee; --dim:#8392a6; --accent:#4f8ef7; }
+  :root {
+    --bg: #0f172a;
+    --panel: #1e293b;
+    --line: #334155;
+    --text: #f8fafc;
+    --dim: #94a3b8;
+    --accent: #38bdf8;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --success: #22c55e;
+  }
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:var(--bg); color:var(--text); font:14px/1.45 -apple-system,"Segoe UI",Roboto,sans-serif; overflow:hidden; }
-  header { position:fixed; top:0; left:0; right:0; height:52px; display:flex; align-items:center; gap:18px;
-           padding:0 18px; background:rgba(20,24,31,.92); border-bottom:1px solid var(--line); z-index:10; }
-  header h1 { font-size:15px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:40vw; }
-  header .stats { color:var(--dim); font-size:12.5px; white-space:nowrap; }
-  header button { background:var(--panel); color:var(--text); border:1px solid var(--line); border-radius:6px;
-                  padding:5px 12px; font-size:12.5px; cursor:pointer; }
-  header button:hover { border-color:var(--accent); color:var(--accent); }
-  canvas { position:fixed; inset:52px 0 0 0; cursor:grab; }
-  #legend { position:fixed; left:14px; bottom:14px; background:rgba(28,34,44,.92); border:1px solid var(--line);
-            border-radius:8px; padding:10px 14px; font-size:12px; max-height:40vh; overflow:auto; }
-  #legend .item { display:flex; align-items:center; gap:7px; margin:2px 0; color:var(--dim); }
-  #legend .sw { width:10px; height:10px; border-radius:50%; flex:none; }
-  #side { position:fixed; top:52px; right:-380px; width:360px; bottom:0; background:var(--panel);
-          border-left:1px solid var(--line); padding:18px; overflow-y:auto; transition:right .18s ease; z-index:9; }
-  #side.open { right:0; }
-  #side h2 { font-size:16px; margin-bottom:4px; word-break:break-all; }
-  #side .close { position:absolute; top:10px; right:12px; cursor:pointer; color:var(--dim); font-size:18px; }
-  #side table { width:100%; border-collapse:collapse; margin:10px 0; }
-  #side td { padding:3px 4px; font-size:12.5px; border-bottom:1px solid var(--line); }
-  #side td:first-child { color:var(--dim); width:44%; }
-  #side .dep { color:var(--accent); cursor:pointer; display:block; padding:1px 0; font-size:12.5px; }
-  #side .dep:hover { text-decoration:underline; }
-  #side .badges span { display:inline-block; margin:2px 4px 2px 0; padding:1px 8px; border-radius:10px;
-                       font-size:11px; border:1px solid var(--line); color:var(--dim); }
-  #side .zone-pain { color:#e05252; } #side .zone-useless { color:#f59f00; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 13px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    height: 54px;
+    background: rgba(15, 23, 42, 0.95);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    z-index: 20;
+    gap: 12px;
+  }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+  .header-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #f1f5f9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .badge-tag {
+    background: #0284c7;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .stats-bar {
+    display: flex;
+    gap: 14px;
+    color: var(--dim);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .stats-item span {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .controls-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .search-box input {
+    background: #090d16;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 5px 10px 5px 28px;
+    color: var(--text);
+    font-size: 12px;
+    width: 170px;
+    outline: none;
+    transition: all .15s;
+  }
+  .search-box input:focus {
+    width: 220px;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+  }
+  .search-icon {
+    position: absolute;
+    left: 8px;
+    color: var(--dim);
+    pointer-events: none;
+    font-size: 11px;
+  }
+  button, select {
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+  button:hover, select:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  #mainContainer {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+  }
+  #diagramDiv {
+    width: 100%;
+    height: 100%;
+    background: #0f172a;
+    outline: none;
+  }
+  #overviewDiv {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    width: 220px;
+    height: 140px;
+    background: rgba(30, 41, 59, 0.92);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    z-index: 10;
+  }
+  #overviewTitle {
+    position: absolute;
+    top: 4px;
+    left: 8px;
+    font-size: 10px;
+    color: var(--dim);
+    font-weight: 600;
+    pointer-events: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 11;
+  }
+  #legend {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: rgba(30, 41, 59, 0.92);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 11.5px;
+    max-height: 45vh;
+    overflow-y: auto;
+    z-index: 10;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  #legend h4 {
+    margin-bottom: 6px;
+    font-size: 11px;
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  #legend .item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 3px 0;
+    color: #cbd5e1;
+    cursor: pointer;
+  }
+  #legend .item:hover {
+    color: #fff;
+  }
+  #legend .sw {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex: none;
+  }
+  #side {
+    position: absolute;
+    top: 0;
+    right: -420px;
+    width: 400px;
+    bottom: 0;
+    background: var(--panel);
+    border-left: 1px solid var(--line);
+    box-shadow: -8px 0 24px rgba(0,0,0,0.5);
+    padding: 20px;
+    overflow-y: auto;
+    transition: right 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 30;
+  }
+  #side.open { right: 0; }
+  #side .close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    cursor: pointer;
+    color: var(--dim);
+    font-size: 18px;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  #side .close:hover { color: #fff; background: rgba(255,255,255,0.08); }
+  #side h2 { font-size: 17px; margin-bottom: 2px; word-break: break-all; color: #f8fafc; }
+  #side .sub-lib { font-size: 12px; color: var(--dim); margin-bottom: 14px; }
+  .section-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--dim);
+    margin: 14px 0 6px;
+    font-weight: 700;
+  }
+  #side table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+  #side td {
+    padding: 5px 6px;
+    font-size: 12px;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+  }
+  #side td:first-child { color: var(--dim); width: 45%; }
+  #side td:last-child { font-family: monospace; font-weight: 600; color: #f1f5f9; }
+  .dep-list {
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: rgba(15, 23, 42, 0.5);
+    padding: 4px 8px;
+  }
+  .dep-item {
+    padding: 3px 0;
+    font-size: 12px;
+    color: var(--accent);
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+  }
+  .dep-item:hover { text-decoration: underline; color: #7dd3fc; }
+  .dep-empty { font-size: 11.5px; color: var(--dim); font-style: italic; padding: 4px 0; }
+  .badge-pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .zone-pain { background: rgba(239, 68, 68, 0.18); color: #f87171; border: 1px solid #ef4444; }
+  .zone-useless { background: rgba(245, 158, 11, 0.18); color: #fbbf24; border: 1px solid #f59e0b; }
+  .zone-balanced { background: rgba(34, 197, 94, 0.18); color: #4ade80; border: 1px solid #22c55e; }
+  .cycle-badge { background: #ef4444; color: #fff; }
+  #fallbackNotice {
+    position: absolute;
+    inset: 0;
+    background: #0f172a;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: #f8fafc;
+    z-index: 100;
+  }
 </style>
 </head>
 <body>
 <header>
-  <h1>🏗 __TITLE__</h1>
-  <div class="stats" id="stats"></div>
-  <button onclick="fitView()">Fit</button>
-  <button onclick="relayout()">Re-layout</button>
+  <div class="header-left">
+    <div class="header-title">
+      🏗 __TITLE__
+      <span class="badge-tag">GoJS Engine</span>
+    </div>
+    <div class="stats-bar">
+      <div class="stats-item">Modules: <span id="statModules">-</span></div>
+      <div class="stats-item">Deps: <span id="statDeps">-</span></div>
+      <div class="stats-item">Cycles: <span id="statCycles">-</span></div>
+    </div>
+  </div>
+  <div class="controls-bar">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="Search module..." oninput="searchModules(this.value)">
+    </div>
+    <select id="layoutSelect" onchange="changeLayout(this.value)">
+      <option value="layered">Layered Digraph</option>
+      <option value="force">Force-Directed</option>
+      <option value="tree">Tree Layout</option>
+    </select>
+    <button onclick="toggleGroups(true)">Expand All</button>
+    <button onclick="toggleGroups(false)">Collapse All</button>
+    <button onclick="fitView()">Fit</button>
+    <button onclick="relayout()">Re-layout</button>
+  </div>
 </header>
-<canvas id="cv"></canvas>
-<div id="legend"></div>
-<div id="side"><span class="close" onclick="closeSide()">✕</span><div id="sideBody"></div></div>
+
+<div id="mainContainer">
+  <div id="diagramDiv"></div>
+  <div id="overviewDiv">
+    <div id="overviewTitle">Minimap</div>
+  </div>
+  <div id="legend"></div>
+  <div id="side">
+    <span class="close" onclick="closeSide()">✕</span>
+    <div id="sideBody"></div>
+  </div>
+  <div id="fallbackNotice">
+    <h3>GoJS diagram library loading...</h3>
+    <p style="color:var(--dim)">Please ensure internet access to cdn.jsdelivr.net</p>
+  </div>
+</div>
+
 <script>
 const DATA = __DATA__;
-const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
-const side = document.getElementById('side'), sideBody = document.getElementById('sideBody');
-const nodes = DATA.nodes.map(n => Object.assign(n, {
-  r: 6 + Math.min(10, Math.sqrt(n.loc) / 2.5), vx: 0, vy: 0, x: 0, y: 0, fixed: false }));
-const byId = Object.fromEntries(nodes.map(n => [n.id, n]));
-const out = {}, inn = {};
-DATA.links.forEach(e => { (out[e.s] = out[e.s] || []).push(e.t); (inn[e.t] = inn[e.t] || []).push(e.s); });
 
-document.getElementById('stats').textContent =
-  `${DATA.modules} modules · ${DATA.edges} deps · ${DATA.cycles} cycles · grouped by ${DATA.groupBy}`;
-document.getElementById('legend').innerHTML = DATA.groups.map(g =>
-  `<div class="item"><span class="sw" style="background:${g.color}"></span>${g.label}</div>`).join('') +
-  `<div class="item"><span class="sw" style="background:#d63c3c"></span>cycle edge</div>`;
-
-let W = 0, H = 0, view = { x: 0, y: 0, k: 1 }, alpha = 1, selected = null, hover = null;
-function resize() {
-  const dpr = window.devicePixelRatio || 1;
-  W = window.innerWidth; H = window.innerHeight - 52;
-  cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + 'px'; cv.style.height = H + 'px';
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-}
-window.addEventListener('resize', resize); resize();
-
-(function place() {  // initial circular placement grouped by cluster
-  const per = Math.ceil(Math.sqrt(nodes.length)) || 1;
-  nodes.forEach((n, i) => {
-    const gx = (i % per) / per, gy = Math.floor(i / per) / per;
-    n.x = 60 + gx * 900 + (Math.random() - .5) * 80;
-    n.y = 60 + gy * 700 + (Math.random() - .5) * 80;
-  });
-})();
-
-function step() {
-  if (alpha > 0.004) {
-    const k = 70 * Math.sqrt((W * H) / Math.max(1, nodes.length));
-    for (let i = 0; i < nodes.length; i++) {       // repulsion
-      const a = nodes[i];
-      for (let j = i + 1; j < nodes.length; j++) {
-        const b = nodes[j];
-        let dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy || 1;
-        if (d2 > 250000) continue;
-        const f = (k * k) / d2, d = Math.sqrt(d2), fx = f * dx / d, fy = f * dy / d;
-        a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy;
-      }
-      a.vx += (W / 2 - a.x) * 0.002; a.vy += (H / 2 - a.y) * 0.002;  // gravity to center
-    }
-    DATA.links.forEach(e => {                        // spring attraction
-      const a = byId[e.s], b = byId[e.t]; if (!a || !b) return;
-      let dx = b.x - a.x, dy = b.y - a.y, d = Math.sqrt(dx * dx + dy * dy) || 1;
-      const f = (d - 90) * 0.015, fx = f * dx / d, fy = f * dy / d;
-      a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy;
-    });
-    nodes.forEach(n => {
-      if (n.fixed) { n.vx = n.vy = 0; return; }
-      n.vx *= 0.82; n.vy *= 0.82; n.x += Math.max(-25, Math.min(25, n.vx)); n.y += Math.max(-25, Math.min(25, n.vy));
-    });
-    alpha *= 0.985;
-  }
-  draw();
-  requestAnimationFrame(step);
+if (typeof go === 'undefined') {
+  document.getElementById('fallbackNotice').style.display = 'flex';
 }
 
-function draw() {
-  ctx.clearRect(0, 0, W, H);
-  ctx.save(); ctx.translate(view.x, view.y); ctx.scale(view.k, view.k);
-  const dimOn = selected !== null;
-  const neigh = selected === null ? {} :
-    Object.fromEntries([...(out[selected] || []), ...(inn[selected] || [])].map(x => [x, 1]));
-  DATA.links.forEach(e => {
-    const a = byId[e.s], b = byId[e.t]; if (!a || !b) return;
-    const hot = selected !== null && (e.s === selected || e.t === selected);
-    ctx.globalAlpha = dimOn && !hot ? 0.07 : 0.55;
-    ctx.strokeStyle = e.inCycle ? '#d63c3c' : e.crossLibrary ? '#b0650f' : '#5a6b80';
-    ctx.lineWidth = (e.inCycle ? 2.2 : 1) * (hot ? 1.8 : 1);
-    const dx = b.x - a.x, dy = b.y - a.y, d = Math.sqrt(dx * dx + dy * dy) || 1;
-    const tx = b.x - (dx / d) * (b.r + 3), ty = b.y - (dy / d) * (b.r + 3);   // trim to node edge
-    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(tx, ty); ctx.stroke();
-    if (hot || view.k > 1.6) arrow(a, tx, ty, dx / d, dy / d, ctx.strokeStyle); // arrowheads when readable
-  });
-  ctx.globalAlpha = 1;
-  nodes.forEach(n => {
-    const isNeigh = selected !== null && (n.id === selected || neigh[n.id]);
-    ctx.globalAlpha = dimOn && !isNeigh ? 0.15 : 1;
-    ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, 7);
-    ctx.fillStyle = n.groupColor; ctx.fill();
-    ctx.lineWidth = n.cycle ? 2.5 : n.id === selected ? 3 : 1;
-    ctx.strokeStyle = n.cycle ? '#d63c3c' : n.id === selected ? '#ffffff' : '#20242c';
-    ctx.stroke();
-    if (n.isEntry) { ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(n.x, n.y, 2, 0, 7); ctx.fill(); }
-    if (view.k > 0.9 || isNeigh) {
-      ctx.globalAlpha = (dimOn && !isNeigh) ? 0.15 : 0.9;
-      ctx.font = `${Math.max(9, 10 / view.k)}px sans-serif`; ctx.textAlign = 'center';
-      ctx.fillStyle = n.id === selected ? '#ffffff' : '#aebccd';
-      ctx.fillText(n.label + (n.hasInterface ? ' 📄' : ''), n.x, n.y + n.r + 11 / view.k + 2);
-    }
-  });
-  ctx.globalAlpha = 1; ctx.restore();
-}
-function arrow(a, tx, ty, ux, uy, color) {
-  const s = 6;
-  ctx.beginPath();
-  ctx.moveTo(tx, ty);
-  ctx.lineTo(tx - s * ux - s * 0.45 * uy, ty - s * uy + s * 0.45 * ux);
-  ctx.lineTo(tx - s * ux + s * 0.45 * uy, ty - s * uy - s * 0.45 * ux);
-  ctx.closePath(); ctx.fillStyle = color; ctx.fill();
+document.getElementById('statModules').textContent = DATA.modules;
+document.getElementById('statDeps').textContent = DATA.edges;
+document.getElementById('statCycles').textContent = DATA.cycles;
+if (DATA.cycles > 0) {
+  document.getElementById('statCycles').style.color = '#ef4444';
 }
 
+// Build Legend
+const legendDiv = document.getElementById('legend');
+legendDiv.innerHTML = `<h4>Libraries (${DATA.groups.length})</h4>` +
+  DATA.groups.map(g => `<div class="item" onclick="focusGroup('${g.label}')"><span class="sw" style="background:${g.color}"></span>${g.label}</div>`).join('') +
+  `<div class="item"><span class="sw" style="background:#ef4444"></span>cycle link</div>` +
+  `<div class="item"><span class="sw" style="background:#f59e0b"></span>cross-lib link</div>`;
+
+// Dependency maps for fast lookup
+const outMap = {}, inMap = {};
+DATA.links.forEach(e => {
+  (outMap[e.s] = outMap[e.s] || []).push(e.t);
+  (inMap[e.t] = inMap[e.t] || []).push(e.s);
+});
+
+// Initialize GoJS Diagram
+const $ = go.GraphObject.make;
+
+const myDiagram = $(go.Diagram, "diagramDiv", {
+  "undoManager.isEnabled": true,
+  "animationManager.isEnabled": true,
+  initialAutoScale: go.Diagram.Uniform,
+  padding: 30,
+  layout: $(go.LayeredDigraphLayout, {
+    direction: 90,
+    layerSpacing: 50,
+    columnSpacing: 25,
+    setsPortSpots: false,
+    aggressiveOption: go.LayeredDigraphLayout.AggressiveMore
+  })
+});
+
+// Minimap Overview
+const myOverview = $(go.Overview, "overviewDiv", {
+  observed: myDiagram,
+  contentAlignment: go.Spot.Center
+});
+
+// Node Selection & Highlight Adornment
+const nodeSelectionAdornment =
+  $(go.Adornment, "Auto",
+    $(go.Shape, "RoundedRectangle", { parameter1: 8, fill: null, stroke: "#38bdf8", strokeWidth: 3 }),
+    $(go.Placeholder)
+  );
+
+// Node Template
+myDiagram.nodeTemplate =
+  $(go.Node, "Auto",
+    {
+      selectionAdornmentTemplate: nodeSelectionAdornment,
+      click: (e, node) => showDetails(node.data),
+      toolTip:
+        $("ToolTip",
+          { "Border.fill": "#1e293b", "Border.stroke": "#475569" },
+          $(go.TextBlock,
+            { margin: 6, font: "12px monospace", stroke: "#f8fafc" },
+            new go.Binding("text", "", d =>
+              `${d.id}\nLOC: ${d.loc} | Ca: ${d.ca} | Ce: ${d.ce}\nInstability (I): ${d.i} | Abstractness (A): ${d.a}\nZone: ${d.zone}`)
+          )
+        )
+    },
+    $(go.Shape, "RoundedRectangle",
+      {
+        parameter1: 6,
+        fill: "#1e293b",
+        stroke: "#334155",
+        strokeWidth: 1.5,
+        cursor: "pointer"
+      },
+      new go.Binding("stroke", "cycle", c => c ? "#ef4444" : "#334155"),
+      new go.Binding("strokeWidth", "cycle", c => c ? 2.5 : 1.5),
+      new go.Binding("fill", "isHighlighted", h => h ? "#0c4a6e" : "#1e293b")
+    ),
+    $(go.Panel, "Vertical",
+      { margin: new go.Margin(6, 8, 6, 8) },
+      // Header: Dot color + Module Name
+      $(go.Panel, "Horizontal",
+        { alignment: go.Spot.Left },
+        $(go.Shape, "Circle",
+          { width: 8, height: 8, strokeWidth: 0, margin: new go.Margin(0, 6, 0, 0) },
+          new go.Binding("fill", "groupColor")
+        ),
+        $(go.TextBlock,
+          {
+            font: "bold 13px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+            stroke: "#f8fafc",
+            maxSize: new go.Size(200, NaN),
+            wrap: go.TextBlock.WrapFit
+          },
+          new go.Binding("text", "label")
+        )
+      ),
+      // Stats: LOC & Instability
+      $(go.Panel, "Horizontal",
+        { margin: new go.Margin(3, 0, 0, 0), alignment: go.Spot.Left },
+        $(go.TextBlock,
+          { font: "11px monospace", stroke: "#94a3b8" },
+          new go.Binding("text", "", d => `LOC: ${d.loc} · I: ${d.i}`)
+        )
+      ),
+      // Badge: Zone / Cycle
+      $(go.Panel, "Auto",
+        { margin: new go.Margin(4, 0, 0, 0), alignment: go.Spot.Left },
+        $(go.Shape, "RoundedRectangle",
+          { parameter1: 4, strokeWidth: 0 },
+          new go.Binding("fill", "zone", z => {
+            if (z === "zone of pain") return "#7f1d1d";
+            if (z === "zone of uselessness") return "#78350f";
+            return "#14532d";
+          })
+        ),
+        $(go.TextBlock,
+          { margin: new go.Margin(1, 5, 1, 5), font: "10px sans-serif", stroke: "#f8fafc" },
+          new go.Binding("text", "zone")
+        )
+      )
+    )
+  );
+
+// Group Template (Dune Library Cluster)
+myDiagram.groupTemplate =
+  $(go.Group, "Auto",
+    {
+      layout: $(go.LayeredDigraphLayout, { direction: 90, layerSpacing: 25, columnSpacing: 20 }),
+      isSubGraphExpanded: true,
+      computesBoundsAfterParent: true
+    },
+    $(go.Shape, "RoundedRectangle",
+      {
+        parameter1: 8,
+        fill: "rgba(30, 41, 59, 0.4)",
+        stroke: "#475569",
+        strokeWidth: 1.5,
+        strokeDashArray: [4, 4]
+      },
+      new go.Binding("stroke", "color")
+    ),
+    $(go.Panel, "Vertical",
+      { defaultAlignment: go.Spot.Left, margin: 8 },
+      $(go.Panel, "Horizontal",
+        { defaultAlignment: go.Spot.Center, margin: new go.Margin(0, 0, 6, 0) },
+        $("SubGraphExpanderButton", { margin: new go.Margin(0, 6, 0, 0) }),
+        $(go.TextBlock,
+          { font: "bold 13px sans-serif", stroke: "#f1f5f9" },
+          new go.Binding("text", "label")
+        ),
+        $(go.Shape, "Circle",
+          { width: 8, height: 8, strokeWidth: 0, margin: new go.Margin(0, 0, 0, 8) },
+          new go.Binding("fill", "color")
+        )
+      ),
+      $(go.Placeholder, { padding: new go.Margin(6, 6, 6, 6) })
+    )
+  );
+
+// Link Template
+myDiagram.linkTemplate =
+  $(go.Link,
+    {
+      routing: go.Link.AvoidsNodes,
+      curve: go.Link.JumpOver,
+      corner: 6,
+      toShortLength: 3,
+      toolTip:
+        $("ToolTip",
+          { "Border.fill": "#1e293b", "Border.stroke": "#475569" },
+          $(go.TextBlock,
+            { margin: 4, font: "11px monospace", stroke: "#f8fafc" },
+            new go.Binding("text", "", d =>
+              `${d.s} → ${d.t}\n[${d.kind}] weight: ${d.weight}${d.inCycle ? ' (CYCLE)' : ''}${d.crossLibrary ? ' (cross-lib)' : ''}`)
+          )
+        )
+    },
+    $(go.Shape,
+      { strokeWidth: 1.2 },
+      new go.Binding("stroke", "", d => d.inCycle ? "#ef4444" : d.crossLibrary ? "#f59e0b" : "#475569"),
+      new go.Binding("strokeWidth", "inCycle", c => c ? 2.5 : 1.2),
+      new go.Binding("strokeDashArray", "inCycle", c => c ? [6, 3] : null)
+    ),
+    $(go.Shape,
+      { toArrow: "Standard", strokeWidth: 0 },
+      new go.Binding("fill", "", d => d.inCycle ? "#ef4444" : d.crossLibrary ? "#f59e0b" : "#475569")
+    )
+  );
+
+// Populate Model
+const groupNodes = DATA.groups.map(g => ({
+  id: g.label,
+  key: g.label,
+  label: g.label,
+  isGroup: true,
+  color: g.color
+}));
+
+const moduleNodes = DATA.nodes.map(n => ({
+  ...n,
+  key: n.id,
+  group: n.group
+}));
+
+const linkData = DATA.links.map(l => ({
+  from: l.s,
+  to: l.t,
+  ...l
+}));
+
+myDiagram.model = new go.GraphLinksModel({
+  nodeKeyProperty: "key",
+  nodeGroupKeyProperty: "group",
+  linkFromKeyProperty: "from",
+  linkToKeyProperty: "to",
+  nodeDataArray: [...groupNodes, ...moduleNodes],
+  linkDataArray: linkData
+});
+
+// UI Actions
 function fitView() {
-  if (!nodes.length) return;
-  let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
-  nodes.forEach(n => { x0 = Math.min(x0, n.x); y0 = Math.min(y0, n.y); x1 = Math.max(x1, n.x); y1 = Math.max(y1, n.y); });
-  const pad = 70;
-  view.k = Math.min(2.2, Math.max(0.15, Math.min(W / (x1 - x0 + pad), H / (y1 - y0 + pad))));
-  view.x = W / 2 - view.k * (x0 + x1) / 2; view.y = H / 2 - view.k * (y0 + y1) / 2;
+  myDiagram.commandHandler.zoomToFit();
 }
-function relayout() { alpha = 1; }
 
-function toWorld(mx, my) { return { x: (mx - view.x) / view.k, y: (my - view.y) / view.k }; }
-function hit(mx, my) {
-  const p = toWorld(mx, my);
-  for (let i = nodes.length - 1; i >= 0; i--) {
-    const n = nodes[i], dx = p.x - n.x, dy = p.y - n.y;
-    if (dx * dx + dy * dy <= (n.r + 4) * (n.r + 4)) return n;
-  }
-  return null;
+function relayout() {
+  myDiagram.layoutDiagram(true);
 }
-let drag = null, panning = false, moved = 0, last = null;
-cv.addEventListener('mousedown', e => {
-  const r = cv.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top;
-  moved = 0; last = { x: e.clientX, y: e.clientY };
-  const n = hit(mx, my);
-  if (n) { drag = n; n.fixed = true; alpha = Math.max(alpha, 0.3); }
-  else { panning = true; cv.style.cursor = 'grabbing'; }
-});
-window.addEventListener('mousemove', e => {
-  if (drag) {
-    const r = cv.getBoundingClientRect(), p = toWorld(e.clientX - r.left, e.clientY - r.top);
-    drag.x = p.x; drag.y = p.y; moved++;
-  } else if (panning && last) {
-    view.x += e.clientX - last.x; view.y += e.clientY - last.y; moved++;
-    last = { x: e.clientX, y: e.clientY };
-  }
-});
-window.addEventListener('mouseup', () => {
-  if (drag && moved < 4) select(drag.id);
-  if (!drag && panning && moved < 4) closeSide();
-  if (drag) drag.fixed = false;
-  drag = null; panning = false; cv.style.cursor = 'grab';
-});
-cv.addEventListener('wheel', e => {
-  e.preventDefault();
-  const r = cv.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top;
-  const f = e.deltaY < 0 ? 1.12 : 1 / 1.12, k2 = Math.min(6, Math.max(0.08, view.k * f));
-  view.x = mx - (mx - view.x) * (k2 / view.k); view.y = my - (my - view.y) * (k2 / view.k); view.k = k2;
-}, { passive: false });
 
-function select(id) {
-  selected = id; const n = byId[id]; if (!n) return;
-  const zoneCls = n.zone === 'zone of pain' ? 'zone-pain' : n.zone === 'zone of uselessness' ? 'zone-useless' : '';
-  const deps = [...new Set(out[id] || [])].sort(), users = [...new Set(inn[id] || [])].sort();
-  sideBody.innerHTML = `
-    <h2>${n.id}</h2>
-    <div class="badges"><span>${n.library || 'no library'}</span><span>${n.layer}</span>
-      ${n.hasInterface ? '<span>.mli</span>' : ''}${n.isEntry ? '<span>entry point</span>' : ''}
-      ${n.cycle ? '<span style="color:#d63c3c;border-color:#d63c3c">in cycle</span>' : ''}</div>
-    <table>
-      <tr><td>LOC</td><td>${n.loc}</td></tr>
-      <tr><td>Afferent Ca</td><td>${n.ca} module(s) depend on it</td></tr>
-      <tr><td>Efferent Ce</td><td>depends on ${n.ce} module(s)</td></tr>
-      <tr><td>Instability I</td><td>${(+n.i).toFixed(2)}</td></tr>
-      <tr><td>Abstractness A</td><td>${(+n.a).toFixed(2)}</td></tr>
-      <tr><td>Main-seq D</td><td>${(+n.d).toFixed(2)} <span class="${zoneCls}">(${n.zone})</span></td></tr>
-    </table>
-    <strong>Depends on (${deps.length})</strong>${deps.map(d => `<span class="dep" onclick="select('${d}')">→ ${d}</span>`).join('') || '<div class="dim">none</div>'}
-    <p></p><strong>Used by (${users.length})</strong>${users.map(u => `<span class="dep" onclick="select('${u}')">← ${u}</span>`).join('') || '<div class="dim">none</div>'}`;
+function changeLayout(type) {
+  myDiagram.startTransaction("changeLayout");
+  if (type === "layered") {
+    myDiagram.layout = $(go.LayeredDigraphLayout, {
+      direction: 90,
+      layerSpacing: 50,
+      columnSpacing: 25,
+      setsPortSpots: false,
+      aggressiveOption: go.LayeredDigraphLayout.AggressiveMore
+    });
+  } else if (type === "force") {
+    myDiagram.layout = $(go.ForceDirectedLayout, {
+      defaultSpringLength: 70,
+      defaultElectricalCharge: 150
+    });
+  } else if (type === "tree") {
+    myDiagram.layout = $(go.TreeLayout, {
+      angle: 90,
+      layerSpacing: 45,
+      nodeSpacing: 30
+    });
+  }
+  myDiagram.commitTransaction("changeLayout");
+}
+
+function toggleGroups(expand) {
+  myDiagram.startTransaction("toggleGroups");
+  myDiagram.nodes.each(n => {
+    if (n instanceof go.Group) {
+      n.isSubGraphExpanded = expand;
+    }
+  });
+  myDiagram.commitTransaction("toggleGroups");
+}
+
+function focusGroup(groupLabel) {
+  const g = myDiagram.findNodeForKey(groupLabel);
+  if (g) {
+    myDiagram.select(g);
+    myDiagram.centerRect(g.actualBounds);
+  }
+}
+
+function searchModules(term) {
+  if (!term) {
+    myDiagram.clearHighlighteds();
+    return;
+  }
+  myDiagram.startTransaction("search");
+  myDiagram.clearHighlighteds();
+  const lower = term.toLowerCase();
+  let firstMatch = null;
+  myDiagram.nodes.each(n => {
+    if (!n.data.isGroup && n.data.label && n.data.label.toLowerCase().includes(lower)) {
+      n.isHighlighted = true;
+      if (!firstMatch) firstMatch = n;
+    }
+  });
+  if (firstMatch) {
+    myDiagram.centerRect(firstMatch.actualBounds);
+    showDetails(firstMatch.data);
+  }
+  myDiagram.commitTransaction("search");
+}
+
+function closeSide() {
+  document.getElementById('side').classList.remove('open');
+}
+
+function selectNode(id) {
+  const n = myDiagram.findNodeForKey(id);
+  if (n) {
+    myDiagram.select(n);
+    myDiagram.centerRect(n.actualBounds);
+    showDetails(n.data);
+  }
+}
+
+function showDetails(n) {
+  if (!n || n.isGroup) return;
+  const side = document.getElementById('side');
+  const body = document.getElementById('sideBody');
   side.classList.add('open');
-}
-function closeSide() { selected = null; side.classList.remove('open'); }
 
-fitView(); step();
+  const outs = outMap[n.id] || [];
+  const ins = inMap[n.id] || [];
+
+  const zonePill = n.zone === "zone of pain"
+    ? `<span class="badge-pill zone-pain">Zone of Pain (D=${n.d})</span>`
+    : n.zone === "zone of uselessness"
+    ? `<span class="badge-pill zone-useless">Zone of Uselessness (D=${n.d})</span>`
+    : `<span class="badge-pill zone-balanced">Balanced (D=${n.d})</span>`;
+
+  const cyclePill = n.cycle ? `<span class="badge-pill cycle-badge">IN CYCLE</span>` : '';
+
+  body.innerHTML = `
+    <h2>${n.label}</h2>
+    <div class="sub-lib">${n.id} · Library: <b>${n.library || '—'}</b></div>
+    <div style="margin-bottom:12px">${zonePill} ${cyclePill}</div>
+
+    <div class="section-title">Robert C. Martin Component Metrics</div>
+    <table>
+      <tr><td>Lines of Code (LOC)</td><td>${n.loc}</td></tr>
+      <tr><td>Afferent Coupling (Ca)</td><td>${n.ca} (incoming)</td></tr>
+      <tr><td>Efferent Coupling (Ce)</td><td>${n.ce} (outgoing)</td></tr>
+      <tr><td>Instability (I = Ce/(Ca+Ce))</td><td>${n.i}</td></tr>
+      <tr><td>Abstractness (A)</td><td>${n.a}</td></tr>
+      <tr><td>Distance to Main Sequence (D)</td><td>${n.d}</td></tr>
+      <tr><td>Has .mli Interface</td><td>${n.hasInterface ? '✓ Yes' : '✗ No'}</td></tr>
+    </table>
+
+    <div class="section-title">Dependencies (${outs.length})</div>
+    <div class="dep-list">
+      ${outs.length ? outs.map(x => `<a class="dep-item" onclick="selectNode('${x}')">→ ${x}</a>`).join('') : '<div class="dep-empty">None (leaf module)</div>'}
+    </div>
+
+    <div class="section-title">Depended on by (${ins.length})</div>
+    <div class="dep-list">
+      ${ins.length ? ins.map(x => `<a class="dep-item" onclick="selectNode('${x}')">← ${x}</a>`).join('') : '<div class="dep-empty">None (root / entry module)</div>'}
+    </div>
+  `;
+}
 </script>
 </body>
 </html>
