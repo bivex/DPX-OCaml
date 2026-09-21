@@ -6,8 +6,10 @@ import re
 
 from pattern_detector.domain.code_model import CodeModel
 from pattern_detector.domain.detection import Detection
-from pattern_detector.domain.rules.base import BasePatternRule
+from pattern_detector.domain.rules.base import BasePatternRule, strip_comments_and_strings
 from pattern_detector.domain.value_objects import Evidence, PatternType
+
+_CATCH_ALL_REGEX = re.compile(r"\btry[\s\S]*?\bwith\s+(?:_\s*->|\|\s*_\s*->|Failure\s+_\s*->)")
 
 
 class DefensiveCatchAllExnRule(BasePatternRule):
@@ -22,7 +24,8 @@ class DefensiveCatchAllExnRule(BasePatternRule):
 
         for m in model.all_modules():
             for fn in m.functions.values():
-                if re.search(r"try[\s\S]*?with\s+_\s*->", fn.body) or re.search(r"try[\s\S]*?with\s+Failure\s+_\s*->", fn.body):
+                clean_body = strip_comments_and_strings(fn.body)
+                if _CATCH_ALL_REGEX.search(clean_body):
                     evidences = [
                         Evidence(
                             description=f"Resilience Smell (Defensive Catch-All): Function '{fn.id_str}' in '{m.name}' swallows all exceptions (`with _ -> ...`); catch specific expected exceptions only",

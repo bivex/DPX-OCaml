@@ -78,3 +78,17 @@ def test_detect_monad_effects_and_safety_smells():
 
     catch_all = DefensiveCatchAllExnRule().detect(model)
     assert len(catch_all) == 1
+
+
+def test_physical_equality_ignores_string_literals_and_comments():
+    source = """
+    let emit_c_code b =
+      Buffer.add_string b "if (x == NULL || y != 0) return -1;\\n";
+      (* Note: do not use a == b here *)
+      Buffer.add_string b {| if (a == b) exit(1); |}
+    """
+    parser = NativeOCamlParserAdapter()
+    model = parser.parse_sources({"lib/c_gen.ml": source})
+
+    phys = PhysicalEqualitySmellRule().detect(model)
+    assert len(phys) == 0, "String literals and comments containing ==/!= must not trigger physical equality smell"

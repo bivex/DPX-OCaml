@@ -2,10 +2,14 @@
 
 from __future__ import annotations
 
+import re
+
 from pattern_detector.domain.code_model import CodeModel
 from pattern_detector.domain.detection import Detection
-from pattern_detector.domain.rules.base import BasePatternRule
+from pattern_detector.domain.rules.base import BasePatternRule, strip_comments_and_strings
 from pattern_detector.domain.value_objects import Evidence, PatternType
+
+_PHYSICAL_EQ_REGEX = re.compile(r"(?<![=!<>:])(?:==|!=)(?![=!<>:])")
 
 
 class PhysicalEqualitySmellRule(BasePatternRule):
@@ -20,7 +24,8 @@ class PhysicalEqualitySmellRule(BasePatternRule):
 
         for m in model.all_modules():
             for fn in m.functions.values():
-                if " == " in fn.body or " != " in fn.body:
+                clean_body = strip_comments_and_strings(fn.body)
+                if _PHYSICAL_EQ_REGEX.search(clean_body):
                     evidences = [
                         Evidence(
                             description=f"Type Safety Hazard (Physical Equality): Function '{fn.id_str}' in '{m.name}' uses physical pointer equality (`==` / `!=`); use structural value equality (`=` / `<>`) to avoid subtle value comparison bugs",

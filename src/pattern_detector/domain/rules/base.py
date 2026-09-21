@@ -94,3 +94,61 @@ class BasePatternRule(ABC):
             related_locations=related_locations or [],
             metadata=metadata or {},
         )
+
+
+def strip_comments_and_strings(text: str) -> str:
+    """Blank out OCaml comments (nested) and string/quoted-string literals.
+
+    Newlines inside comments/strings are preserved so line-based analysis stays stable.
+    """
+    import re
+    out: list[str] = []
+    i, n = 0, len(text)
+    while i < n:
+        ch = text[i]
+        if ch == "(" and i + 1 < n and text[i + 1] == "*":  # nested comment
+            depth = 1
+            i += 2
+            while i < n and depth > 0:
+                if text.startswith("(*", i):
+                    depth += 1
+                    out.append("  ")
+                    i += 2
+                elif text.startswith("*)", i):
+                    depth -= 1
+                    out.append("  ")
+                    i += 2
+                else:
+                    out.append(text[i] if text[i] == "\n" else " ")
+                    i += 1
+        elif ch == '"':  # string literal with escapes
+            out.append(" ")
+            i += 1
+            while i < n:
+                if text[i] == "\\":
+                    out.append("  " if text[i + 1 : i + 2] == "\n" else " ")
+                    i += 2
+                    continue
+                if text[i] == '"':
+                    out.append(" ")
+                    i += 1
+                    break
+                out.append(text[i] if text[i] == "\n" else " ")
+                i += 1
+        elif ch == "{":  # quoted string literal {| ... |} or {id| ... |id}
+            m = re.match(r"\{([A-Za-z0-9_]*)\|", text[i:])
+            if m:
+                tag = m.group(1)
+                closer = f"|{tag}}}"
+                end = text.find(closer, i)
+                end = n if end == -1 else end + len(closer)
+                chunk = text[i:end]
+                out.append("".join(c if c == "\n" else " " for c in chunk))
+                i = end
+            else:
+                out.append(ch)
+                i += 1
+        else:
+            out.append(ch)
+            i += 1
+    return "".join(out)

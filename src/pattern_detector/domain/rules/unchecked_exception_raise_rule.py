@@ -2,10 +2,14 @@
 
 from __future__ import annotations
 
+import re
+
 from pattern_detector.domain.code_model import CodeModel
 from pattern_detector.domain.detection import Detection
-from pattern_detector.domain.rules.base import BasePatternRule
+from pattern_detector.domain.rules.base import BasePatternRule, strip_comments_and_strings
 from pattern_detector.domain.value_objects import Evidence, PatternType
+
+_THROW_REGEX = re.compile(r"\bfailwith\s+|\braise\s+(?!Exit\b)|\braise_notrace\s+")
 
 
 class UncheckedExceptionRaiseRule(BasePatternRule):
@@ -20,8 +24,8 @@ class UncheckedExceptionRaiseRule(BasePatternRule):
 
         for m in model.all_modules():
             for fn in m.functions.values():
-                body = fn.body
-                if "failwith " in body or "raise " in body or "raise_notrace " in body:
+                clean_body = strip_comments_and_strings(fn.body)
+                if _THROW_REGEX.search(clean_body):
                     evidences = [
                         Evidence(
                             description=f"Type Safety Audit: Function '{fn.id_str}' in '{m.name}' throws unhandled runtime exception (`failwith`/`raise`); return typed `Result.t` or `Option.t` instead",
