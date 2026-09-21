@@ -874,6 +874,34 @@ def test_test_reaching_internals_not_false_positive(tmp_path: Path) -> None:
     assert reaching == [], f"False positive: {reaching}"
 
 
+def test_test_reaching_internals_detected(tmp_path: Path) -> None:
+    """Test accessing an unexported internal module of a library with a facade MUST trigger test_reaching_internals."""
+    (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")
+    (tmp_path / "lib").mkdir()
+    (tmp_path / "lib" / "dune").write_text("(library (name mylib))\n")
+    (tmp_path / "lib" / "mylib.ml").write_text("let pub = 42\n")
+    (tmp_path / "lib" / "internal_secret.ml").write_text("let secret = 99\n")
+    (tmp_path / "tests").mkdir()
+    (tmp_path / "tests" / "dune").write_text(
+        "(test (name run_tests) (libraries mylib))\n"
+    )
+    # Test bypasses Mylib and directly accesses Internal_secret
+    (tmp_path / "tests" / "test_bad.ml").write_text(
+        "open Mylib\nlet () = ignore Internal_secret.secret\n"
+    )
+
+    service = ArchitectureScanService(
+        source_provider=FileSourceProvider(),
+        dune_parser=DuneManifestParser(),
+        extractor=ModuleDependencyExtractor(),
+    )
+    result = service.scan_architecture(str(tmp_path))
+    reaching = [i for i in result.issues if i.kind.value == "test_reaching_internals"]
+    assert len(reaching) == 1
+    assert "Internal_secret" in reaching[0].message
+    assert "mylib" in reaching[0].message
+
+
 def test_module_name_collision_detected(tmp_path: Path) -> None:
     """Two libraries define a module with the same name — collision must be reported."""
     (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")

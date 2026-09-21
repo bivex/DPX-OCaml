@@ -817,12 +817,40 @@ class ArchitectureScanService(ScanArchitectureUseCase):
                     if tgt_stanza is None or not tgt_stanza.wrapped:
                         continue
                     facade_name = self._wrap_prefix(tgt_stanza)
-                    # Accessing the wrapper/facade module itself is fine (public API entry point).
-                    # Accessing any other sub-module is a bypass of the library interface.
-                    if tgt_node.name != facade_name:
-                        reaching_internals.setdefault(
-                            (edge.source, tgt_lib_name), []
-                        ).append(tgt_node.name)
+                    # A library only has a facade if a compilation unit matching facade_name exists on disk.
+                    # Without an explicit facade file, Dune exposes all modules in the library equally.
+                    facade_node = next(
+                        (n for n in graph.nodes.values() if n.dune_library == tgt_lib_name and n.name == facade_name),
+                        None,
+                    )
+                    if facade_node is None:
+                        continue
+                    if tgt_node.name == facade_name:
+                        continue
+
+                    # Check if the target module is explicitly re-exported by the facade (.ml or .mli)
+                    reexport_pat = rf"\bmodule\s+{tgt_node.name}\s*[:=]"
+                    is_reexported = False
+                    if facade_node.file_path:
+                        try:
+                            ml_text = Path(facade_node.file_path).read_text(encoding="utf-8")
+                            if re.search(reexport_pat, ml_text):
+                                is_reexported = True
+                        except OSError:
+                            pass
+                        if not is_reexported and facade_node.has_interface:
+                            mli_path = Path(facade_node.file_path).with_suffix(".mli")
+                            try:
+                                if mli_path.exists() and re.search(reexport_pat, mli_path.read_text(encoding="utf-8")):
+                                    is_reexported = True
+                            except OSError:
+                                pass
+                    if is_reexported:
+                        continue
+
+                    reaching_internals.setdefault(
+                        (edge.source, tgt_lib_name), []
+                    ).append(tgt_node.name)
 
                 for (src_module, tgt_lib_name), internal_names in reaching_internals.items():
                     tgt_stanza = local_libs_map[tgt_lib_name]
