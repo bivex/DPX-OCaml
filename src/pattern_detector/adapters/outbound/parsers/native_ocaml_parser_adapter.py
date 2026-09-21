@@ -64,9 +64,8 @@ class NativeOCamlParserAdapter(ParserPort):
     # -------------------------------------------------------------------------
 
     def _strip_comments_and_strings(self, text: str) -> str:
-        # Strip nested comments (* ... *)
-        clean = re.sub(r"\(\*[\s\S]*?\*\)", " ", text)
-        return clean
+        from pattern_detector.domain.rules.base import strip_comments_and_strings
+        return strip_comments_and_strings(text)
 
     def _parse_includes(self, text: str) -> list[str]:
         includes = []
