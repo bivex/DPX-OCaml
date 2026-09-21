@@ -2,13 +2,25 @@
 
 from __future__ import annotations
 
-from pattern_detector.adapters.outbound.parsers.native_ocaml_parser_adapter import NativeOCamlParserAdapter
-from pattern_detector.domain.rules.defensive_catch_all_exn_rule import DefensiveCatchAllExnRule
+from pattern_detector.adapters.outbound.parsers.native_ocaml_parser_adapter import (
+    NativeOCamlParserAdapter,
+)
+from pattern_detector.domain.rules.defensive_catch_all_exn_rule import (
+    DefensiveCatchAllExnRule,
+)
 from pattern_detector.domain.rules.effect_handlers_rule import EffectHandlersRule
-from pattern_detector.domain.rules.functor_parametric_module_rule import FunctorParametricModuleRule
-from pattern_detector.domain.rules.gadts_expression_eval_rule import GadtsExpressionEvalRule
-from pattern_detector.domain.rules.physical_equality_smell_rule import PhysicalEqualitySmellRule
-from pattern_detector.domain.rules.railway_monadic_bind_rule import RailwayMonadicBindRule
+from pattern_detector.domain.rules.functor_parametric_module_rule import (
+    FunctorParametricModuleRule,
+)
+from pattern_detector.domain.rules.gadts_expression_eval_rule import (
+    GadtsExpressionEvalRule,
+)
+from pattern_detector.domain.rules.physical_equality_smell_rule import (
+    PhysicalEqualitySmellRule,
+)
+from pattern_detector.domain.rules.railway_monadic_bind_rule import (
+    RailwayMonadicBindRule,
+)
 
 
 def test_detect_functor_and_gadts():

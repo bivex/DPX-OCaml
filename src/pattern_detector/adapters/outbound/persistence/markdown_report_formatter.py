@@ -11,7 +11,7 @@ class MarkdownReportFormatter(ReportFormatterPort):
 
     def format(self, report: DetectionReport) -> str:
         lines = [
-            f"# 🐫 DPX-OCaml: Module Architecture & Functional Pattern Report",
+            "# 🐫 DPX-OCaml: Module Architecture & Functional Pattern Report",
             "",
             f"- **Target Path:** `{report.project_path}`",
             f"- **Files Scanned:** `{report.scanned_files_count}`",

@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import re
 from pattern_detector.domain.code_model import CodeModel
 from pattern_detector.domain.detection import Detection
 from pattern_detector.domain.rules.base import BasePatternRule

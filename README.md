@@ -75,6 +75,52 @@ uv run dpx-ocaml scan /path/to/ocaml_project -S reports/security.sarif
 uv run dpx-ocaml scan /path/to/ocaml_project --llm
 ```
 
+### Architecture & Dependency Graph Scanner (`dpx arch`)
+
+Zero-config architectural X-ray for Dune projects: builds the module dependency DAG,
+classifies modules into hexagonal layers, and reports cycles, layer inversions and
+Martin component metrics.
+
+```bash
+# Rich terminal report (default)
+uv run dpx arch /path/to/ocaml_project
+
+# Every format at once, written to ./arch_report/
+uv run dpx arch /path/to/ocaml_project -f all -o ./arch_report
+
+# Just the circular dependencies, as Mermaid
+uv run dpx arch /path/to/ocaml_project -f mermaid --show-cycles-only
+```
+
+| Option | Values | Default |
+|---|---|---|
+| `PATH` | project directory | `.` |
+| `-f, --format` | `terminal` \| `mermaid` \| `dot` \| `html` \| `json` \| `all` | `terminal` |
+| `--group-by` | `dune-library` \| `layer` \| `directory` | `dune-library` |
+| `--show-cycles-only` | only circular dependencies | off |
+| `--metrics/--no-metrics` | Martin metrics matrix (Ca/Ce/I/A/D) | on |
+| `-o, --out` | output directory for file formats | cwd |
+
+**What it detects:**
+
+- 🔁 **Circular dependencies** — Tarjan SCC over the module graph, with cross-library
+  cycles flagged separately (those cannot be broken with a local `module rec`).
+- ⚠️ **Layer violations** — dependency direction that breaks ports-and-adapters
+  boundaries (e.g. Domain → Infrastructure).
+- ℹ️ **Orphans & smells** — isolated modules, god modules (>400 LOC), hub modules
+  (>15 efferent deps), interface-bypass hotspots.
+- 📊 **Martin metrics** — per-module Afferent/Efferent coupling, Instability,
+  Abstractness and Main-Sequence distance, with *zone of pain* / *zone of uselessness*
+  classification.
+
+The pipeline reads `dune`/`dune-project` S-expressions (wrapped libraries,
+`(select ... from ...)` dependencies, `default_wrapped`), extracts per-compilation-unit
+facts (opens, includes, functor applications, qualified references, `type t` exports)
+from `.ml`/`.mli` pairs, and falls back to pure filesystem grouping when no Dune
+manifests exist. The `html` export is a single self-contained interactive file —
+zoom, drag, click-to-highlight neighborhoods — with no CDN dependencies. Scans
+500 modules in well under a second.
+
 ---
 
 ---

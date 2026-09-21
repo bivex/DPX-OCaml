@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import time
 
-from pattern_detector.domain.code_model import CodeModel
 from pattern_detector.domain.detection import Detection, DetectionReport
 from pattern_detector.domain.value_objects import ConfidenceLevel, PatternCategory
 from pattern_detector.ports.inbound import DetectorPort, ScannerPort, ScanOptions

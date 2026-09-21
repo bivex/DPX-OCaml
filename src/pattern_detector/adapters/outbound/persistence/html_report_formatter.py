@@ -4,11 +4,9 @@ from __future__ import annotations
 
 import html
 import os
-from typing import Any
 
 from pattern_detector.domain.detection import Detection, DetectionReport
 from pattern_detector.domain.value_objects import (
-    ConfidenceLevel,
     PatternCategory,
     PatternType,
 )

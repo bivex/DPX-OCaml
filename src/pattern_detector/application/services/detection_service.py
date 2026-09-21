@@ -25,7 +25,7 @@ class DetectionService(DetectorPort):
             try:
                 detections = rule.detect(model)
                 all_detections.extend(detections)
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001 — rule isolation boundary: a failing rule must not abort the scan
                 if options.verbose:
                     print(f"Warning: Rule {rule.name} failed: {e}")
 

@@ -6,15 +6,15 @@ from pathlib import Path
 from typing import Annotated
 
 import typer
-from rich import print as rprint
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 
-from pattern_detector.adapters.outbound.persistence.llm_report_formatter import LlmReportFormatter
+from pattern_detector.adapters.inbound.cli.commands.arch import arch
+from pattern_detector.adapters.outbound.persistence.llm_report_formatter import (
+    LlmReportFormatter,
+)
 from pattern_detector.bootstrap.container import Container, create_container
-from pattern_detector.domain.detection import Detection, DetectionReport
-from pattern_detector.domain.pattern import PATTERN_CATALOG
 from pattern_detector.domain.rules import DEFAULT_RULES
 from pattern_detector.domain.value_objects import ConfidenceLevel, PatternCategory
 from pattern_detector.ports.inbound import ScanOptions
@@ -24,6 +24,7 @@ app = typer.Typer(
     help="🐫 Hexagonal Pattern Scanner & Architecture Detector for OCaml (OCaml 4.14 - 5.3+ / Multicore).",
     no_args_is_help=True,
 )
+app.command(name="arch")(arch)
 console = Console()
 
 

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from pattern_detector.domain.code_model import CodeModel, ModuleModel, FunctionModel
+from pattern_detector.domain.code_model import CodeModel, ModuleModel
 from pattern_detector.domain.value_objects import (
     Confidence,
     ConfidenceLevel,

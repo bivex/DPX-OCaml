@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 import re
 from pathlib import Path
 
@@ -111,7 +110,7 @@ class NativeOCamlParserAdapter(ParserPort):
 
             is_record = "{" in body and "}" in body
             is_gadt = bool(re.search(r"\|\s*[A-Z][a-zA-Z0-9_]*\s*:", body)) or bool(re.search(r"^[A-Z][a-zA-Z0-9_]*\s*:", body))
-            is_variant = ("|" in body or (body and body[0].isupper())) and not is_record
+            is_variant = ("|" in body or body[:1].isupper()) and not is_record
             is_poly = "`" in body
             is_abstract = not body
 
@@ -185,7 +184,6 @@ class NativeOCamlParserAdapter(ParserPort):
             re.MULTILINE,
         )
 
-        pos = 0
         matches = list(pattern.finditer(text))
         for i, m in enumerate(matches):
             is_rec = bool(m.group(1))
@@ -276,7 +274,6 @@ class NativeOCamlParserAdapter(ParserPort):
 
     def _extract_struct_end_block(self, text: str, start_pos: int) -> tuple[str, int]:
         depth = 1
-        i = start_pos
         tokens = re.finditer(r"\b(struct|sig|end)\b", text[start_pos:])
 
         for token in tokens:

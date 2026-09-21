@@ -6,6 +6,27 @@ from typing import Protocol
 
 from pattern_detector.domain.code_model import CodeModel
 from pattern_detector.domain.detection import DetectionReport
+from pattern_detector.ports.outbound.arch_exporter_port import (
+    ArchitectureExporterPort,
+    GraphViewOptions,
+)
+from pattern_detector.ports.outbound.dune_parser_port import (
+    DuneLibraryStanza,
+    DuneManifest,
+    DuneManifestParserPort,
+    DuneProjectInfo,
+    DuneProjectTree,
+)
+
+__all__ = [
+    "ArchitectureExporterPort",
+    "DuneLibraryStanza",
+    "DuneManifest",
+    "DuneManifestParserPort",
+    "DuneProjectInfo",
+    "DuneProjectTree",
+    "GraphViewOptions",
+]
 
 
 class SourceProviderPort(Protocol):

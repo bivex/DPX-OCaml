@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
+from typing import ClassVar
 
 from pattern_detector.ports.outbound import SourceProviderPort
 
@@ -11,7 +12,7 @@ from pattern_detector.ports.outbound import SourceProviderPort
 class FileSourceProvider(SourceProviderPort):
     """Recursively retrieves OCaml source code files (.ml, .mli) from disk."""
 
-    DEFAULT_EXCLUDES = {
+    DEFAULT_EXCLUDES: ClassVar[set[str]] = {
         "_build",
         ".git",
         "_opam",
@@ -77,5 +78,5 @@ class FileSourceProvider(SourceProviderPort):
     def _read_file(self, path: Path) -> str:
         try:
             return path.read_text(encoding="utf-8", errors="replace")
-        except Exception:
+        except OSError:
             return ""

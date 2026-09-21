@@ -23,7 +23,9 @@ def test_scanning_service_memory():
 
 
 def test_file_source_provider_exclude_dirs(tmp_path):
-    from pattern_detector.adapters.outbound.persistence.file_source_provider import FileSourceProvider
+    from pattern_detector.adapters.outbound.persistence.file_source_provider import (
+        FileSourceProvider,
+    )
 
     src_dir = tmp_path / "lib"
     src_dir.mkdir()

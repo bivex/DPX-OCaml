@@ -4,10 +4,18 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from pattern_detector.adapters.outbound.persistence.html_report_formatter import HtmlReportFormatter
-from pattern_detector.adapters.outbound.persistence.json_report_formatter import JsonReportFormatter
-from pattern_detector.adapters.outbound.persistence.markdown_report_formatter import MarkdownReportFormatter
-from pattern_detector.adapters.outbound.persistence.sarif_report_formatter import SarifReportFormatter
+from pattern_detector.adapters.outbound.persistence.html_report_formatter import (
+    HtmlReportFormatter,
+)
+from pattern_detector.adapters.outbound.persistence.json_report_formatter import (
+    JsonReportFormatter,
+)
+from pattern_detector.adapters.outbound.persistence.markdown_report_formatter import (
+    MarkdownReportFormatter,
+)
+from pattern_detector.adapters.outbound.persistence.sarif_report_formatter import (
+    SarifReportFormatter,
+)
 from pattern_detector.domain.detection import DetectionReport
 from pattern_detector.ports.outbound import ResultRepositoryPort
 

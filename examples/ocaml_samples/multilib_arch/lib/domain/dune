@@ -1,0 +1,3 @@
+(library
+ (name arch_domain)
+ (libraries arch_infra))

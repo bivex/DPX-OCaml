@@ -8,6 +8,19 @@ from typing import Protocol
 from pattern_detector.domain.code_model import CodeModel
 from pattern_detector.domain.detection import Detection, DetectionReport
 from pattern_detector.domain.value_objects import ConfidenceLevel, PatternCategory
+from pattern_detector.ports.inbound.arch_scanner_port import (
+    ArchOutputFormat,
+    ArchScanOptions,
+    GraphGrouping,
+    ScanArchitectureUseCase,
+)
+
+__all__ = [
+    "ArchOutputFormat",
+    "ArchScanOptions",
+    "GraphGrouping",
+    "ScanArchitectureUseCase",
+]
 
 
 @dataclass

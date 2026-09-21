@@ -2,10 +2,7 @@
 
 from __future__ import annotations
 
-import os
-import re
 from dataclasses import dataclass, field
-from typing import Any, Sequence
 
 from pattern_detector.domain.value_objects import SourceLocation
 
@@ -119,7 +116,7 @@ class CodeModel:
         return res
 
     def all_functions(self) -> list[FunctionModel]:
-        res = []
+        res: list[FunctionModel] = []
         for m in self.all_modules():
             res.extend(m.functions.values())
         return res

@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 import hashlib
-from pattern_detector.domain.code_model import CodeModel
+
+from pattern_detector.domain.code_model import CodeModel, FunctionModel
 from pattern_detector.domain.detection import Detection
 from pattern_detector.domain.rules.base import BasePatternRule
 from pattern_detector.domain.value_objects import Evidence, PatternType
@@ -18,7 +19,7 @@ class DuplicateCodeDryRule(BasePatternRule):
 
     def detect(self, model: CodeModel) -> list[Detection]:
         detections: list[Detection] = []
-        body_hashes: dict[str, list[tuple[str, any]]] = {}
+        body_hashes: dict[str, list[tuple[str, FunctionModel]]] = {}
 
         for m in model.all_modules():
             for fn in m.functions.values():

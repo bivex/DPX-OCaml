@@ -1,0 +1,3 @@
+(library
+ (name arch_lex)
+ (libraries arch_parse))

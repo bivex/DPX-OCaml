@@ -31,3 +31,9 @@ dev = [
     "ruff>=0.16.4",
 ]
 
+[tool.mypy]
+# Src layout: resolve `pattern_detector` imports through src/ (PEP 561 py.typed
+# ships with the package) instead of the editable install's site-packages view.
+mypy_path = "src"
+explicit_package_bases = true
+

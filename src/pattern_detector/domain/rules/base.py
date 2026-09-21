@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Protocol, runtime_checkable
+from typing import Any, Protocol, runtime_checkable
 
 from pattern_detector.domain.code_model import CodeModel
 from pattern_detector.domain.detection import Detection
@@ -81,7 +81,7 @@ class BasePatternRule(ABC):
         evidences: list[Evidence],
         location: SourceLocation | None = None,
         related_locations: list[SourceLocation] | None = None,
-        metadata: dict | None = None,
+        metadata: dict[str, Any] | None = None,
     ) -> Detection:
         return Detection(
             pattern_type=self.pattern_type,

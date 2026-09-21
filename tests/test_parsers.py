@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-from pattern_detector.adapters.outbound.parsers.native_ocaml_parser_adapter import NativeOCamlParserAdapter
+from pattern_detector.adapters.outbound.parsers.native_ocaml_parser_adapter import (
+    NativeOCamlParserAdapter,
+)
 
 
 def test_parse_ocaml_types_and_functions():

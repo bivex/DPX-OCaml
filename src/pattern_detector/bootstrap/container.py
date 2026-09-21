@@ -2,23 +2,56 @@
 
 from __future__ import annotations
 
-from pattern_detector.adapters.outbound.parsers.native_ocaml_parser_adapter import NativeOCamlParserAdapter
+from pattern_detector.adapters.outbound.formatters.dot_formatter import (
+    DotArchitectureFormatter,
+)
+from pattern_detector.adapters.outbound.formatters.html_graph_formatter import (
+    HtmlGraphFormatter,
+)
+from pattern_detector.adapters.outbound.formatters.json_formatter import (
+    JsonArchitectureFormatter,
+)
+from pattern_detector.adapters.outbound.formatters.mermaid_formatter import (
+    MermaidArchitectureFormatter,
+)
+from pattern_detector.adapters.outbound.formatters.terminal_formatter import (
+    TerminalArchitectureFormatter,
+)
+from pattern_detector.adapters.outbound.parsers.dune_manifest_parser import (
+    DuneManifestParser,
+)
+from pattern_detector.adapters.outbound.parsers.module_dep_extractor import (
+    ModuleDependencyExtractor,
+)
+from pattern_detector.adapters.outbound.parsers.native_ocaml_parser_adapter import (
+    NativeOCamlParserAdapter,
+)
 from pattern_detector.adapters.outbound.persistence.file_result_repositories import (
     HtmlResultRepository,
     JsonResultRepository,
     MarkdownResultRepository,
     SarifResultRepository,
 )
-from pattern_detector.adapters.outbound.persistence.file_source_provider import FileSourceProvider
+from pattern_detector.adapters.outbound.persistence.file_source_provider import (
+    FileSourceProvider,
+)
+from pattern_detector.application.services.architecture_scan_service import (
+    ArchitectureScanService,
+)
 from pattern_detector.application.services.detection_service import DetectionService
 from pattern_detector.application.services.scanning_service import ScanningService
 from pattern_detector.domain.rules import DEFAULT_RULES
 from pattern_detector.ports.inbound import DetectorPort, ScannerPort
+from pattern_detector.ports.inbound.arch_scanner_port import (
+    ArchOutputFormat,
+    ScanArchitectureUseCase,
+)
 from pattern_detector.ports.outbound import (
     ParserPort,
     ResultRepositoryPort,
     SourceProviderPort,
 )
+from pattern_detector.ports.outbound.arch_exporter_port import ArchitectureExporterPort
 
 
 class Container:
@@ -34,6 +67,9 @@ class Container:
         self._html_repo: ResultRepositoryPort | None = None
         self._markdown_repo: ResultRepositoryPort | None = None
         self._sarif_repo: ResultRepositoryPort | None = None
+
+        self._arch_service: ScanArchitectureUseCase | None = None
+        self._arch_exporters: dict[ArchOutputFormat, ArchitectureExporterPort] | None = None
 
     @property
     def source_provider(self) -> SourceProviderPort:
@@ -89,6 +125,26 @@ class Container:
                 sarif_repository=self.sarif_repository,
             )
         return self._scanner
+
+    def get_arch_service(self) -> ScanArchitectureUseCase:
+        if self._arch_service is None:
+            self._arch_service = ArchitectureScanService(
+                source_provider=self.source_provider,
+                dune_parser=DuneManifestParser(),
+                extractor=ModuleDependencyExtractor(),
+            )
+        return self._arch_service
+
+    def get_arch_exporters(self) -> dict[ArchOutputFormat, ArchitectureExporterPort]:
+        if self._arch_exporters is None:
+            self._arch_exporters = {
+                ArchOutputFormat.TERMINAL: TerminalArchitectureFormatter(),
+                ArchOutputFormat.MERMAID: MermaidArchitectureFormatter(),
+                ArchOutputFormat.DOT: DotArchitectureFormatter(),
+                ArchOutputFormat.HTML: HtmlGraphFormatter(),
+                ArchOutputFormat.JSON: JsonArchitectureFormatter(),
+            }
+        return self._arch_exporters
 
 
 def create_container() -> Container:
