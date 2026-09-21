@@ -792,12 +792,18 @@ class ArchitectureScanService(ScanArchitectureUseCase):
                         break
 
             if test_dirs:
+                # Collect (source, tgt_lib) -> [internal modules accessed]
+                reaching_internals: dict[tuple[str, str], list[str]] = {}
                 for edge in graph.edges:
-                    if not edge.cross_library:
-                        continue
                     src_node = graph.nodes.get(edge.source)
                     tgt_node = graph.nodes.get(edge.target)
                     if src_node is None or tgt_node is None:
+                        continue
+                    # Test stanza modules have dune_library="" so cross_library is always
+                    # False. Instead check: source lives in a test dir AND target belongs
+                    # to a real library (non-empty dune_library).
+                    tgt_lib_name = tgt_node.dune_library
+                    if not tgt_lib_name:
                         continue
                     src_dir = str(Path(src_node.file_path).parent.resolve())
                     if not any(
@@ -805,8 +811,7 @@ class ArchitectureScanService(ScanArchitectureUseCase):
                         for td in test_dirs
                     ):
                         continue
-                    tgt_lib_name = tgt_node.dune_library
-                    tgt_stanza = local_libs_map.get(tgt_lib_name) if tgt_lib_name else None
+                    tgt_stanza = local_libs_map.get(tgt_lib_name)
                     # Only wrapped libraries have a meaningful facade concept.
                     # Unwrapped libs expose all modules equally — no bypass possible.
                     if tgt_stanza is None or not tgt_stanza.wrapped:
@@ -815,20 +820,32 @@ class ArchitectureScanService(ScanArchitectureUseCase):
                     # Accessing the wrapper/facade module itself is fine (public API entry point).
                     # Accessing any other sub-module is a bypass of the library interface.
                     if tgt_node.name != facade_name:
-                        issues.append(
-                            ArchIssue(
-                                severity=IssueSeverity.WARNING,
-                                kind=ArchIssueKind.TEST_REACHING_INTERNALS,
-                                subject=edge.source,
-                                message=(
-                                    f"test reaching internals: test module '{edge.source}' directly accesses "
-                                    f"internal module '{edge.target}' from library '{tgt_lib_name}', "
-                                    f"bypassing its public facade '{facade_name}'. "
-                                    f"Tests coupled to implementation details break on refactoring."
-                                ),
-                                related=[edge.target],
-                            )
+                        reaching_internals.setdefault(
+                            (edge.source, tgt_lib_name), []
+                        ).append(tgt_node.name)
+
+                for (src_module, tgt_lib_name), internal_names in reaching_internals.items():
+                    tgt_stanza = local_libs_map[tgt_lib_name]
+                    facade_name = self._wrap_prefix(tgt_stanza)
+                    unique_names = list(dict.fromkeys(internal_names))
+                    names_str = ", ".join(unique_names[:5])
+                    if len(unique_names) > 5:
+                        names_str += f" (+{len(unique_names) - 5} more)"
+                    issues.append(
+                        ArchIssue(
+                            severity=IssueSeverity.WARNING,
+                            kind=ArchIssueKind.TEST_REACHING_INTERNALS,
+                            subject=src_module,
+                            message=(
+                                f"test reaching internals: '{src_module}' directly accesses "
+                                f"{len(unique_names)} internal module(s) of library '{tgt_lib_name}' "
+                                f"({names_str}), bypassing its public facade '{facade_name}'. "
+                                f"Tests coupled to implementation details break on refactoring."
+                            ),
+                            related=unique_names,
                         )
+                    )
+
 
         # 6. Module name collision across libraries: two different local libraries
         #    export a module with the same bare name — silent shadowing when both are opened.
