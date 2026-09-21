@@ -807,11 +807,13 @@ class ArchitectureScanService(ScanArchitectureUseCase):
                         continue
                     tgt_lib_name = tgt_node.dune_library
                     tgt_stanza = local_libs_map.get(tgt_lib_name) if tgt_lib_name else None
-                    if tgt_stanza is None or tgt_stanza.public_name:
-                        continue
-                    if not tgt_stanza.wrapped:
+                    # Only wrapped libraries have a meaningful facade concept.
+                    # Unwrapped libs expose all modules equally — no bypass possible.
+                    if tgt_stanza is None or not tgt_stanza.wrapped:
                         continue
                     facade_name = self._wrap_prefix(tgt_stanza)
+                    # Accessing the wrapper/facade module itself is fine (public API entry point).
+                    # Accessing any other sub-module is a bypass of the library interface.
                     if tgt_node.name != facade_name:
                         issues.append(
                             ArchIssue(
