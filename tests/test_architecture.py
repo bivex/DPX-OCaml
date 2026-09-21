@@ -771,3 +771,61 @@ def test_one_shot_functor_issue_detected(tmp_path: Path) -> None:
     assert one_shot[0].subject == "My_lib.Gen"
 
 
+def test_dead_library_dependency_detected(tmp_path: Path) -> None:
+    (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")
+    (tmp_path / "lib_a").mkdir()
+    (tmp_path / "lib_a" / "dune").write_text("(library (name lib_a))\n")
+    (tmp_path / "lib_a" / "a.ml").write_text("let a = 1\n")
+
+    (tmp_path / "lib_b").mkdir()
+    (tmp_path / "lib_b" / "dune").write_text("(library (name lib_b) (libraries lib_a))\n")
+    (tmp_path / "lib_b" / "b.ml").write_text("let b = 2\n")  # never uses lib_a!
+
+    service = ArchitectureScanService(
+        source_provider=FileSourceProvider(),
+        dune_parser=DuneManifestParser(),
+        extractor=ModuleDependencyExtractor(),
+    )
+    result = service.scan_architecture(str(tmp_path))
+    dead = [i for i in result.issues if i.kind.value == "dead_library_dependency"]
+    assert len(dead) == 1
+    assert dead[0].subject == "lib_b"
+    assert "lib_a" in dead[0].message
+
+
+def test_missing_public_interface_detected(tmp_path: Path) -> None:
+    (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")
+    (tmp_path / "lib").mkdir()
+    (tmp_path / "lib" / "dune").write_text("(library (name my_lib) (public_name my_package.my_lib))\n")
+    (tmp_path / "lib" / "my_lib.ml").write_text("let secret = 42\n")  # No my_lib.mli!
+
+    service = ArchitectureScanService(
+        source_provider=FileSourceProvider(),
+        dune_parser=DuneManifestParser(),
+        extractor=ModuleDependencyExtractor(),
+    )
+    result = service.scan_architecture(str(tmp_path))
+    missing = [i for i in result.issues if i.kind.value == "missing_public_interface"]
+    assert len(missing) == 1
+    assert missing[0].subject == "My_lib.My_lib"
+    assert "my_package.my_lib" in missing[0].message
+
+
+def test_unwrapped_namespace_hazard_detected(tmp_path: Path) -> None:
+    (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")
+    (tmp_path / "lib").mkdir()
+    (tmp_path / "lib" / "dune").write_text("(library (name my_lib) (wrapped false))\n")
+    (tmp_path / "lib" / "utils.ml").write_text("let helper () = ()\n")
+
+    service = ArchitectureScanService(
+        source_provider=FileSourceProvider(),
+        dune_parser=DuneManifestParser(),
+        extractor=ModuleDependencyExtractor(),
+    )
+    result = service.scan_architecture(str(tmp_path))
+    hazards = [i for i in result.issues if i.kind.value == "unwrapped_namespace_hazard"]
+    assert len(hazards) == 1
+    assert hazards[0].subject == "Utils"
+
+
+

@@ -158,9 +158,11 @@ class _ResolutionIndex:
                 if candidate in self.nodes:
                     return candidate
 
-            # If parts[0] is in self.wrap_prefixes, it was an explicit cross-lib path like "Http.Header".
-            # Suppress prefix-head -> wrapper edge (never resolve "Http.Header" to wrapper "Http.Http").
+            # If parts[0] is in self.wrap_prefixes, it was an explicit cross-lib path like "Http.Header" or "Alcotest_engine.V1".
             if parts[0] in self.wrap_prefixes:
+                wrap_id = f"{parts[0]}.{parts[0]}"
+                if wrap_id in self.nodes:
+                    return wrap_id
                 return None
 
             # Sibling in source_lib? (e.g. "Order.describe" where "Order" is a sibling in source_lib)
@@ -257,7 +259,7 @@ class ArchitectureScanService(ScanArchitectureUseCase):
         cycles = detect_cycles(graph)
         self._mark_cycles(graph, cycles)
         metrics = attach_metrics(graph)
-        issues = self._collect_issues(graph, cycles, metrics)
+        issues = self._collect_issues(graph, cycles, metrics, tree)
 
         return ArchitectureScanResult(
             project_path=str(root),
@@ -422,6 +424,7 @@ class ArchitectureScanService(ScanArchitectureUseCase):
         graph: ComponentGraph,
         cycles: list[CycleGroup],
         metrics: dict[str, ModuleMetrics],
+        tree: DuneProjectTree | None = None,
     ) -> list[ArchIssue]:
         issues: list[ArchIssue] = []
 
@@ -576,6 +579,83 @@ class ArchitectureScanService(ScanArchitectureUseCase):
                         related=[sources[0]],
                     )
                 )
+
+        _HAZARDOUS_UNWRAPPED_NAMES = {
+            "Utils", "Util", "Config", "Types", "Common", "Helper", "Helpers", "Error", "Errors", "Log", "Logging"
+        }
+
+        if tree:
+            local_libs: dict[str, DuneLibraryStanza] = {}
+            for lib in tree.libraries:
+                local_libs[lib.name] = lib
+                if lib.public_name:
+                    local_libs[lib.public_name] = lib
+
+            for lib in tree.libraries:
+                # 1. Dead Library Dependencies (declared in (libraries ...) but never used)
+                for dep in lib.libraries:
+                    if dep in local_libs:
+                        target_lib = local_libs[dep]
+                        if target_lib.name == lib.name:
+                            continue
+                        has_edge = any(
+                            graph.nodes[e.source].dune_library == lib.name
+                            and graph.nodes[e.target].dune_library == target_lib.name
+                            for e in graph.edges
+                        )
+                        if not has_edge:
+                            issues.append(
+                                ArchIssue(
+                                    severity=IssueSeverity.WARNING,
+                                    kind=ArchIssueKind.DEAD_LIBRARY_DEPENDENCY,
+                                    subject=lib.name,
+                                    message=(
+                                        f"dead library dependency: library '{lib.name}' declares dependency on "
+                                        f"'{dep}', but none of its modules use any module from it. "
+                                        f"Remove to optimize Dune build graph parallelism."
+                                    ),
+                                    related=[target_lib.name],
+                                )
+                            )
+
+                # 2. Missing public interface (.mli) for public library
+                if lib.public_name:
+                    candidates = {
+                        lib.name[:1].upper() + lib.name[1:],
+                    }
+                    pub_short = lib.public_name.split(".")[-1].replace("-", "_")
+                    candidates.add(pub_short[:1].upper() + pub_short[1:])
+
+                    for node in graph.nodes.values():
+                        if node.dune_library == lib.name and node.name in candidates and not node.has_interface:
+                            issues.append(
+                                ArchIssue(
+                                    severity=IssueSeverity.WARNING,
+                                    kind=ArchIssueKind.MISSING_PUBLIC_INTERFACE,
+                                    subject=node.id,
+                                    message=(
+                                        f"missing public interface: library '{lib.public_name}' (name {lib.name}) "
+                                        f"is public, but its facade module {node.name} has no .mli contract. "
+                                        f"Internal symbols are unintentionally exposed as public API."
+                                    ),
+                                )
+                            )
+
+                # 3. Unwrapped namespace hazard: (wrapped false) with generic module names
+                if not lib.wrapped:
+                    for node in graph.nodes.values():
+                        if node.dune_library == lib.name and node.name in _HAZARDOUS_UNWRAPPED_NAMES:
+                            issues.append(
+                                ArchIssue(
+                                    severity=IssueSeverity.WARNING,
+                                    kind=ArchIssueKind.UNWRAPPED_NAMESPACE_HAZARD,
+                                    subject=node.id,
+                                    message=(
+                                        f"unwrapped namespace hazard: library '{lib.name}' has (wrapped false) "
+                                        f"and exports generic module '{node.name}', risking linker collisions across projects."
+                                    ),
+                                )
+                            )
 
         rank = {IssueSeverity.ERROR: 0, IssueSeverity.WARNING: 1, IssueSeverity.INFO: 2}
         issues.sort(key=lambda i: (rank[i.severity], i.kind.value, i.subject))

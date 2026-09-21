@@ -56,6 +56,9 @@ class ArchIssueKind(str, Enum):
     ZONE_OF_USELESSNESS = "zone_of_uselessness"
     LEAKY_INTERFACE = "leaky_interface"
     ONE_SHOT_FUNCTOR = "one_shot_functor"
+    DEAD_LIBRARY_DEPENDENCY = "dead_library_dependency"
+    MISSING_PUBLIC_INTERFACE = "missing_public_interface"
+    UNWRAPPED_NAMESPACE_HAZARD = "unwrapped_namespace_hazard"
 
 
 class ModuleNode(BaseModel):

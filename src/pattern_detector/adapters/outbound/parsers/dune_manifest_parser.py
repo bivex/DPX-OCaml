@@ -212,7 +212,7 @@ class DuneManifestParser(DuneManifestParserPort):
                         include_subdirs=include_subdirs,
                     )
                 )
-            elif head == "executable":
+            elif head in ("executable", "test"):
                 manifest.executables.append(
                     DuneExecutableStanza(
                         names=[_field_atom(stanza, "name") or ""],
@@ -220,7 +220,7 @@ class DuneManifestParser(DuneManifestParserPort):
                         directory=directory,
                     )
                 )
-            elif head == "executables":
+            elif head in ("executables", "tests"):
                 manifest.executables.append(
                     DuneExecutableStanza(
                         names=_field_atoms(stanza, "names"),
