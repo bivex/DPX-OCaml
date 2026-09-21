@@ -580,22 +580,26 @@ class ArchitectureScanService(ScanArchitectureUseCase):
                     )
                 )
 
-        _HAZARDOUS_UNWRAPPED_NAMES = {
-            "Utils", "Util", "Config", "Types", "Common", "Helper", "Helpers", "Error", "Errors", "Log", "Logging"
-        }
-
         if tree:
-            local_libs: dict[str, DuneLibraryStanza] = {}
+            _HAZARDOUS_UNWRAPPED_NAMES = {
+                "Utils", "Util", "Config", "Types", "Common", "Helper", "Helpers",
+                "Error", "Errors", "Log", "Logging",
+            }
+            local_libs_map: dict[str, DuneLibraryStanza] = {}
             for lib in tree.libraries:
-                local_libs[lib.name] = lib
+                local_libs_map[lib.name] = lib
                 if lib.public_name:
-                    local_libs[lib.public_name] = lib
+                    local_libs_map[lib.public_name] = lib
+
+            declared_by_lib: dict[str, set[str]] = {
+                lib.name: set(lib.libraries) for lib in tree.libraries
+            }
 
             for lib in tree.libraries:
                 # 1. Dead Library Dependencies (declared in (libraries ...) but never used)
                 for dep in lib.libraries:
-                    if dep in local_libs:
-                        target_lib = local_libs[dep]
+                    if dep in local_libs_map:
+                        target_lib = local_libs_map[dep]
                         if target_lib.name == lib.name:
                             continue
                         has_edge = any(
@@ -656,6 +660,204 @@ class ArchitectureScanService(ScanArchitectureUseCase):
                                     ),
                                 )
                             )
+
+            # 4. Undeclared library dependency: module uses symbols from lib_B but
+            #    lib_A's dune stanza doesn't list lib_B in (libraries ...).
+            reported_undeclared: set[tuple[str, str]] = set()
+            for edge in graph.edges:
+                if not edge.cross_library:
+                    continue
+                src_lib = graph.nodes[edge.source].dune_library
+                tgt_lib = graph.nodes[edge.target].dune_library
+                if not src_lib or not tgt_lib:
+                    continue
+                pair_key = (src_lib, tgt_lib)
+                if pair_key in reported_undeclared:
+                    continue
+                declared = declared_by_lib.get(src_lib, set())
+                tgt_stanza = local_libs_map.get(tgt_lib)
+                if tgt_stanza is None:
+                    continue
+                names_to_check = {tgt_stanza.name}
+                if tgt_stanza.public_name:
+                    names_to_check.add(tgt_stanza.public_name)
+                if not (declared & names_to_check):
+                    reported_undeclared.add(pair_key)
+                    issues.append(
+                        ArchIssue(
+                            severity=IssueSeverity.WARNING,
+                            kind=ArchIssueKind.UNDECLARED_LIBRARY_DEPENDENCY,
+                            subject=edge.source,
+                            message=(
+                                f"undeclared library dependency: module '{edge.source}' (library '{src_lib}') "
+                                f"uses '{edge.target}' from library '{tgt_lib}', "
+                                f"but '{src_lib}' does not list '{tgt_lib}' in its dune (libraries ...) stanza. "
+                                f"This will fail at link time."
+                            ),
+                            related=[edge.target],
+                        )
+                    )
+
+            # 5. Test reaching internals: a test stanza module directly imports
+            #    a library-internal module instead of going through the public facade.
+            test_dirs: set[str] = set()
+            for manifest in tree.manifests:
+                for exe in manifest.executables:
+                    mdir = manifest.directory.lower().replace("\\", "/")
+                    if any(seg in mdir for seg in ("/test", "/tests", "_test", "_tests")):
+                        test_dirs.add(manifest.directory)
+                        break
+
+            for edge in graph.edges:
+                if not edge.cross_library or not test_dirs:
+                    continue
+                src_node = graph.nodes.get(edge.source)
+                tgt_node = graph.nodes.get(edge.target)
+                if src_node is None or tgt_node is None:
+                    continue
+                src_dir = str(Path(src_node.file_path).parent.resolve())
+                if not any(
+                    src_dir.startswith(str(Path(td).resolve()))
+                    for td in test_dirs
+                ):
+                    continue
+                tgt_lib_name = tgt_node.dune_library
+                tgt_stanza = local_libs_map.get(tgt_lib_name) if tgt_lib_name else None
+                if tgt_stanza is None or tgt_stanza.public_name:
+                    continue
+                if not tgt_stanza.wrapped:
+                    continue
+                facade_name = self._wrap_prefix(tgt_stanza)
+                if tgt_node.name != facade_name:
+                    issues.append(
+                        ArchIssue(
+                            severity=IssueSeverity.WARNING,
+                            kind=ArchIssueKind.TEST_REACHING_INTERNALS,
+                            subject=edge.source,
+                            message=(
+                                f"test reaching internals: test module '{edge.source}' directly accesses "
+                                f"internal module '{edge.target}' from library '{tgt_lib_name}', "
+                                f"bypassing its public facade '{facade_name}'. "
+                                f"Tests coupled to implementation details break on refactoring."
+                            ),
+                            related=[edge.target],
+                        )
+                    )
+
+            # 4. Undeclared library dependency: module uses symbols from lib_B but
+            #    lib_A's dune stanza doesn't list lib_B in (libraries ...).
+            reported_undeclared: set[tuple[str, str]] = set()
+            for edge in graph.edges:
+                if not edge.cross_library:
+                    continue
+                src_lib = graph.nodes[edge.source].dune_library
+                tgt_lib = graph.nodes[edge.target].dune_library
+                if not src_lib or not tgt_lib:
+                    continue
+                pair_key = (src_lib, tgt_lib)
+                if pair_key in reported_undeclared:
+                    continue
+                declared = declared_by_lib.get(src_lib, set())
+                tgt_stanza = local_libs_map.get(tgt_lib)
+                if tgt_stanza is None:
+                    continue
+                names_to_check = {tgt_stanza.name}
+                if tgt_stanza.public_name:
+                    names_to_check.add(tgt_stanza.public_name)
+                if not (declared & names_to_check):
+                    reported_undeclared.add(pair_key)
+                    issues.append(
+                        ArchIssue(
+                            severity=IssueSeverity.WARNING,
+                            kind=ArchIssueKind.UNDECLARED_LIBRARY_DEPENDENCY,
+                            subject=edge.source,
+                            message=(
+                                f"undeclared library dependency: module '{edge.source}' (library '{src_lib}') "
+                                f"uses '{edge.target}' from library '{tgt_lib}', "
+                                f"but '{src_lib}' does not list '{tgt_lib}' in its dune (libraries ...) stanza. "
+                                f"This will fail at link time."
+                            ),
+                            related=[edge.target],
+                        )
+                    )
+
+            # 5. Test reaching internals: a test stanza module directly imports
+            #    a library-internal module instead of going through the public facade.
+            test_dirs: set[str] = set()
+            for manifest in tree.manifests:
+                for exe in manifest.executables:
+                    mdir = manifest.directory.lower().replace("\\", "/")
+                    if any(seg in mdir for seg in ("/test", "/tests", "_test", "_tests")):
+                        test_dirs.add(manifest.directory)
+                        break
+
+            if test_dirs:
+                for edge in graph.edges:
+                    if not edge.cross_library:
+                        continue
+                    src_node = graph.nodes.get(edge.source)
+                    tgt_node = graph.nodes.get(edge.target)
+                    if src_node is None or tgt_node is None:
+                        continue
+                    src_dir = str(Path(src_node.file_path).parent.resolve())
+                    if not any(
+                        src_dir.startswith(str(Path(td).resolve()))
+                        for td in test_dirs
+                    ):
+                        continue
+                    tgt_lib_name = tgt_node.dune_library
+                    tgt_stanza = local_libs_map.get(tgt_lib_name) if tgt_lib_name else None
+                    if tgt_stanza is None or tgt_stanza.public_name:
+                        continue
+                    if not tgt_stanza.wrapped:
+                        continue
+                    facade_name = self._wrap_prefix(tgt_stanza)
+                    if tgt_node.name != facade_name:
+                        issues.append(
+                            ArchIssue(
+                                severity=IssueSeverity.WARNING,
+                                kind=ArchIssueKind.TEST_REACHING_INTERNALS,
+                                subject=edge.source,
+                                message=(
+                                    f"test reaching internals: test module '{edge.source}' directly accesses "
+                                    f"internal module '{edge.target}' from library '{tgt_lib_name}', "
+                                    f"bypassing its public facade '{facade_name}'. "
+                                    f"Tests coupled to implementation details break on refactoring."
+                                ),
+                                related=[edge.target],
+                            )
+                        )
+
+        # 6. Module name collision across libraries: two different local libraries
+        #    export a module with the same bare name — silent shadowing when both are opened.
+        name_to_libs: dict[str, list[str]] = {}
+        for node in graph.nodes.values():
+            if node.dune_library:
+                name_to_libs.setdefault(node.name, []).append(node.dune_library)
+
+        reported_collisions: set[frozenset[str]] = set()
+        for mod_name, libs in name_to_libs.items():
+            unique_libs = list(dict.fromkeys(libs))
+            if len(unique_libs) < 2:
+                continue
+            key = frozenset(unique_libs)
+            if key in reported_collisions:
+                continue
+            reported_collisions.add(key)
+            libs_str = ", ".join(f"'{lib}'" for lib in unique_libs)
+            issues.append(
+                ArchIssue(
+                    severity=IssueSeverity.WARNING,
+                    kind=ArchIssueKind.MODULE_NAME_COLLISION,
+                    subject=mod_name,
+                    message=(
+                        f"module name collision: module '{mod_name}' is defined in {len(unique_libs)} different "
+                        f"libraries ({libs_str}). Simultaneously opening both causes silent shadowing "
+                        f"and may produce subtle runtime bugs."
+                    ),
+                    related=unique_libs,
+                )
+            )
 
         rank = {IssueSeverity.ERROR: 0, IssueSeverity.WARNING: 1, IssueSeverity.INFO: 2}
         issues.sort(key=lambda i: (rank[i.severity], i.kind.value, i.subject))

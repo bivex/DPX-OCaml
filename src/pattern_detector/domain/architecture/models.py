@@ -59,6 +59,9 @@ class ArchIssueKind(str, Enum):
     DEAD_LIBRARY_DEPENDENCY = "dead_library_dependency"
     MISSING_PUBLIC_INTERFACE = "missing_public_interface"
     UNWRAPPED_NAMESPACE_HAZARD = "unwrapped_namespace_hazard"
+    UNDECLARED_LIBRARY_DEPENDENCY = "undeclared_library_dependency"
+    TEST_REACHING_INTERNALS = "test_reaching_internals"
+    MODULE_NAME_COLLISION = "module_name_collision"
 
 
 class ModuleNode(BaseModel):

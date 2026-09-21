@@ -828,4 +828,69 @@ def test_unwrapped_namespace_hazard_detected(tmp_path: Path) -> None:
     assert hazards[0].subject == "Utils"
 
 
+def test_undeclared_library_dependency_detected(tmp_path: Path) -> None:
+    """lib_b uses module from lib_a, but lib_b doesn't list lib_a in (libraries ...)."""
+    (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")
+    (tmp_path / "lib_a").mkdir()
+    (tmp_path / "lib_a" / "dune").write_text("(library (name lib_a))\n")
+    (tmp_path / "lib_a" / "foo.ml").write_text("let x = 1\n")
+    # lib_b uses Lib_a.Foo but doesn't declare lib_a in (libraries ...)
+    (tmp_path / "lib_b").mkdir()
+    (tmp_path / "lib_b" / "dune").write_text("(library (name lib_b))\n")
+    (tmp_path / "lib_b" / "bar.ml").write_text("let y = Lib_a.Foo.x\n")
 
+    service = ArchitectureScanService(
+        source_provider=FileSourceProvider(),
+        dune_parser=DuneManifestParser(),
+        extractor=ModuleDependencyExtractor(),
+    )
+    result = service.scan_architecture(str(tmp_path))
+    undecl = [i for i in result.issues if i.kind.value == "undeclared_library_dependency"]
+    assert len(undecl) >= 1
+    assert any("lib_b" in i.message and "lib_a" in i.message for i in undecl)
+
+
+def test_test_reaching_internals_not_false_positive(tmp_path: Path) -> None:
+    """Test accessing the public facade of a library must NOT trigger test_reaching_internals."""
+    (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")
+    (tmp_path / "lib").mkdir()
+    (tmp_path / "lib" / "dune").write_text("(library (name mylib))\n")
+    (tmp_path / "lib" / "mylib.ml").write_text("let pub = 42\n")
+    (tmp_path / "tests").mkdir()
+    (tmp_path / "tests" / "dune").write_text(
+        "(library (name mylib_tests) (libraries mylib))\n"
+    )
+    # Test imports only the wrapper module (Mylib) - this is fine
+    (tmp_path / "tests" / "test_ok.ml").write_text("let () = ignore Mylib.pub\n")
+
+    service = ArchitectureScanService(
+        source_provider=FileSourceProvider(),
+        dune_parser=DuneManifestParser(),
+        extractor=ModuleDependencyExtractor(),
+    )
+    result = service.scan_architecture(str(tmp_path))
+    reaching = [i for i in result.issues if i.kind.value == "test_reaching_internals"]
+    assert reaching == [], f"False positive: {reaching}"
+
+
+def test_module_name_collision_detected(tmp_path: Path) -> None:
+    """Two libraries define a module with the same name — collision must be reported."""
+    (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")
+    (tmp_path / "lib_a").mkdir()
+    (tmp_path / "lib_a" / "dune").write_text("(library (name lib_a))\n")
+    (tmp_path / "lib_a" / "utils.ml").write_text("let a = 1\n")
+    (tmp_path / "lib_b").mkdir()
+    (tmp_path / "lib_b" / "dune").write_text("(library (name lib_b))\n")
+    (tmp_path / "lib_b" / "utils.ml").write_text("let b = 2\n")
+
+    service = ArchitectureScanService(
+        source_provider=FileSourceProvider(),
+        dune_parser=DuneManifestParser(),
+        extractor=ModuleDependencyExtractor(),
+    )
+    result = service.scan_architecture(str(tmp_path))
+    collisions = [i for i in result.issues if i.kind.value == "module_name_collision"]
+    assert len(collisions) >= 1
+    collision = collisions[0]
+    assert collision.subject == "Utils"
+    assert set(collision.related) == {"lib_a", "lib_b"}
