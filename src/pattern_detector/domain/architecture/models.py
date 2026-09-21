@@ -52,6 +52,10 @@ class ArchIssueKind(str, Enum):
     GOD_MODULE = "god_module"
     HUB_MODULE = "hub_module"
     INTERFACE_BYPASS = "interface_bypass"
+    ZONE_OF_PAIN = "zone_of_pain"
+    ZONE_OF_USELESSNESS = "zone_of_uselessness"
+    LEAKY_INTERFACE = "leaky_interface"
+    ONE_SHOT_FUNCTOR = "one_shot_functor"
 
 
 class ModuleNode(BaseModel):

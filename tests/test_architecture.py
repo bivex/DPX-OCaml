@@ -687,3 +687,87 @@ def test_ppx_extension_on_module_declaration(tmp_path: Path) -> None:
     assert ("My_lib.Monad_intf", "My_lib.Monad") not in edges
     assert len(result.cycles) == 0
 
+
+def test_zone_of_pain_issue_detected(tmp_path: Path) -> None:
+    (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")
+    (tmp_path / "lib").mkdir()
+    (tmp_path / "lib" / "dune").write_text("(library (name my_lib))\n")
+    # A concrete module with >= 50 lines of code, 0 abstract types
+    body = "type t = { id: int }\n" + "\n".join(f"let f{i} () = {i}" for i in range(55))
+    (tmp_path / "lib" / "core_config.ml").write_text(body + "\n")
+
+    # 5 clients depend on Core_config
+    for i in range(5):
+        (tmp_path / "lib" / f"client_{i}.ml").write_text(f"let x = Core_config.f{i} ()\n")
+
+    service = ArchitectureScanService(
+        source_provider=FileSourceProvider(),
+        dune_parser=DuneManifestParser(),
+        extractor=ModuleDependencyExtractor(),
+    )
+    result = service.scan_architecture(str(tmp_path))
+    pain_issues = [i for i in result.issues if i.kind.value == "zone_of_pain"]
+    assert len(pain_issues) == 1
+    assert pain_issues[0].subject == "My_lib.Core_config"
+
+
+def test_zone_of_uselessness_issue_detected(tmp_path: Path) -> None:
+    (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")
+    (tmp_path / "lib").mkdir()
+    (tmp_path / "lib" / "dune").write_text("(library (name my_lib))\n")
+    (tmp_path / "lib" / "dep.ml").write_text("let val_ = 1\n")
+    # Isolated module, depends on dep.ml (Ce >= 1), 0 incoming clients (Ca == 0)
+    # Exports >= 2 abstract types in .mli
+    (tmp_path / "lib" / "over_abstract.ml").write_text("type t = int\ntype handle = string\nlet x = Dep.val_\n")
+    (tmp_path / "lib" / "over_abstract.mli").write_text("type t\ntype handle\n")
+
+    service = ArchitectureScanService(
+        source_provider=FileSourceProvider(),
+        dune_parser=DuneManifestParser(),
+        extractor=ModuleDependencyExtractor(),
+    )
+    result = service.scan_architecture(str(tmp_path))
+    useless_issues = [i for i in result.issues if i.kind.value == "zone_of_uselessness"]
+    assert len(useless_issues) == 1
+    assert useless_issues[0].subject == "My_lib.Over_abstract"
+
+
+def test_leaky_interface_issue_detected(tmp_path: Path) -> None:
+    (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")
+    (tmp_path / "lib").mkdir()
+    (tmp_path / "lib" / "dune").write_text("(library (name my_lib))\n")
+    # Exports 2 concrete types in .mli (abstract_types == 0), used by 3 clients
+    (tmp_path / "lib" / "schema.ml").write_text("type a = int\ntype b = string\n")
+    (tmp_path / "lib" / "schema.mli").write_text("type a = int\ntype b = string\n")
+    for i in range(3):
+        (tmp_path / "lib" / f"user_{i}.ml").write_text(f"let v : Schema.a = {i}\n")
+
+    service = ArchitectureScanService(
+        source_provider=FileSourceProvider(),
+        dune_parser=DuneManifestParser(),
+        extractor=ModuleDependencyExtractor(),
+    )
+    result = service.scan_architecture(str(tmp_path))
+    leaky_issues = [i for i in result.issues if i.kind.value == "leaky_interface"]
+    assert len(leaky_issues) == 1
+    assert leaky_issues[0].subject == "My_lib.Schema"
+
+
+def test_one_shot_functor_issue_detected(tmp_path: Path) -> None:
+    (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")
+    (tmp_path / "lib").mkdir()
+    (tmp_path / "lib" / "dune").write_text("(library (name my_lib))\n")
+    (tmp_path / "lib" / "gen.ml").write_text("module Make (X : S) = struct let v = 1 end\n")
+    (tmp_path / "lib" / "user.ml").write_text("module Inst = Gen.Make(Arg)\n")
+
+    service = ArchitectureScanService(
+        source_provider=FileSourceProvider(),
+        dune_parser=DuneManifestParser(),
+        extractor=ModuleDependencyExtractor(),
+    )
+    result = service.scan_architecture(str(tmp_path))
+    one_shot = [i for i in result.issues if i.kind.value == "one_shot_functor"]
+    assert len(one_shot) == 1
+    assert one_shot[0].subject == "My_lib.Gen"
+
+

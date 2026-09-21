@@ -213,10 +213,15 @@ class _ResolutionIndex:
 class ArchitectureScanService(ScanArchitectureUseCase):
     """End-to-end architecture scanning orchestrator for Dune/OCaml projects."""
 
-    #: Issue detection thresholds.
     GOD_MODULE_LOC = 400
     HUB_MODULE_CE = 15
     INTERFACE_BYPASS_CA = 3
+    PAIN_ZONE_CA = 5
+    PAIN_ZONE_MAX_I = 0.2
+    PAIN_ZONE_MAX_A = 0.1
+    PAIN_ZONE_MIN_LOC = 50
+    USELESS_ZONE_MIN_A = 0.7
+    LEAKY_INTERFACE_CA = 3
 
     _KIND_PRIORITY: ClassVar[dict[EdgeKind, int]] = {
         EdgeKind.OPEN: 3,
@@ -489,6 +494,86 @@ class ArchitectureScanService(ScanArchitectureUseCase):
                         kind=ArchIssueKind.ORPHAN_MODULE,
                         subject=node_id,
                         message=f"orphan module: nothing depends on {node.name} and it is not an entry point",
+                    )
+                )
+
+            if (
+                m
+                and ca >= self.PAIN_ZONE_CA
+                and m.instability <= self.PAIN_ZONE_MAX_I
+                and m.abstractness <= self.PAIN_ZONE_MAX_A
+                and node.loc >= self.PAIN_ZONE_MIN_LOC
+            ):
+                issues.append(
+                    ArchIssue(
+                        severity=IssueSeverity.WARNING,
+                        kind=ArchIssueKind.ZONE_OF_PAIN,
+                        subject=node_id,
+                        message=(
+                            f"zone of pain: {node.name} is rigidly concrete (A={m.abstractness:.2f}) "
+                            f"yet heavily depended on by {ca} modules (I={m.instability:.2f}, D={m.main_sequence_distance:.2f})"
+                        ),
+                    )
+                )
+
+            if (
+                m
+                and ca == 0
+                and ce >= 1
+                and not node.is_entry
+                and m.abstractness >= self.USELESS_ZONE_MIN_A
+                and node.exported_types >= 2
+            ):
+                issues.append(
+                    ArchIssue(
+                        severity=IssueSeverity.INFO,
+                        kind=ArchIssueKind.ZONE_OF_USELESSNESS,
+                        subject=node_id,
+                        message=(
+                            f"zone of uselessness: {node.name} is highly abstract (A={m.abstractness:.2f}) "
+                            f"with {node.exported_types} types, but has no dependents (I={m.instability:.2f}, D={m.main_sequence_distance:.2f})"
+                        ),
+                    )
+                )
+
+            if (
+                node.has_interface
+                and ca >= self.LEAKY_INTERFACE_CA
+                and node.exported_types >= 2
+                and node.abstract_types == 0
+            ):
+                issues.append(
+                    ArchIssue(
+                        severity=IssueSeverity.INFO,
+                        kind=ArchIssueKind.LEAKY_INTERFACE,
+                        subject=node_id,
+                        message=(
+                            f"leaky interface: {node.name}.mli exports {node.exported_types} types, "
+                            f"but none are abstract. Implementation details are fully exposed to {ca} clients."
+                        ),
+                    )
+                )
+
+        # Functor application anomalies: one-shot functors
+        functor_apps: dict[str, list[str]] = {}
+        for edge in graph.edges:
+            if edge.kind is EdgeKind.FUNCTOR_APPLICATION:
+                functor_apps.setdefault(edge.target, []).append(edge.source)
+
+        for target_id, sources in functor_apps.items():
+            if len(sources) == 1:
+                target_node = graph.nodes.get(target_id)
+                name = target_node.name if target_node else target_id
+                issues.append(
+                    ArchIssue(
+                        severity=IssueSeverity.INFO,
+                        kind=ArchIssueKind.ONE_SHOT_FUNCTOR,
+                        subject=target_id,
+                        message=(
+                            f"one-shot functor: {name} is instantiated as a functor in only 1 place ({sources[0]}). "
+                            f"Consider whether a simple record or higher-order function would suffice."
+                        ),
+                        related=[sources[0]],
                     )
                 )
 
