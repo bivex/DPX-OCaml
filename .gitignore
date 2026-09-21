@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Tooling caches & artifacts
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+dist/
+build/
+
+# Scratch output of `dpx arch` exports
+dpx_arch_report.*
+
+# macOS
+.DS_Store
+
+# Dune / OCaml build output
+_build/
+_opam/
+_esy/
