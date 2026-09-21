@@ -597,3 +597,93 @@ def test_show_cycles_only_filters_formatters() -> None:
     assert "Arch_domain_Order" in text  # cycle member stays visible
     assert "Helper" not in text  # orphan (non-cycle) module is filtered out
     assert "Main" not in text  # entry module is filtered out too
+
+
+def test_multi_param_functor_does_not_create_spurious_edge(tmp_path: Path) -> None:
+    (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")
+    (tmp_path / "lib").mkdir()
+    (tmp_path / "lib" / "dune").write_text("(library (name my_lib))\n")
+    (tmp_path / "lib" / "conf.ml").write_text("let config = 1\n")
+    (tmp_path / "lib" / "worker.ml").write_text(
+        "module Make (Conf : Config) (Data : Data_sig) =\n"
+        "struct\n"
+        "  let c = Conf.length\n"
+        "  let d = Data.val_\n"
+        "end\n"
+    )
+
+    service = ArchitectureScanService(
+        source_provider=FileSourceProvider(),
+        dune_parser=DuneManifestParser(),
+        extractor=ModuleDependencyExtractor(),
+    )
+    result = service.scan_architecture(str(tmp_path))
+    edges = [(e.source, e.target) for e in result.graph.edges]
+    assert ("My_lib.Worker", "My_lib.Conf") not in edges
+    assert len(result.cycles) == 0
+
+
+def test_functor_type_signature_param_does_not_create_cycle(tmp_path: Path) -> None:
+    (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")
+    (tmp_path / "lib").mkdir()
+    (tmp_path / "lib" / "dune").write_text("(library (name my_lib))\n")
+    (tmp_path / "lib" / "store.ml").write_text("include Store_intf\nlet x = 1\n")
+    (tmp_path / "lib" / "store_intf.ml").write_text(
+        "module type Json_tree = functor (Store : S) -> sig val f : Store.t end\n"
+    )
+
+    service = ArchitectureScanService(
+        source_provider=FileSourceProvider(),
+        dune_parser=DuneManifestParser(),
+        extractor=ModuleDependencyExtractor(),
+    )
+    result = service.scan_architecture(str(tmp_path))
+    edges = [(e.source, e.target) for e in result.graph.edges]
+    # Store in functor (Store : S) must NOT create an edge from Store_intf to Store
+    assert ("My_lib.Store_intf", "My_lib.Store") not in edges
+    assert len(result.cycles) == 0
+
+
+def test_module_type_local_shadows_compilation_unit(tmp_path: Path) -> None:
+    (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")
+    (tmp_path / "lib").mkdir()
+    (tmp_path / "lib" / "dune").write_text("(library (name my_lib))\n")
+    (tmp_path / "lib" / "error.ml").write_text("include Error_intf\n")
+    (tmp_path / "lib" / "error_intf.ml").write_text(
+        "module type Error = sig val x : int end\n"
+        "module type S = sig\n"
+        "  include Error\n"
+        "end\n"
+    )
+
+    service = ArchitectureScanService(
+        source_provider=FileSourceProvider(),
+        dune_parser=DuneManifestParser(),
+        extractor=ModuleDependencyExtractor(),
+    )
+    result = service.scan_architecture(str(tmp_path))
+    edges = [(e.source, e.target) for e in result.graph.edges]
+    # include Error inside error_intf refers to local module type Error, not sibling unit
+    assert ("My_lib.Error_intf", "My_lib.Error") not in edges
+    assert len(result.cycles) == 0
+
+
+def test_ppx_extension_on_module_declaration(tmp_path: Path) -> None:
+    (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")
+    (tmp_path / "lib").mkdir()
+    (tmp_path / "lib" / "dune").write_text("(library (name my_lib))\n")
+    (tmp_path / "lib" / "monad.ml").write_text("include Monad_intf\n")
+    (tmp_path / "lib" / "monad_intf.ml").write_text(
+        "module%template.portable Of_monad (Monad : S) = struct let t = Monad.t end\n"
+    )
+
+    service = ArchitectureScanService(
+        source_provider=FileSourceProvider(),
+        dune_parser=DuneManifestParser(),
+        extractor=ModuleDependencyExtractor(),
+    )
+    result = service.scan_architecture(str(tmp_path))
+    edges = [(e.source, e.target) for e in result.graph.edges]
+    assert ("My_lib.Monad_intf", "My_lib.Monad") not in edges
+    assert len(result.cycles) == 0
+

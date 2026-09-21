@@ -29,9 +29,14 @@ _QUALIFIED_RE = re.compile(
     r"|"
     r"\b([A-Z][A-Za-z0-9_']*)\s*\.\s*(?:[a-z_]|[({\[])"
 )
-_LOCAL_MODULE_RE = re.compile(r"\bmodule\s+(?:rec\s+)?(?!(?:type\b))([A-Z][A-Za-z0-9_']*)")
+_LOCAL_MODULE_RE = re.compile(
+    r"\bmodule(?:\s*%\s*[a-z0-9_.]+)?\s+(?:rec\s+)?(?:type\s+)?([A-Z][A-Za-z0-9_']*)"
+)
 _LOCAL_AND_MODULE_RE = re.compile(r"\band\s+([A-Z][A-Za-z0-9_']*)\s*(?::\s*[^=\n]+)?(?:=|:)")
-_FUNCTOR_PARAM_RE = re.compile(r"\bmodule\s+(?:rec\s+)?[A-Z][A-Za-z0-9_']*\s*(?:\([^)]*\)\s*)*\(([A-Z][A-Za-z0-9_']*)\s*:")
+_FUNCTOR_HEAD_RE = re.compile(
+    r"\b(?:module(?:\s*%\s*[a-z0-9_.]+)?\s+(?:rec\s+)?[A-Z][A-Za-z0-9_']*|\bfunctor)\s*"
+)
+_PARAM_START_RE = re.compile(r"\(\s*([A-Z][A-Za-z0-9_']*)\s*:")
 _SUBMODULE_RE = re.compile(
     r"\bmodule\s+(?:rec\s+)?([A-Z][A-Za-z0-9_']*)\s*(?:\([^)]*\)\s*)?(?::\s*[^=\n]+)?(?:=|:)\s*(?:struct|sig|functor)"
 )
@@ -125,8 +130,8 @@ class ModuleDependencyExtractor:
                 local_mods.add(m.group(1))
             for m in _LOCAL_AND_MODULE_RE.finditer(text):
                 local_mods.add(m.group(1))
-            for m in _FUNCTOR_PARAM_RE.finditer(text):
-                local_mods.add(m.group(1))
+            for p in self._find_functor_params(text):
+                local_mods.add(p)
 
         # The interface (when present) defines the exported type contract.
         interface_text = strip_comments_and_strings(intf if intf is not None else (impl or ""))
@@ -182,6 +187,45 @@ class ModuleDependencyExtractor:
 
     def _find_submodules(self, text: str) -> list[str]:
         return [m.group(1) for m in _SUBMODULE_RE.finditer(text)]
+
+    @staticmethod
+    def _skip_matching_paren(text: str, start: int) -> int:
+        """Given start pointing at '(', return index immediately after the matching ')'."""
+        depth = 0
+        i = start
+        n = len(text)
+        while i < n:
+            c = text[i]
+            if c == "(":
+                depth += 1
+            elif c == ")":
+                depth -= 1
+                if depth == 0:
+                    return i + 1
+            i += 1
+        return n
+
+    def _find_functor_params(self, text: str) -> list[str]:
+        """Extract all formal module parameters from functor definitions and types.
+
+        Handles multi-parameter functors (e.g. ``module M (A : SA) (B : SB) =``)
+        and functor type expressions (e.g. ``functor (A : SA) ->``).
+        """
+        params: list[str] = []
+        n = len(text)
+        for m in _FUNCTOR_HEAD_RE.finditer(text):
+            pos = m.end()
+            while pos < n:
+                while pos < n and text[pos].isspace():
+                    pos += 1
+                if pos < n and text[pos] == "(":
+                    pm = _PARAM_START_RE.match(text, pos)
+                    if pm:
+                        params.append(pm.group(1))
+                    pos = self._skip_matching_paren(text, pos)
+                else:
+                    break
+        return params
 
     def _count_type_declarations(self, text: str) -> tuple[int, int]:
         """Count (total, abstract) type declarations; abstract = no ``=`` in the decl region."""
