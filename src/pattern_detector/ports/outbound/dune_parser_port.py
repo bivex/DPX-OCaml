@@ -15,6 +15,7 @@ class DuneLibraryStanza(BaseModel):
     libraries: list[str] = Field(default_factory=list)
     wrapped: bool = True
     directory: str = ""
+    include_subdirs: str | None = None
 
 
 class DuneExecutableStanza(BaseModel):
@@ -62,11 +63,25 @@ class DuneProjectTree(BaseModel):
         return {lib.name for lib in self.libraries}
 
     def library_for_file(self, file_path: str) -> DuneLibraryStanza | None:
-        """Find the library stanza owning a given source file (by directory containment)."""
+        """Find the library stanza owning a given source file (by directory containment, longest prefix)."""
+        from pathlib import Path
+
+        fpath = Path(file_path).resolve()
+        best_lib: DuneLibraryStanza | None = None
+        best_len = -1
         for lib in self.libraries:
-            if file_path.startswith(lib.directory):
-                return lib
-        return None
+            if not lib.directory:
+                continue
+            lib_dir = Path(lib.directory).resolve()
+            try:
+                fpath.relative_to(lib_dir)
+                dlen = len(str(lib_dir))
+                if dlen > best_len:
+                    best_lib = lib
+                    best_len = dlen
+            except ValueError:
+                continue
+        return best_lib
 
     def external_dependencies(self) -> dict[str, list[str]]:
         """Map each local library to its non-local (opam) dependencies."""

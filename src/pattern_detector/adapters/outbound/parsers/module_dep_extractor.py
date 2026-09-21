@@ -24,7 +24,14 @@ _INCLUDE_RE = re.compile(r"\binclude\s+([A-Z][A-Za-z0-9_'.]*)")
 _FUNCTOR_APP_RE = re.compile(
     r"\bmodule\s+(?:rec\s+)?([A-Z][A-Za-z0-9_']*)\s*(?::[^=\n]+)?=\s*([A-Z][A-Za-z0-9_'.]*)\s*\(([^()]*)\)"
 )
-_QUALIFIED_RE = re.compile(r"\b([A-Z][A-Za-z0-9_']*)\s*\.")
+_QUALIFIED_RE = re.compile(
+    r"\b([A-Z][A-Za-z0-9_']*(?:\.[A-Z][A-Za-z0-9_']*)+)\b"
+    r"|"
+    r"\b([A-Z][A-Za-z0-9_']*)\s*\.\s*(?:[a-z_]|[({\[])"
+)
+_LOCAL_MODULE_RE = re.compile(r"\bmodule\s+(?:rec\s+)?(?!(?:type\b))([A-Z][A-Za-z0-9_']*)")
+_LOCAL_AND_MODULE_RE = re.compile(r"\band\s+([A-Z][A-Za-z0-9_']*)\s*(?::\s*[^=\n]+)?(?:=|:)")
+_FUNCTOR_PARAM_RE = re.compile(r"\bmodule\s+(?:rec\s+)?[A-Z][A-Za-z0-9_']*\s*(?:\([^)]*\)\s*)*\(([A-Z][A-Za-z0-9_']*)\s*:")
 _SUBMODULE_RE = re.compile(
     r"\bmodule\s+(?:rec\s+)?([A-Z][A-Za-z0-9_']*)\s*(?:\([^)]*\)\s*)?(?::\s*[^=\n]+)?(?:=|:)\s*(?:struct|sig|functor)"
 )
@@ -48,6 +55,7 @@ class ModuleDependencyInfo(BaseModel):
     functor_apps: list[tuple[str, str]] = Field(default_factory=list)
     qualified_refs: dict[str, int] = Field(default_factory=dict)
     submodules: list[str] = Field(default_factory=list)
+    local_modules: list[str] = Field(default_factory=list)
     exported_types: int = 0
     abstract_types: int = 0
     defines_type_t: bool = False
@@ -66,6 +74,8 @@ class ModuleDependencyExtractor:
         for file_path in sorted(sources):
             path = Path(file_path)
             if path.suffix not in {".ml", ".mli"}:
+                continue
+            if not re.match(r"^[A-Za-z0-9_']+$", path.stem):
                 continue
             unit_key = str(path.with_suffix(".ml"))
             by_unit.setdefault(unit_key, {})[path.suffix] = sources[file_path]
@@ -100,6 +110,7 @@ class ModuleDependencyExtractor:
         refs: Counter[str] = Counter()
         functor_apps: list[tuple[str, str]] = []
         submodules: list[str] = []
+        local_mods: set[str] = set()
 
         for raw in (impl, intf):
             if raw is None:
@@ -110,6 +121,12 @@ class ModuleDependencyExtractor:
             refs.update(self._find_qualified_refs(text))
             functor_apps.extend(self._find_functor_apps(text))
             submodules.extend(self._find_submodules(text))
+            for m in _LOCAL_MODULE_RE.finditer(text):
+                local_mods.add(m.group(1))
+            for m in _LOCAL_AND_MODULE_RE.finditer(text):
+                local_mods.add(m.group(1))
+            for m in _FUNCTOR_PARAM_RE.finditer(text):
+                local_mods.add(m.group(1))
 
         # The interface (when present) defines the exported type contract.
         interface_text = strip_comments_and_strings(intf if intf is not None else (impl or ""))
@@ -123,6 +140,7 @@ class ModuleDependencyExtractor:
         info.qualified_refs = dict(refs)
         info.functor_apps = sorted(set(functor_apps))
         info.submodules = sorted(set(submodules))
+        info.local_modules = sorted(local_mods)
         return info
 
     # ------------------------------------------------------------------
@@ -146,8 +164,8 @@ class ModuleDependencyExtractor:
     def _find_qualified_refs(self, text: str) -> Counter[str]:
         found: Counter[str] = Counter()
         for m in _QUALIFIED_RE.finditer(text):
-            ident = m.group(1)
-            if ident not in _NON_MODULE_UPPER:
+            ident = m.group(1) or m.group(2)
+            if ident and ident.split(".")[0] not in _NON_MODULE_UPPER:
                 found[ident] += 1
         return found
 
@@ -156,6 +174,8 @@ class ModuleDependencyExtractor:
         apps: list[tuple[str, str]] = []
         for m in _FUNCTOR_APP_RE.finditer(text):
             functor, args_raw = m.group(2), m.group(3)
+            if args_raw.strip().startswith("struct"):
+                continue  # inline anonymous struct argument
             for arg in re.findall(r"\b([A-Z][A-Za-z0-9_'.]*)\b", args_raw):
                 apps.append((functor, arg))
         return apps

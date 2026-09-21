@@ -11,6 +11,7 @@ Pipeline (implements ScanArchitectureUseCase):
 
 from __future__ import annotations
 
+import re
 import time
 from pathlib import Path
 from typing import TYPE_CHECKING, ClassVar, Protocol
@@ -61,40 +62,151 @@ class _ResolutionIndex:
         self.nodes = nodes
         self.wrap_prefixes: dict[str, str] = {}  # "Arch_domain" -> library name
         self.siblings: dict[str, dict[str, str]] = {}  # library name -> module -> node id
-        self.top_level_ids: dict[str, str] = {}  # bare name -> id (unwrapped / dune-less)
-        self.wrapped_by_name: dict[str, list[str]] = {}  # bare name -> wrapped ids
+        self.dir_modules: dict[str, dict[str, str]] = {}  # directory path -> module -> node id
+        self.scopes: dict[str, dict[str, str]] = {}  # node id -> {module name: target node id}
 
-    def register(self, node_id: str, module_name: str, library: str, wrapped: bool) -> None:
-        if wrapped:
-            self.wrapped_by_name.setdefault(module_name, []).append(node_id)
+    def register(
+        self,
+        node_id: str,
+        module_name: str,
+        library: str,
+        wrapped: bool,
+        directory: str,
+    ) -> None:
+        if wrapped and library:
             self.siblings.setdefault(library, {})[module_name] = node_id
             self.wrap_prefixes[node_id.rsplit(".", 1)[0]] = library
-        else:
-            self.top_level_ids.setdefault(module_name, node_id)
+        elif library:
+            self.siblings.setdefault(library, {})[module_name] = node_id
 
-    def resolve(self, target_name: str, source_lib: str) -> str | None:
-        """Resolve a raw reference from ``source_lib`` to a graph node id, or None."""
+        if directory:
+            self.dir_modules.setdefault(directory, {})[module_name] = node_id
+
+    def build_scopes(
+        self,
+        units: dict[str, ModuleDependencyInfo],
+        node_id_by_unit: dict[str, str],
+    ) -> None:
+        """Compute bare module names brought into scope for each unit via open/include."""
+        info_by_nid = {
+            node_id_by_unit[uk]: info
+            for uk, info in units.items()
+            if uk in node_id_by_unit
+        }
+        memo: dict[str, dict[str, str]] = {}
+
+        def get_scope(nid: str, visited: set[str]) -> dict[str, str]:
+            if nid in memo:
+                return memo[nid]
+            if nid in visited:
+                return {}
+            visited.add(nid)
+
+            scope: dict[str, str] = {}
+            uinfo = info_by_nid.get(nid)
+            if uinfo is None:
+                return scope
+
+            source_node = self.nodes.get(nid)
+            source_lib = source_node.dune_library if source_node else ""
+            source_dir = str(Path(uinfo.file_path).parent.resolve())
+
+            for target in list(uinfo.opens) + list(uinfo.includes):
+                # 1. Target is a library wrapper prefix (e.g. "Stdune", "Arch_infra")
+                lib_name = self.wrap_prefixes.get(target) or self.wrap_prefixes.get(target.split(".")[0])
+                if lib_name and lib_name in self.siblings:
+                    scope.update(self.siblings[lib_name])
+
+                # 2. Target is a module in the same library
+                if source_lib:
+                    sib_id = self.siblings.get(source_lib, {}).get(target)
+                    if sib_id and sib_id != nid:
+                        scope.update(get_scope(sib_id, visited.copy()))
+
+                # 3. Target is a module in the same directory
+                dir_sib = self.dir_modules.get(source_dir, {}).get(target)
+                if dir_sib and dir_sib != nid:
+                    scope.update(get_scope(dir_sib, visited.copy()))
+
+            memo[nid] = scope
+            return scope
+
+        for nid in info_by_nid:
+            self.scopes[nid] = get_scope(nid, set())
+
+    def resolve(
+        self,
+        target_name: str,
+        source_id: str,
+        source_lib: str,
+        source_dir: str,
+        local_modules: set[str],
+    ) -> str | None:
+        """Resolve a raw reference from a source compilation unit to a graph node id, or None."""
         parts = target_name.split(".")
         head = parts[0]
 
-        # Explicit cross-library path: ``Arch_infra.Db`` / ``Arch_infra.Db.query``.
-        if len(parts) >= 2 and head in self.wrap_prefixes:
-            candidate = f"{head}.{parts[1]}"
-            return candidate if candidate in self.nodes else None
+        # References to locally defined modules, aliases, or functor parameters are intra-unit
+        if head in local_modules:
+            return None
 
-        # Sibling module inside the same wrapped library (``open Types``).
-        sibling = self.siblings.get(source_lib, {}).get(head)
-        if sibling is not None:
-            return sibling
+        # Multi-segment qualified reference (e.g. "A.B" or "A.B.C")
+        if len(parts) >= 2:
+            # Longest matching path in self.nodes
+            for i in range(len(parts), 1, -1):
+                candidate = ".".join(parts[:i])
+                if candidate in self.nodes:
+                    return candidate
 
-        # Bare module of an unwrapped library / dune-less project.
-        if head in self.top_level_ids:
-            return self.top_level_ids[head]
+            # If parts[0] is in self.wrap_prefixes, it was an explicit cross-lib path like "Http.Header".
+            # Suppress prefix-head -> wrapper edge (never resolve "Http.Header" to wrapper "Http.Http").
+            if parts[0] in self.wrap_prefixes:
+                return None
 
-        # Unique wrapped module with this name anywhere in the project.
-        matches = [nid for nid in self.wrapped_by_name.get(head, []) if nid in self.nodes]
-        if len(matches) == 1:
-            return matches[0]
+            # Sibling in source_lib? (e.g. "Order.describe" where "Order" is a sibling in source_lib)
+            if source_lib:
+                sib = self.siblings.get(source_lib, {}).get(parts[0])
+                if sib is not None:
+                    return sib
+
+            # Sibling in source_dir?
+            if source_dir:
+                dir_sib = self.dir_modules.get(source_dir, {}).get(parts[0])
+                if dir_sib is not None:
+                    return dir_sib
+
+            # In open scope?
+            scoped = self.scopes.get(source_id, {}).get(parts[0])
+            if scoped is not None:
+                return scoped
+
+            return None
+
+        # Bare single-segment reference (len(parts) == 1):
+
+        # Sibling in the same wrapped library
+        if source_lib:
+            sib = self.siblings.get(source_lib, {}).get(head)
+            if sib is not None:
+                return sib
+
+        # Sibling in the same directory (unwrapped modules / exes)
+        if source_dir:
+            dir_sib = self.dir_modules.get(source_dir, {}).get(head)
+            if dir_sib is not None:
+                return dir_sib
+
+        # In scope via open / include
+        scoped = self.scopes.get(source_id, {}).get(head)
+        if scoped is not None:
+            return scoped
+
+        # Explicit library wrapper module (e.g. `open Stdune` -> node `Stdune.Stdune`)
+        if head in self.wrap_prefixes:
+            wrap_id = f"{head}.{head}"
+            if wrap_id in self.nodes:
+                return wrap_id
+
         return None
 
 
@@ -175,10 +287,27 @@ class ArchitectureScanService(ScanArchitectureUseCase):
             wrap = self._wrap_prefix(lib) if lib is not None and lib.wrapped else ""
 
             module = info.module_name
+            if lib is not None and lib.include_subdirs == "qualified" and lib.directory:
+                try:
+                    rel_parts = Path(info.file_path).parent.resolve().relative_to(Path(lib.directory).resolve()).parts
+                    if rel_parts:
+                        prefix_mod = ".".join(p[:1].upper() + p[1:] for p in rel_parts)
+                        module = f"{prefix_mod}.{module}"
+                except ValueError:
+                    pass
+
             node_id = f"{wrap}.{module}" if wrap else module
-            if not wrap and lib is not None and node_id in graph.nodes:
-                # Unwrapped collision between libraries: qualify with the wrap name.
-                node_id = f"{self._wrap_prefix(lib)}.{module}"
+            if node_id in graph.nodes:
+                # Collision: disambiguate using directory relative parts
+                rel = self._relative_parts(root, info.file_path)
+                prefix = "_".join(rel) if rel else str(Path(info.file_path).parent.name)
+                prefix = re.sub(r"[^A-Za-z0-9_]", "_", prefix)
+                node_id = f"{prefix}.{module}"
+                counter = 1
+                base_id = node_id
+                while node_id in graph.nodes:
+                    node_id = f"{base_id}_{counter}"
+                    counter += 1
 
             graph.nodes[node_id] = ModuleNode(
                 id=node_id,
@@ -195,13 +324,23 @@ class ArchitectureScanService(ScanArchitectureUseCase):
                 submodules=info.submodules,
             )
             node_id_by_unit[unit_key] = node_id
-            index.register(node_id, module, lib.name if lib is not None else "", bool(wrap))
+            index.register(
+                node_id=node_id,
+                module_name=module,
+                library=lib.name if lib is not None else "",
+                wrapped=bool(wrap),
+                directory=str(Path(info.file_path).parent.resolve()),
+            )
+
+        index.build_scopes(units, node_id_by_unit)
 
         # Pass 2: resolve references and emit one aggregated edge per module pair.
         pending: dict[tuple[str, str], tuple[EdgeKind, int]] = {}
         for unit_key, info in units.items():
             source_id = node_id_by_unit[unit_key]
             source_lib = graph.nodes[source_id].dune_library
+            source_dir = str(Path(info.file_path).parent.resolve())
+            source_local_mods = set(info.local_modules)
 
             wants: list[tuple[str, EdgeKind, int]] = []
             wants.extend((t, EdgeKind.OPEN, w) for t, w in info.opens.items())
@@ -212,7 +351,13 @@ class ArchitectureScanService(ScanArchitectureUseCase):
                 wants.append((argument, EdgeKind.FUNCTOR_APPLICATION, 1))
 
             for target_name, kind, weight in wants:
-                target_id = index.resolve(target_name, source_lib)
+                target_id = index.resolve(
+                    target_name,
+                    source_id=source_id,
+                    source_lib=source_lib,
+                    source_dir=source_dir,
+                    local_modules=source_local_mods,
+                )
                 if target_id is None or target_id == source_id:
                     continue  # stdlib / unresolved / self-reference
                 self._accumulate(pending, source_id, target_id, kind, weight)

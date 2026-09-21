@@ -188,10 +188,16 @@ class DuneManifestParser(DuneManifestParserPort):
         directory = str(path.parent)
         manifest = DuneManifest(path=str(path), directory=directory)
 
+        include_subdirs: str | None = None
+        for stanza in stanzas:
+            if stanza and stanza[0] == "include_subdirs" and len(stanza) > 1 and isinstance(stanza[1], str):
+                include_subdirs = _unquote(stanza[1])
+
         for stanza in stanzas:
             head = stanza[0] if stanza else ""
             if head == "library":
-                name = _field_atom(stanza, "name")
+                public_name = _field_atom(stanza, "public_name")
+                name = _field_atom(stanza, "name") or public_name
                 if not name:
                     continue
                 wrapped_field = _field_atom(stanza, "wrapped")
@@ -203,6 +209,7 @@ class DuneManifestParser(DuneManifestParserPort):
                         libraries=_library_deps(stanza),
                         wrapped=wrapped,
                         directory=directory,
+                        include_subdirs=include_subdirs,
                     )
                 )
             elif head == "executable":

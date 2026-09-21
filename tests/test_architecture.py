@@ -184,7 +184,7 @@ def test_extract_opens_includes_refs_functors() -> None:
     assert info.opens == {"Base": 1, "Stdio": 1}
     assert info.includes == {"Helper": 1}
     assert ("Registry.Make", "Sqlite") in info.functor_apps
-    assert info.qualified_refs.get("Core") == 1
+    assert info.qualified_refs.get("Core.List") == 1
     # `module Backend = Registry.Make (...)` is a functor application, not a
     # struct/sig submodule definition, so it must not appear in `submodules`.
     assert "Backend" not in info.submodules
@@ -457,6 +457,77 @@ def test_scan_without_dune_falls_back_to_filesystem(tmp_path: Path) -> None:
     assert len(result.cycles) == 1  # A -> B -> A even without any dune metadata
     node_ids = set(result.graph.nodes)
     assert node_ids == {"A", "B"}
+
+
+def test_qualified_ref_routes_to_longest_module_not_wrapper(tmp_path: Path) -> None:
+    (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")
+    (tmp_path / "lib_a").mkdir()
+    (tmp_path / "lib_a" / "dune").write_text("(library (name lib_a))\n")
+    (tmp_path / "lib_a" / "mod_x.ml").write_text("let value = 42\n")
+    (tmp_path / "lib_a" / "lib_a.ml").write_text("module Mod_x = Mod_x\n")
+
+    (tmp_path / "lib_b").mkdir()
+    (tmp_path / "lib_b" / "dune").write_text("(library (name lib_b) (libraries lib_a))\n")
+    (tmp_path / "lib_b" / "consumer.ml").write_text("let x = Lib_a.Mod_x.value\n")
+
+    service = ArchitectureScanService(
+        source_provider=FileSourceProvider(),
+        dune_parser=DuneManifestParser(),
+        extractor=ModuleDependencyExtractor(),
+    )
+    result = service.scan_architecture(str(tmp_path))
+
+    # Should route to Lib_a.Mod_x, NEVER to wrapper Lib_a.Lib_a
+    edges = [(e.source, e.target) for e in result.graph.edges]
+    assert ("Lib_b.Consumer", "Lib_a.Mod_x") in edges
+    assert ("Lib_b.Consumer", "Lib_a.Lib_a") not in edges
+    assert len(result.cycles) == 0
+
+
+def test_local_module_shadows_sibling_unit(tmp_path: Path) -> None:
+    (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")
+    (tmp_path / "lib").mkdir()
+    (tmp_path / "lib" / "dune").write_text("(library (name my_lib))\n")
+    (tmp_path / "lib" / "helper.ml").write_text("let run () = ()\n")
+    (tmp_path / "lib" / "caller.ml").write_text(
+        "module Helper = struct let run () = () end\n"
+        "let test () = Helper.run ()\n"
+    )
+
+    service = ArchitectureScanService(
+        source_provider=FileSourceProvider(),
+        dune_parser=DuneManifestParser(),
+        extractor=ModuleDependencyExtractor(),
+    )
+    result = service.scan_architecture(str(tmp_path))
+
+    # Helper is shadowed by the local submodule definition; no edge to My_lib.Helper
+    edges = [(e.source, e.target) for e in result.graph.edges]
+    assert ("My_lib.Caller", "My_lib.Helper") not in edges
+    assert len(result.cycles) == 0
+
+
+def test_bare_fallback_prevented_across_libraries(tmp_path: Path) -> None:
+    (tmp_path / "dune-project").write_text("(lang dune 3.0)\n")
+    (tmp_path / "lib_a").mkdir()
+    (tmp_path / "lib_a" / "dune").write_text("(library (name lib_a))\n")
+    (tmp_path / "lib_a" / "random.ml").write_text("let x = 1\n")
+
+    (tmp_path / "lib_b").mkdir()
+    (tmp_path / "lib_b" / "dune").write_text("(library (name lib_b))\n")
+    (tmp_path / "lib_b" / "user.ml").write_text("let r = Random.int 10\n")
+
+    service = ArchitectureScanService(
+        source_provider=FileSourceProvider(),
+        dune_parser=DuneManifestParser(),
+        extractor=ModuleDependencyExtractor(),
+    )
+    result = service.scan_architecture(str(tmp_path))
+
+    # Bare Random.int in lib_b must NOT resolve to Lib_a.Random via global fallback
+    edges = [(e.source, e.target) for e in result.graph.edges]
+    assert ("Lib_b.User", "Lib_a.Random") not in edges
+    assert len(result.cycles) == 0
 
 
 # ----------------------------------------------------------------------
