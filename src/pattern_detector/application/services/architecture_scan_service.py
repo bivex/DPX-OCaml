@@ -516,7 +516,7 @@ class ArchitectureScanService(ScanArchitectureUseCase):
                     and node.exported_types > 0
                     and (
                         node.layer == ArchLayer.DOMAIN
-                        or bool(re.search(r"(ast|ir|types?|spec|grammar|register|flags|opcode|mba|syntax)", node.name.lower()))
+                        or bool(re.search(r"(ast|ir|types?|spec|grammar|register|flags|opcode|mba|rns|math|arithmetic|syntax)", node.name.lower()))
                     )
                 )
                 severity = IssueSeverity.INFO if is_ast_or_data_model else IssueSeverity.WARNING
