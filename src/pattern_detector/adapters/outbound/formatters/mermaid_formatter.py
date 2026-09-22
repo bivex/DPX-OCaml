@@ -30,6 +30,9 @@ def safe_id(node_id: str) -> str:
     return f"n{sid}" if sid[:1].isdigit() else sid
 
 
+MAX_MERMAID_EDGES = 480
+
+
 class MermaidArchitectureFormatter(ArchitectureExporterPort):
     """Renders the component graph as a Mermaid ``graph TD`` definition."""
 
@@ -41,21 +44,63 @@ class MermaidArchitectureFormatter(ArchitectureExporterPort):
 
         visible = {n.id for _, nodes in grouped_nodes(result, options.group_by, options.show_cycles_only) for n in nodes}
         in_cycle = {n.id for n in result.graph.nodes.values() if n.cycle_id is not None}
+        cycle_pairs = cycle_edge_pairs(result)
+
+        candidate_edges = [
+            e for e in result.graph.edges
+            if e.source in visible and e.target in visible
+        ]
+
+        # GitHub enforces a strict 500-edge limit on Mermaid diagrams.
+        # If total edges exceed MAX_MERMAID_EDGES, prioritize architectural components.
+        if len(candidate_edges) > MAX_MERMAID_EDGES:
+            def is_test_node(nid: str) -> bool:
+                node = result.graph.nodes.get(nid)
+                if not node:
+                    return False
+                fp = node.file_path.replace("\\", "/")
+                return (
+                    "/test/" in fp
+                    or fp.startswith("test/")
+                    or node.name.startswith("Test_")
+                    or node.name == "Run_tests"
+                )
+
+            prod_edges = [
+                e for e in candidate_edges
+                if not is_test_node(e.source) and not is_test_node(e.target)
+            ]
+            if len(prod_edges) <= MAX_MERMAID_EDGES:
+                candidate_edges = prod_edges
+                visible = {nid for nid in visible if not is_test_node(nid)}
+                lines.insert(1, "%% Note: Test modules omitted to comply with GitHub 500-edge limit.")
+            else:
+                def edge_score(e) -> tuple[int, int, int, int]:
+                    in_c = 0 if (e.source, e.target) in cycle_pairs else 1
+                    cross_lib = 0 if e.cross_library else 1
+                    cross_lay = 0 if e.cross_layer else 1
+                    return (in_c, cross_lib, cross_lay, -e.weight)
+
+                prod_edges.sort(key=edge_score)
+                candidate_edges = prod_edges[:MAX_MERMAID_EDGES]
+                active_nodes = {e.source for e in candidate_edges} | {e.target for e in candidate_edges} | in_cycle
+                visible = {nid for nid in visible if not is_test_node(nid)} & active_nodes
+                lines.insert(1, "%% Note: Edges prioritized and capped to comply with GitHub 500-edge limit.")
 
         for group_label, nodes in grouped_nodes(result, options.group_by, options.show_cycles_only):
+            group_nodes = [n for n in nodes if n.id in visible]
+            if not group_nodes:
+                continue
             group_id = safe_id(f"group_{group_label}")
             lines.append(f'  subgraph {group_id}["{group_label}"]')
-            for node in nodes:
+            for node in group_nodes:
                 badge = " 🔁" if node.id in in_cycle else ""
                 iface = " 📄" if node.has_interface else ""
                 entry = " 🚪" if node.is_entry else ""
                 lines.append(f'    {safe_id(node.id)}["{node.name}{iface}{entry}{badge}"]')
             lines.append("  end")
 
-        cycle_pairs = cycle_edge_pairs(result)
-        for edge in result.graph.edges:
-            if edge.source not in visible or edge.target not in visible:
-                continue
+        for edge in candidate_edges:
             label = _KIND_LABEL.get(edge.kind.value, edge.kind.value)
             style = "==>" if edge.weight >= 5 else "-->"
             if (edge.source, edge.target) in cycle_pairs:
