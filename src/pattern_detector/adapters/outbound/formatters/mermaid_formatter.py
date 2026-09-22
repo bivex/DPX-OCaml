@@ -57,7 +57,7 @@ class MermaidArchitectureFormatter(ArchitectureExporterPort):
             if edge.source not in visible or edge.target not in visible:
                 continue
             label = _KIND_LABEL.get(edge.kind.value, edge.kind.value)
-            style = "=>" if edge.weight >= 5 else "-->"
+            style = "==>" if edge.weight >= 5 else "-->"
             if (edge.source, edge.target) in cycle_pairs:
                 lines.append(f'  {safe_id(edge.source)} == "{label} ×{edge.weight}" ==> {safe_id(edge.target)}')
             elif edge.cross_layer and not edge.cross_library:
