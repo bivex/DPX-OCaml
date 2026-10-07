@@ -23,11 +23,12 @@ from pattern_detector.domain.architecture.models import (
     ArchEdge,
     ArchIssue,
     ArchIssueKind,
-    ArchLayer,
     ArchitectureScanResult,
+    ArchLayer,
     ComponentGraph,
     CycleGroup,
     EdgeKind,
+    EdgeLocation,
     IssueSeverity,
     ModuleNode,
     infer_layer,
@@ -46,6 +47,7 @@ from pattern_detector.ports.outbound.dune_parser_port import (
 
 if TYPE_CHECKING:
     from pattern_detector.adapters.outbound.parsers.module_dep_extractor import (
+        DependencyOccurrence,
         ModuleDependencyInfo,
     )
 
@@ -343,12 +345,16 @@ class ArchitectureScanService(ScanArchitectureUseCase):
         index.build_scopes(units, node_id_by_unit)
 
         # Pass 2: resolve references and emit one aggregated edge per module pair.
-        pending: dict[tuple[str, str], tuple[EdgeKind, int]] = {}
+        pending: dict[tuple[str, str], tuple[EdgeKind, int, list[EdgeLocation]]] = {}
         for unit_key, info in units.items():
             source_id = node_id_by_unit[unit_key]
             source_lib = graph.nodes[source_id].dune_library
             source_dir = str(Path(info.file_path).parent.resolve())
             source_local_mods = set(info.local_modules)
+
+            occ_by_target: dict[tuple[str, str], list[DependencyOccurrence]] = {}
+            for occ in info.occurrences:
+                occ_by_target.setdefault((occ.kind, occ.name), []).append(occ)
 
             wants: list[tuple[str, EdgeKind, int]] = []
             wants.extend((t, EdgeKind.OPEN, w) for t, w in info.opens.items())
@@ -368,9 +374,13 @@ class ArchitectureScanService(ScanArchitectureUseCase):
                 )
                 if target_id is None or target_id == source_id:
                     continue  # stdlib / unresolved / self-reference
-                self._accumulate(pending, source_id, target_id, kind, weight)
+                locs = [
+                    EdgeLocation(file=o.file, line=o.line, column=o.column, occurrence=o.name)
+                    for o in occ_by_target.get((kind.value, target_name), [])
+                ]
+                self._accumulate(pending, source_id, target_id, kind, weight, locs)
 
-        for (source_id, target_id), (kind, weight) in pending.items():
+        for (source_id, target_id), (kind, weight, locations) in pending.items():
             source_lib = graph.nodes[source_id].dune_library
             target_lib = graph.nodes[target_id].dune_library
             graph.edges.append(
@@ -381,6 +391,7 @@ class ArchitectureScanService(ScanArchitectureUseCase):
                     weight=weight,
                     cross_library=bool(source_lib) and bool(target_lib) and source_lib != target_lib,
                     cross_layer=graph.nodes[source_id].layer != graph.nodes[target_id].layer,
+                    locations=locations,
                 )
             )
 
@@ -393,22 +404,34 @@ class ArchitectureScanService(ScanArchitectureUseCase):
         graph.external_deps = tree.external_dependencies()
         return graph
 
+    #: Hard cap on ``file:line:col`` evidence kept per aggregated edge.
+    MAX_EDGE_LOCATIONS = 50
+
     def _accumulate(
         self,
-        pending: dict[tuple[str, str], tuple[EdgeKind, int]],
+        pending: dict[tuple[str, str], tuple[EdgeKind, int, list[EdgeLocation]]],
         source: str,
         target: str,
         kind: EdgeKind,
         weight: int,
+        locations: list[EdgeLocation] | None = None,
     ) -> None:
         existing = pending.get((source, target))
         if existing is None:
-            pending[(source, target)] = (kind, weight)
+            pending[(source, target)] = (kind, weight, (locations or [])[: self.MAX_EDGE_LOCATIONS])
             return
-        best_kind, total = existing
+        best_kind, total, merged = existing
         if self._KIND_PRIORITY[kind] > self._KIND_PRIORITY[best_kind]:
             best_kind = kind
-        pending[(source, target)] = (best_kind, total + weight)
+        seen = {(loc.file, loc.line, loc.column, loc.occurrence) for loc in merged}
+        for loc in locations or []:
+            if len(merged) >= self.MAX_EDGE_LOCATIONS:
+                break
+            key = (loc.file, loc.line, loc.column, loc.occurrence)
+            if key not in seen:
+                seen.add(key)
+                merged.append(loc)
+        pending[(source, target)] = (best_kind, total + weight, merged)
 
     # ------------------------------------------------------------------
     # Analysis helpers
@@ -674,89 +697,6 @@ class ArchitectureScanService(ScanArchitectureUseCase):
                                     ),
                                 )
                             )
-
-            # 4. Undeclared library dependency: module uses symbols from lib_B but
-            #    lib_A's dune stanza doesn't list lib_B in (libraries ...).
-            reported_undeclared: set[tuple[str, str]] = set()
-            for edge in graph.edges:
-                if not edge.cross_library:
-                    continue
-                src_lib = graph.nodes[edge.source].dune_library
-                tgt_lib = graph.nodes[edge.target].dune_library
-                if not src_lib or not tgt_lib:
-                    continue
-                pair_key = (src_lib, tgt_lib)
-                if pair_key in reported_undeclared:
-                    continue
-                declared = declared_by_lib.get(src_lib, set())
-                tgt_stanza = local_libs_map.get(tgt_lib)
-                if tgt_stanza is None:
-                    continue
-                names_to_check = {tgt_stanza.name}
-                if tgt_stanza.public_name:
-                    names_to_check.add(tgt_stanza.public_name)
-                if not (declared & names_to_check):
-                    reported_undeclared.add(pair_key)
-                    issues.append(
-                        ArchIssue(
-                            severity=IssueSeverity.WARNING,
-                            kind=ArchIssueKind.UNDECLARED_LIBRARY_DEPENDENCY,
-                            subject=edge.source,
-                            message=(
-                                f"undeclared library dependency: module '{edge.source}' (library '{src_lib}') "
-                                f"uses '{edge.target}' from library '{tgt_lib}', "
-                                f"but '{src_lib}' does not list '{tgt_lib}' in its dune (libraries ...) stanza. "
-                                f"This will fail at link time."
-                            ),
-                            related=[edge.target],
-                        )
-                    )
-
-            # 5. Test reaching internals: a test stanza module directly imports
-            #    a library-internal module instead of going through the public facade.
-            test_dirs: set[str] = set()
-            for manifest in tree.manifests:
-                for exe in manifest.executables:
-                    mdir = manifest.directory.lower().replace("\\", "/")
-                    if any(seg in mdir for seg in ("/test", "/tests", "_test", "_tests")):
-                        test_dirs.add(manifest.directory)
-                        break
-
-            for edge in graph.edges:
-                if not edge.cross_library or not test_dirs:
-                    continue
-                src_node = graph.nodes.get(edge.source)
-                tgt_node = graph.nodes.get(edge.target)
-                if src_node is None or tgt_node is None:
-                    continue
-                src_dir = str(Path(src_node.file_path).parent.resolve())
-                if not any(
-                    src_dir.startswith(str(Path(td).resolve()))
-                    for td in test_dirs
-                ):
-                    continue
-                tgt_lib_name = tgt_node.dune_library
-                tgt_stanza = local_libs_map.get(tgt_lib_name) if tgt_lib_name else None
-                if tgt_stanza is None or tgt_stanza.public_name:
-                    continue
-                if not tgt_stanza.wrapped:
-                    continue
-                facade_name = self._wrap_prefix(tgt_stanza)
-                if tgt_node.name != facade_name:
-                    issues.append(
-                        ArchIssue(
-                            severity=IssueSeverity.WARNING,
-                            kind=ArchIssueKind.TEST_REACHING_INTERNALS,
-                            subject=edge.source,
-                            message=(
-                                f"test reaching internals: test module '{edge.source}' directly accesses "
-                                f"internal module '{edge.target}' from library '{tgt_lib_name}', "
-                                f"bypassing its public facade '{facade_name}'. "
-                                f"Tests coupled to implementation details break on refactoring."
-                            ),
-                            related=[edge.target],
-                        )
-                    )
 
             # 4. Undeclared library dependency: module uses symbols from lib_B but
             #    lib_A's dune stanza doesn't list lib_B in (libraries ...).

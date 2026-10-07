@@ -40,6 +40,9 @@ from pattern_detector.application.services.architecture_scan_service import (
 )
 from pattern_detector.application.services.detection_service import DetectionService
 from pattern_detector.application.services.scanning_service import ScanningService
+from pattern_detector.application.services.viewer_snapshot_service import (
+    ViewerSnapshotService,
+)
 from pattern_detector.domain.rules import DEFAULT_RULES
 from pattern_detector.ports.inbound import DetectorPort, ScannerPort
 from pattern_detector.ports.inbound.arch_scanner_port import (
@@ -70,6 +73,7 @@ class Container:
 
         self._arch_service: ScanArchitectureUseCase | None = None
         self._arch_exporters: dict[ArchOutputFormat, ArchitectureExporterPort] | None = None
+        self._viewer_service: ViewerSnapshotService | None = None
 
     @property
     def source_provider(self) -> SourceProviderPort:
@@ -145,6 +149,17 @@ class Container:
                 ArchOutputFormat.JSON: JsonArchitectureFormatter(),
             }
         return self._arch_exporters
+
+    def get_viewer_service(self) -> ViewerSnapshotService:
+        """Snapshot builder powering ``dpx viewer`` (architecture.json + HTML)."""
+        if self._viewer_service is None:
+            self._viewer_service = ViewerSnapshotService(
+                arch_service=self.get_arch_service(),
+                source_provider=self.source_provider,
+                parser=self.parser,
+                detector=self.detector,
+            )
+        return self._viewer_service
 
 
 def create_container() -> Container:

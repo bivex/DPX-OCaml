@@ -47,6 +47,28 @@ _DECL_END_RE = re.compile(r"\n\s*(?:type|let|module|val|open|include|exception|a
 _NON_MODULE_UPPER = {"Module", "Some", "Assert"}
 
 
+class DependencyOccurrence(BaseModel):
+    """One concrete occurrence of a dependency directive/reference in a source file.
+
+    Positions are 1-based line/column offsets into the *raw* source; the
+    comment/string stripper preserves offsets, so positions computed on the
+    stripped text remain valid for the original file.
+    """
+
+    kind: str  # "open" | "include" | "functor_application" | "qualified_reference"
+    name: str  # target as written (e.g. "Base", "Registry.Make", "Sqlite")
+    file: str  # path of the file containing the occurrence (.ml or .mli)
+    line: int = 1
+    column: int = 1
+
+
+def line_col_of(text: str, offset: int) -> tuple[int, int]:
+    """1-based (line, column) of a character offset in ``text``."""
+    line = text.count("\n", 0, offset) + 1
+    nl = text.rfind("\n", 0, offset)
+    return line, offset - nl
+
+
 class ModuleDependencyInfo(BaseModel):
     """Dependency facts about one OCaml compilation unit (.ml + optional .mli)."""
 
@@ -59,6 +81,9 @@ class ModuleDependencyInfo(BaseModel):
     includes: dict[str, int] = Field(default_factory=dict)
     functor_apps: list[tuple[str, str]] = Field(default_factory=list)
     qualified_refs: dict[str, int] = Field(default_factory=dict)
+    #: Flat per-occurrence evidence (kind, name, file, line, column) backing the
+    #: counters above — the "why does this edge exist" ground truth.
+    occurrences: list[DependencyOccurrence] = Field(default_factory=list)
     submodules: list[str] = Field(default_factory=list)
     local_modules: list[str] = Field(default_factory=list)
     exported_types: int = 0
@@ -116,15 +141,27 @@ class ModuleDependencyExtractor:
         functor_apps: list[tuple[str, str]] = []
         submodules: list[str] = []
         local_mods: set[str] = set()
+        occurrences: list[DependencyOccurrence] = []
 
-        for raw in (impl, intf):
+        impl_file = unit_key
+        intf_file = str(path.with_suffix(".mli"))
+        for raw, occ_file in ((impl, impl_file), (intf, intf_file)):
             if raw is None:
                 continue
             text = strip_comments_and_strings(raw)
-            opens.update(self._find_opens(text))
-            includes.update(self._find_includes(text))
-            refs.update(self._find_qualified_refs(text))
-            functor_apps.extend(self._find_functor_apps(text))
+            for target, offset in self._find_opens(text):
+                opens[target] += 1
+                occurrences.append(self._occurrence("open", target, occ_file, text, offset))
+            for target, offset in self._find_includes(text):
+                includes[target] += 1
+                occurrences.append(self._occurrence("include", target, occ_file, text, offset))
+            for target, offset in self._find_qualified_refs(text):
+                refs[target] += 1
+                occurrences.append(self._occurrence("qualified_reference", target, occ_file, text, offset))
+            for functor, argument, offset in self._find_functor_apps(text):
+                functor_apps.append((functor, argument))
+                occurrences.append(self._occurrence("functor_application", functor, occ_file, text, offset))
+                occurrences.append(self._occurrence("functor_application", argument, occ_file, text, offset))
             submodules.extend(self._find_submodules(text))
             for m in _LOCAL_MODULE_RE.finditer(text):
                 local_mods.add(m.group(1))
@@ -144,45 +181,53 @@ class ModuleDependencyExtractor:
         info.includes = dict(includes)
         info.qualified_refs = dict(refs)
         info.functor_apps = sorted(set(functor_apps))
+        info.occurrences = occurrences
         info.submodules = sorted(set(submodules))
         info.local_modules = sorted(local_mods)
         return info
 
     # ------------------------------------------------------------------
-    # Individual extractors
+    # Individual extractors (position-aware: name + start offset)
     # ------------------------------------------------------------------
 
-    def _find_opens(self, text: str) -> Counter[str]:
-        found: Counter[str] = Counter()
-        for m in _OPEN_RE.finditer(text):
-            target = m.group(1) or m.group(2)
-            if target:
-                found[target] += 1
-        return found
+    @staticmethod
+    def _occurrence(
+        kind: str,
+        name: str,
+        file: str,
+        text: str,
+        offset: int,
+    ) -> DependencyOccurrence:
+        line, column = line_col_of(text, offset)
+        return DependencyOccurrence(kind=kind, name=name, file=file, line=line, column=column)
 
-    def _find_includes(self, text: str) -> Counter[str]:
-        found: Counter[str] = Counter()
-        for m in _INCLUDE_RE.finditer(text):
-            found[m.group(1)] += 1
-        return found
+    def _find_opens(self, text: str) -> list[tuple[str, int]]:
+        return [
+            (target, m.start())
+            for m in _OPEN_RE.finditer(text)
+            if (target := m.group(1) or m.group(2))
+        ]
 
-    def _find_qualified_refs(self, text: str) -> Counter[str]:
-        found: Counter[str] = Counter()
+    def _find_includes(self, text: str) -> list[tuple[str, int]]:
+        return [(m.group(1), m.start()) for m in _INCLUDE_RE.finditer(text)]
+
+    def _find_qualified_refs(self, text: str) -> list[tuple[str, int]]:
+        found: list[tuple[str, int]] = []
         for m in _QUALIFIED_RE.finditer(text):
             ident = m.group(1) or m.group(2)
             if ident and ident.split(".")[0] not in _NON_MODULE_UPPER:
-                found[ident] += 1
+                found.append((ident, m.start()))
         return found
 
-    def _find_functor_apps(self, text: str) -> list[tuple[str, str]]:
-        """Extract ``(functor, argument)`` pairs from ``module M = F (Arg)`` bindings."""
-        apps: list[tuple[str, str]] = []
+    def _find_functor_apps(self, text: str) -> list[tuple[str, str, int]]:
+        """Extract ``(functor, argument, offset)`` triples from ``module M = F (Arg)`` bindings."""
+        apps: list[tuple[str, str, int]] = []
         for m in _FUNCTOR_APP_RE.finditer(text):
             functor, args_raw = m.group(2), m.group(3)
             if args_raw.strip().startswith("struct"):
                 continue  # inline anonymous struct argument
             for arg in re.findall(r"\b([A-Z][A-Za-z0-9_'.]*)\b", args_raw):
-                apps.append((functor, arg))
+                apps.append((functor, arg, m.start()))
         return apps
 
     def _find_submodules(self, text: str) -> list[str]:

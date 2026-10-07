@@ -83,6 +83,20 @@ class ModuleNode(BaseModel):
     metrics: ModuleMetrics | None = None
 
 
+class EdgeLocation(BaseModel):
+    """One source-level occurrence justifying a dependency edge.
+
+    ``occurrence`` is the target as written in the source (e.g. ``"Base"`` in
+    ``open Base``), ``file``/``line``/``column`` (1-based) point into the raw
+    OCaml source of the *source* module of the edge.
+    """
+
+    file: str
+    line: int = 1
+    column: int = 1
+    occurrence: str = ""
+
+
 class ArchEdge(BaseModel):
     """A directed dependency edge between two modules of the component graph."""
 
@@ -92,6 +106,7 @@ class ArchEdge(BaseModel):
     weight: int = 1
     cross_library: bool = False
     cross_layer: bool = False
+    locations: list[EdgeLocation] = Field(default_factory=list)
 
 
 class CycleGroup(BaseModel):

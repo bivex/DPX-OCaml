@@ -6,7 +6,10 @@ import re
 
 from pattern_detector.domain.code_model import CodeModel
 from pattern_detector.domain.detection import Detection
-from pattern_detector.domain.rules.base import BasePatternRule, strip_comments_and_strings
+from pattern_detector.domain.rules.base import (
+    BasePatternRule,
+    strip_comments_and_strings,
+)
 from pattern_detector.domain.value_objects import Evidence, PatternType
 
 _CATCH_ALL_REGEX = re.compile(r"\btry[\s\S]*?\bwith\s+(?:_\s*->|\|\s*_\s*->|Failure\s+_\s*->)")

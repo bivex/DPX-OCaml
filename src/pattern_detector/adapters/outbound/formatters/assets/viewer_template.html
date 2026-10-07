@@ -1,0 +1,1122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DPX Architecture Viewer</title>
+<style>
+:root {
+  --bg: #0d1117; --panel: #161b22; --panel2: #1c2129; --border: #30363d;
+  --text: #e6edf3; --muted: #8b949e; --accent: #58a6ff; --danger: #f85149;
+  --warn: #d29922; --ok: #3fb950; --cyan: #39c5cf; --purple: #bc8cff;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  display: flex; flex-direction: column; background: var(--bg); color: var(--text);
+  font: 13px/1.45 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow: hidden;
+}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: #2d333b; border-radius: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* ---------- Top bar ---------- */
+#bar {
+  display: flex; align-items: center; gap: 10px; padding: 8px 12px;
+  background: var(--panel); border-bottom: 1px solid var(--border); flex: none;
+}
+#bar .logo { font-weight: 700; letter-spacing: .5px; color: var(--accent); white-space: nowrap; }
+#bar .logo span { color: var(--muted); font-weight: 400; }
+#searchwrap { position: relative; flex: 0 1 420px; }
+#search {
+  width: 100%; padding: 6px 28px 6px 30px; background: var(--bg); color: var(--text);
+  border: 1px solid var(--border); border-radius: 6px; font-size: 13px; outline: none;
+}
+#search:focus { border-color: var(--accent); }
+#searchwrap .k { position: absolute; left: 9px; top: 6px; color: var(--muted); font-size: 11px; border: 1px solid var(--border); border-radius: 4px; padding: 0 5px; }
+#searchwrap .clr { position: absolute; right: 7px; top: 7px; color: var(--muted); cursor: pointer; display: none; font-style: normal; }
+#results {
+  position: absolute; top: 34px; left: 0; right: 0; z-index: 50; max-height: 340px; overflow: auto;
+  background: var(--panel2); border: 1px solid var(--border); border-radius: 6px; display: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,.5);
+}
+#results .r { padding: 6px 10px; cursor: pointer; display: flex; gap: 8px; align-items: baseline; }
+#results .r:hover, #results .r.sel { background: #22304a; }
+#results .r .rt { color: var(--muted); font-size: 11px; }
+#bar select, #bar button {
+  background: var(--bg); color: var(--text); border: 1px solid var(--border);
+  border-radius: 6px; padding: 5px 8px; font-size: 12px; cursor: pointer;
+}
+#bar button:hover { border-color: var(--accent); }
+#bar label.tog { color: var(--muted); font-size: 12px; display: flex; gap: 4px; align-items: center; cursor: pointer; white-space: nowrap; }
+#bar .spacer { flex: 1; }
+#projmeta { color: var(--muted); font-size: 11px; text-align: right; line-height: 1.3; white-space: nowrap; }
+#projmeta b { color: var(--text); }
+
+/* ---------- Layout ---------- */
+#main { flex: 1; display: flex; min-height: 0; }
+#left {
+  width: 320px; flex: none; background: var(--panel); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; min-height: 0;
+}
+#tabs { display: flex; border-bottom: 1px solid var(--border); flex: none; overflow-x: auto; }
+#tabs .t {
+  padding: 8px 10px; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent;
+  font-size: 12px; white-space: nowrap; user-select: none;
+}
+#tabs .t:hover { color: var(--text); }
+#tabs .t.on { color: var(--text); border-bottom-color: var(--accent); }
+#tabs .t .n { background: #2d333b; border-radius: 8px; padding: 0 6px; font-size: 10px; margin-left: 3px; }
+.tabbody { flex: 1; overflow: auto; display: none; min-height: 0; }
+.tabbody.on { display: block; }
+
+#canvaswrap { flex: 1; position: relative; min-width: 0; background: var(--bg); }
+#cy { position: absolute; inset: 0; }
+#crumbs {
+  position: absolute; top: 8px; left: 10px; z-index: 10; display: flex; gap: 4px; align-items: center;
+  background: rgba(22,27,34,.9); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px;
+  font-size: 12px; backdrop-filter: blur(4px);
+}
+#crumbs .c { cursor: pointer; color: var(--accent); }
+#crumbs .c:hover { text-decoration: underline; }
+#crumbs .sep { color: var(--muted); }
+#legend {
+  position: absolute; bottom: 8px; left: 10px; z-index: 10;
+  background: rgba(22,27,34,.9); border: 1px solid var(--border); border-radius: 6px;
+  padding: 6px 10px; font-size: 11px; color: var(--muted); backdrop-filter: blur(4px);
+}
+#legend .row { display: flex; gap: 6px; align-items: center; margin: 2px 0; }
+#legend .sw { width: 18px; height: 0; border-top: 3px solid; display: inline-block; }
+#legend .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+#empty {
+  position: absolute; inset: 0; display: none; align-items: center; justify-content: center;
+  color: var(--muted); z-index: 5; text-align: center;
+}
+
+#right {
+  width: 360px; flex: none; background: var(--panel); border-left: 1px solid var(--border);
+  overflow: auto; min-height: 0;
+}
+
+/* ---------- Shared list styles ---------- */
+.grp-h {
+  padding: 6px 12px; color: var(--muted); font-size: 11px; text-transform: uppercase;
+  letter-spacing: .6px; position: sticky; top: 0; background: var(--panel); z-index: 2;
+  display: flex; justify-content: space-between; cursor: pointer; user-select: none;
+}
+.grp-h .cnt { color: #6e7681; }
+.grp.closed .grp-h::before { content: "▸ "; }
+.grp:not(.closed) .grp-h::before { content: "▾ "; }
+.grp.closed .grp-body { display: none; }
+.mrow {
+  display: flex; align-items: center; gap: 7px; padding: 4px 12px 4px 20px; cursor: pointer;
+  border-left: 2px solid transparent;
+}
+.mrow:hover { background: var(--panel2); }
+.mrow.sel { background: #1f6feb33; border-left-color: var(--accent); }
+.mrow .nm { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mrow .loc { color: #6e7681; font-size: 11px; font-family: var(--mono); }
+.badge {
+  font-size: 10px; border-radius: 8px; padding: 0 6px; border: 1px solid var(--border);
+  color: var(--muted); white-space: nowrap;
+}
+.badge.err { color: var(--danger); border-color: var(--danger); }
+.badge.warn { color: var(--warn); border-color: var(--warn); }
+.badge.ok { color: var(--ok); border-color: var(--ok); }
+.badge.cyc { color: var(--danger); border-color: var(--danger); }
+.badge.fnd { color: var(--purple); border-color: var(--purple); }
+.chip {
+  display: inline-block; font-size: 11px; padding: 1px 8px; border-radius: 10px;
+  border: 1px solid var(--border); color: var(--muted); margin-right: 4px;
+}
+.chip.domain { color: var(--ok); border-color: var(--ok); }
+.chip.ports { color: var(--cyan); border-color: var(--cyan); }
+.chip.adapters { color: var(--warn); border-color: var(--warn); }
+.chip.infrastructure { color: var(--danger); border-color: var(--danger); }
+.chip.api { color: var(--purple); border-color: var(--purple); }
+.chip.shared { color: var(--muted); border-color: var(--muted); }
+.chip.unknown { color: #6e7681; }
+.chip.zone_pain { color: var(--danger); border-color: var(--danger); }
+.chip.zone_useless { color: var(--warn); border-color: var(--warn); }
+.chip.zone_balanced { color: var(--ok); border-color: var(--ok); }
+
+/* ---------- Inspector ---------- */
+.insp { padding: 12px 14px; }
+.insp h2 { margin: 0 0 2px; font-size: 15px; word-break: break-all; font-family: var(--mono); }
+.insp .sub { color: var(--muted); font-size: 12px; margin-bottom: 8px; word-break: break-all; }
+.insp h3 {
+  margin: 16px 0 6px; font-size: 11px; text-transform: uppercase; letter-spacing: .6px;
+  color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 4px;
+}
+.kv { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.kv .cell { background: var(--panel2); border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; }
+.kv .cell .l { color: var(--muted); font-size: 10px; text-transform: uppercase; }
+.kv .cell .v { font-size: 15px; font-family: var(--mono); }
+.lrow {
+  display: flex; gap: 8px; padding: 4px 6px; border-radius: 4px; cursor: pointer;
+  align-items: baseline; font-size: 12px;
+}
+.lrow:hover { background: var(--panel2); }
+.lrow .where { font-family: var(--mono); font-size: 11px; color: var(--accent); white-space: nowrap; }
+.lrow .what { flex: 1; }
+.lrow.sev-error .what { color: var(--danger); }
+.lrow.sev-warning .what { color: var(--warn); }
+.lrow.sev-info .what { color: var(--muted); }
+table.tbl { border-collapse: collapse; width: 100%; font-size: 12px; }
+table.tbl th, table.tbl td { text-align: left; padding: 3px 6px; border-bottom: 1px solid #21262d; }
+table.tbl th { color: var(--muted); font-weight: 500; cursor: pointer; position: sticky; top: 0; background: var(--panel); user-select: none; }
+table.tbl th:hover { color: var(--text); }
+table.tbl td.num { font-family: var(--mono); text-align: right; }
+table.tbl tr.click { cursor: pointer; }
+table.tbl tr.click:hover { background: var(--panel2); }
+.ent { font-family: var(--mono); font-size: 12px; padding: 2px 6px; cursor: default; display: flex; gap: 6px; }
+.ent .t { color: var(--cyan); }
+.ent .f { color: var(--text); }
+.ent .m { color: #6e7681; font-size: 11px; }
+.empty-note { color: #6e7681; font-size: 12px; padding: 8px 0; }
+#insp-empty { padding: 20px 14px; color: var(--muted); }
+
+/* Scatter */
+#scatter { width: 100%; background: var(--panel2); border: 1px solid var(--border); border-radius: 6px; }
+#scatter .pt { cursor: pointer; }
+#scatter text.axis { fill: var(--muted); font-size: 10px; }
+
+/* ---------- Status bar ---------- */
+#status {
+  flex: none; display: flex; gap: 14px; padding: 5px 12px; background: var(--panel);
+  border-top: 1px solid var(--border); color: var(--muted); font-size: 11px; align-items: center;
+}
+#status b { color: var(--text); font-weight: 600; }
+#status .sep { color: #30363d; }
+#status .right { margin-left: auto; }
+.hint { color: #6e7681; }
+a.fp { color: var(--accent); text-decoration: none; }
+a.fp:hover { text-decoration: underline; }
+@media (max-width: 1100px) { #right { display: none; } }
+</style>
+</head>
+<body>
+
+<div id="bar">
+  <div class="logo">🐫 DPX <span>Architecture Viewer</span></div>
+  <div id="searchwrap">
+    <span class="k">/</span>
+    <input id="search" type="text" placeholder="Search modules, entities, findings, issues…  (⌘K)" autocomplete="off" spellcheck="false">
+    <i class="clr" id="searchclr" title="Clear">✕</i>
+    <div id="results"></div>
+  </div>
+  <label class="tog">Group by
+    <select id="groupby">
+      <option value="library">Dune library</option>
+      <option value="layer">Layer</option>
+      <option value="directory">Directory</option>
+      <option value="none">Flat</option>
+    </select>
+  </label>
+  <label class="tog">Layout
+    <select id="layout">
+      <option value="auto">Auto</option>
+      <option value="cose">Force</option>
+      <option value="breadthfirst">Hierarchical</option>
+      <option value="circle">Circle</option>
+      <option value="grid">Grid</option>
+      <option value="concentric">Concentric</option>
+    </select>
+  </label>
+  <label class="tog"><input type="checkbox" id="cycleshl"> Highlight cycles</label>
+  <button id="reset" title="Reset view">⟲ Reset</button>
+  <div class="spacer"></div>
+  <div id="projmeta"></div>
+</div>
+
+<div id="main">
+  <div id="left">
+    <div id="tabs"></div>
+    <div class="tabbody" id="tab-tree"></div>
+    <div class="tabbody" id="tab-cycles"></div>
+    <div class="tabbody" id="tab-layers"></div>
+    <div class="tabbody" id="tab-metrics"></div>
+    <div class="tabbody" id="tab-issues"></div>
+    <div class="tabbody" id="tab-findings"></div>
+  </div>
+
+  <div id="canvaswrap">
+    <div id="cy"></div>
+    <div id="crumbs"></div>
+    <div id="legend"></div>
+    <div id="empty">No modules found.<br>Run <code>dpx viewer</code> on an OCaml project with .ml/.mli sources.</div>
+  </div>
+
+  <div id="right"><div id="insp-empty">Select a module on the map, in the tree, or via search<br>to inspect its metrics, dependencies and findings.</div></div>
+</div>
+
+<div id="status"></div>
+
+<script>__DPX_CYTOSCAPE_JS__</script>
+<script>window.DPX = __DPX_SNAPSHOT_JSON__;</script>
+<script id="dpx-app">
+"use strict";
+(function () {
+  const SNAP = window.DPX;
+  const $ = (id) => document.getElementById(id);
+
+  // ------------------------------------------------------------------
+  // Indexes
+  // ------------------------------------------------------------------
+  const modules = SNAP.modules || [];
+  const byId = new Map(modules.map((m) => [m.id, m]));
+  const outE = new Map(), inE = new Map();
+  for (const e of SNAP.edges || []) {
+    if (e.source === e.target) continue;
+    (outE.get(e.source) || outE.set(e.source, []).get(e.source)).push(e);
+    (inE.get(e.target) || inE.set(e.target, []).get(e.target)).push(e);
+  }
+  const issuesByNode = new Map();
+  for (const i of SNAP.issues || []) {
+    for (const n of [i.subject, ...(i.related || [])]) {
+      if (byId.has(n)) (issuesByNode.get(n) || issuesByNode.set(n, []).get(n)).push(i);
+    }
+  }
+  const cycleById = new Map((SNAP.cycles || []).map((c) => [c.id, c]));
+  const findingsByNode = new Map();
+  for (const m of modules) {
+    for (const f of m.findings || []) (findingsByNode.get(m.id) || findingsByNode.set(m.id, []).get(m.id)).push(f);
+  }
+
+  const LAYER_COLOR = {
+    domain: "#3fb950", ports: "#39c5cf", adapters: "#d29922", infrastructure: "#f85149",
+    api: "#bc8cff", shared: "#8b949e", unknown: "#6e7681",
+  };
+  const EDGE_STYLE = {
+    open: { color: "#58a6ff", width: 2.6, style: "solid" },
+    include: { color: "#39c5cf", width: 2, style: "dashed" },
+    functor_application: { color: "#d29922", width: 2, style: "dotted" },
+    qualified_reference: { color: "#6e7681", width: 1.2, style: "solid" },
+  };
+
+  // ------------------------------------------------------------------
+  // State
+  // ------------------------------------------------------------------
+  const S = {
+    group: "library",
+    layout: "auto",
+    mode: "overview",      // "overview" (grouped) | "module" (drilled into one group)
+    focusGroup: null,
+    selected: null,        // module id | group id ("group:lib") | edge id
+    selectedEdge: null,
+    focusMode: false,      // 1-hop neighborhood isolation
+    cycles: false,
+    tab: "tree",
+    collapsed: new Set(),
+  };
+
+  const groupOf = (m) =>
+    S.group === "library" ? (m.library || "(no library)")
+    : S.group === "layer" ? m.layer
+    : S.group === "directory" ? (m.dir || "(root)")
+    : "";
+
+  function groupDefs() {
+    const acc = new Map();
+    for (const m of modules) {
+      const g = groupOf(m);
+      if (!g) return [];
+      if (!acc.has(g)) acc.set(g, { name: g, modules: [], loc: 0 });
+      const d = acc.get(g);
+      d.modules.push(m); d.loc += m.loc;
+    }
+    return [...acc.values()].sort((a, b) => b.loc - a.loc || a.name.localeCompare(b.name));
+  }
+
+  // ------------------------------------------------------------------
+  // Cytoscape instance
+  // ------------------------------------------------------------------
+  const cy = cytoscape({
+    container: $("cy"),
+    wheelSensitivity: 0.25,
+    style: [
+      { selector: "node", style: {
+        label: "data(label)", "text-valign": "center", "text-halign": "center",
+        "font-size": 9, color: "#e6edf3", "text-outline-color": "#0d1117", "text-outline-width": 2,
+        "background-color": "data(color)", "border-width": 1.5, "border-color": "#0d1117",
+        width: "data(size)", height: "data(size)", shape: "data(shape)",
+        "min-zoomed-font-size": 6, "z-index": 10,
+      }},
+      { selector: "node.group", style: { "font-size": 11, "font-weight": "bold" } },
+      { selector: "node.ghost", style: { opacity: 0.45, "border-style": "dashed" } },
+      { selector: "node:selected", style: { "border-width": 3, "border-color": "#58a6ff" } },
+      { selector: "node.dim", style: { opacity: 0.16 } },
+      { selector: "node.cycle", style: { "border-color": "#f85149", "border-width": 3 } },
+      { selector: "edge", style: {
+        width: "data(width)", "line-color": "data(color)", "line-style": "data(lstyle)",
+        "curve-style": "bezier", "arrow-scale": 0.7, "arrow-color": "data(color)",
+        "target-arrow-shape": "triangle", opacity: 0.75,
+      }},
+      { selector: "edge.dim", style: { opacity: 0.06 } },
+      { selector: "edge.hl-in", style: { opacity: 1, width: 3.4, "line-color": "#39c5cf", "arrow-color": "#39c5cf" } },
+      { selector: "edge.hl-out", style: { opacity: 1, width: 3.4, "line-color": "#d29922", "arrow-color": "#d29922" } },
+      { selector: "edge.hl-cycle", style: { opacity: 1, width: 3.2, "line-color": "#f85149", "arrow-color": "#f85149" } },
+    ],
+    elements: [],
+  });
+
+  // ------------------------------------------------------------------
+  // Graph element builders
+  // ------------------------------------------------------------------
+  function overviewElements() {
+    const defs = groupDefs();
+    if (!defs.length) return [];
+    const els = defs.map((g) => ({
+      group: "nodes", data: {
+        id: "group:" + g.name, label: g.name + "\n" + g.modules.length + " mod · " + g.loc + " loc",
+        color: layerColorOfGroup(g), size: Math.min(30 + g.modules.length * 6, 86), shape: "round-rectangle",
+        kind: "group", gid: g.name,
+      }, classes: "group",
+    }));
+    const agg = new Map();
+    for (const e of SNAP.edges || []) {
+      const s = byId.get(e.source), t = byId.get(e.target);
+      if (!s || !t) continue;
+      const gs = groupOf(s), gt = groupOf(t);
+      if (!gs || !gt || gs === gt) continue;
+      const k = gs + "\u0000" + gt;
+      const cur = agg.get(k) || { w: 0, cross: false, kind: e.kind };
+      cur.w += e.weight; cur.cross = cur.cross || e.cross_library || e.cross_layer;
+      if (EDGE_STYLE[e.kind] && (!EDGE_STYLE[cur.kind] ||
+          EDGE_STYLE_PRIORITY.indexOf(e.kind) < EDGE_STYLE_PRIORITY.indexOf(cur.kind))) cur.kind = e.kind;
+      agg.set(k, cur);
+    }
+    for (const [k, v] of agg) {
+      const [gs, gt] = k.split("\u0000");
+      els.push({
+        group: "edges", data: {
+          id: "ge:" + k, source: "group:" + gs, target: "group:" + gt,
+          width: Math.min(1 + v.w * 0.4, 7),
+          color: v.cross ? "#f85149" : (EDGE_STYLE[v.kind] || EDGE_STYLE.qualified_reference).color,
+          lstyle: "solid",
+        },
+      });
+    }
+    return els;
+  }
+  const EDGE_STYLE_PRIORITY = ["qualified_reference", "functor_application", "include", "open"];
+
+  function layerColorOfGroup(g) {
+    if (S.group === "layer") return LAYER_COLOR[g.name] || LAYER_COLOR.unknown;
+    // dominant layer color of members
+    const count = new Map();
+    for (const m of g.modules) count.set(m.layer, (count.get(m.layer) || 0) + 1);
+    let best = "unknown", n = -1;
+    for (const [l, c] of count) if (c > n) { n = c; best = l; }
+    return LAYER_COLOR[best] || LAYER_COLOR.unknown;
+  }
+
+  function moduleElements(groupName) {
+    const members = groupName == null
+      ? modules
+      : modules.filter((m) => groupOf(m) === groupName);
+    const memberSet = new Set(members.map((m) => m.id));
+    const els = members.map((m) => ({
+      group: "nodes", data: {
+        id: m.id, label: m.name, color: LAYER_COLOR[m.layer] || LAYER_COLOR.unknown,
+        size: Math.min(26 + Math.sqrt(m.loc || 1) * 3, 64),
+        shape: m.is_entry ? "round-diamond" : m.has_interface ? "round-rectangle" : "ellipse",
+        kind: "module", mid: m.id,
+      },
+    }));
+    // Ghost neighbours (capped) so cross-group context survives the drill-down.
+    let ghosts = 0;
+    const ghostOf = new Map();
+    const GHOST_CAP = Math.max(0, 500 - members.length);
+    for (const e of SNAP.edges || []) {
+      const sIn = memberSet.has(e.source), tIn = memberSet.has(e.target);
+      if (sIn && tIn) {
+        els.push({
+          group: "edges", data: {
+            id: "e:" + e.source + "\u0000" + e.target, source: e.source, target: e.target,
+            width: (EDGE_STYLE[e.kind] || EDGE_STYLE.qualified_reference).width,
+            color: (EDGE_STYLE[e.kind] || EDGE_STYLE.qualified_reference).color,
+            lstyle: (EDGE_STYLE[e.kind] || EDGE_STYLE.qualified_reference).style, kind: e.kind,
+          },
+        });
+      } else if ((sIn || tIn) && ghosts < GHOST_CAP) {
+        const other = sIn ? e.target : e.source;
+        if (!memberSet.has(other) && !ghostOf.has(other)) {
+          ghostOf.set(other, true); ghosts++;
+          const m = byId.get(other);
+          els.push({
+            group: "nodes", data: {
+              id: other, label: m ? m.name : other, color: "#30363d",
+              size: 18, shape: "ellipse", kind: "ghost", mid: other,
+            }, classes: "ghost",
+          });
+        }
+      }
+    }
+    return els;
+  }
+
+  function pickLayout(n) {
+    if (S.layout !== "auto") return S.layout;
+    if (n > 260) return "grid";
+    if (n > 120) return "concentric";
+    return "cose";
+  }
+
+  let layoutRun = 0;
+  function rebuild() {
+    const els = S.mode === "overview" && S.group !== "none" ? overviewElements() : moduleElements(S.focusGroup);
+    cy.elements().remove();
+    cy.add(els.length ? els : []);
+    $("empty").style.display = els.length ? "none" : "flex";
+    const n = cy.nodes().length;
+    const name = pickLayout(n);
+    const opts = { name, animate: false, padding: 30, fit: true };
+    if (name === "cose") { opts.nodeRepulsion = 5200; opts.idealEdgeLength = 62; opts.gravity = 0.28; }
+    if (name === "breadthfirst") { opts.directed = true; opts.roots = cy.nodes().filter((x) => x.indegree(false) === 0); }
+    if (name === "concentric") { opts.concentric = (x) => x.indegree(false); opts.levelWidth = () => 2; }
+    const ticket = ++layoutRun;
+    cy.one("layoutstop", () => { if (ticket === layoutRun) applyHighlights(); });
+    const l = cy.layout(opts);
+    l.run();
+    setTimeout(() => { if (ticket === layoutRun) applyHighlights(); }, 60);
+    renderCrumbs();
+    renderLegend();
+  }
+
+  // ------------------------------------------------------------------
+  // Highlighting
+  // ------------------------------------------------------------------
+  function applyHighlights() {
+    cy.batch(() => {
+      cy.nodes().removeClass("dim cycle").removeStyle("opacity");
+      cy.edges().removeClass("dim hl-in hl-out hl-cycle");
+      const cycleNodes = new Set();
+      if (S.cycles) {
+        for (const c of SNAP.cycles || []) for (const m of c.members) cycleNodes.add(m);
+        for (const n of cy.nodes()) if (cycleNodes.has(n.id())) n.addClass("cycle");
+      }
+      const sel = S.selected && byId.has(S.selected) ? S.selected : null;
+      if (sel && cy.getElementById(sel).nonempty()) {
+        const keep = new Set([sel]);
+        cy.edges().forEach((e) => {
+          if (e.source().id() === sel) { e.addClass("hl-out"); keep.add(e.target().id()); }
+          else if (e.target().id() === sel) { e.addClass("hl-in"); keep.add(e.source().id()); }
+        });
+        if (!S.focusMode) {
+          cy.nodes().forEach((n) => { if (!keep.has(n.id()) && !cycleNodes.has(n.id())) n.addClass("dim"); });
+          cy.edges().forEach((e) => { if (!e.hasClass("hl-in") && !e.hasClass("hl-out")) e.addClass("dim"); });
+        }
+      } else if (S.cycles) {
+        cy.edges().forEach((e) => {
+          if (cycleNodes.has(e.source().id()) && cycleNodes.has(e.target().id())) e.addClass("hl-cycle");
+        });
+      }
+    });
+  }
+
+  // ------------------------------------------------------------------
+  // Selection & navigation
+  // ------------------------------------------------------------------
+  function select(id, opts) {
+    opts = opts || {};
+    S.selected = id || null;
+    S.selectedEdge = null;
+    if (id && byId.has(id)) {
+      // Make sure the module is on-canvas: drill into its group when hidden.
+      const m = byId.get(id);
+      if (S.mode === "overview" || (S.focusGroup != null && groupOf(m) !== S.focusGroup)) {
+        if (S.group !== "none" && groupOf(m) !== S.focusGroup) {
+          S.mode = "module"; S.focusGroup = groupOf(m); rebuild();
+        } else if (S.group === "none" && S.mode === "overview") {
+          S.mode = "module"; S.focusGroup = null; rebuild();
+        }
+      }
+      const node = cy.getElementById(id);
+      if (node.nonempty()) { cy.elements().unselect(); node.select(); }
+      renderInspector(id);
+      if (opts.tab) setTab(opts.tab);
+      highlightTreeRow(id);
+      updateHash();
+    } else if (id && id.startsWith("group:")) {
+      const node = cy.getElementById(id);
+      if (node.nonempty()) { cy.elements().unselect(); node.select(); }
+      renderGroupInspector(id.slice(6));
+      updateHash();
+    } else {
+      renderInspector(null);
+    }
+    applyHighlights();
+  }
+
+  function drill(groupName) {
+    S.mode = "module";
+    S.focusGroup = groupName;
+    S.selected = null;
+    renderInspector(null);
+    rebuild();
+    updateHash();
+  }
+
+  function goOverview() {
+    S.mode = "overview";
+    S.focusGroup = null;
+    S.selected = null;
+    S.focusMode = false;
+    renderInspector(null);
+    rebuild();
+    updateHash();
+  }
+
+  function toggleFocusMode() {
+    if (!S.selected || !byId.has(S.selected)) return;
+    S.focusMode = !S.focusMode;
+    if (S.focusMode) {
+      const sel = S.selected;
+      const keep = new Set([sel]);
+      cy.edges().forEach((e) => {
+        if (e.source().id() === sel) keep.add(e.target().id());
+        if (e.target().id() === sel) keep.add(e.source().id());
+      });
+      cy.nodes().forEach((n) => { if (!keep.has(n.id())) n.remove(); });
+    } else {
+      rebuild();
+    }
+    applyHighlights();
+  }
+
+  // ------------------------------------------------------------------
+  // Inspector
+  // ------------------------------------------------------------------
+  function renderInspector(id) {
+    const right = $("right");
+    if (!id) {
+      right.innerHTML = '<div id="insp-empty">Select a module on the map, in the tree, or via search<br>to inspect its metrics, dependencies and findings.</div>';
+      return;
+    }
+    const m = byId.get(id);
+    const met = m.metrics;
+    const isss = (issuesByNode.get(id) || []).slice().sort(sevRank);
+    const fnds = findingsByNode.get(id) || [];
+    const outs = (outE.get(id) || []).slice().sort((a, b) => a.target.localeCompare(b.target));
+    const ins = (inE.get(id) || []).slice().sort((a, b) => a.source.localeCompare(b.source));
+    const cyc = m.cycle_id != null ? cycleById.get(m.cycle_id) : null;
+
+    let h = '<div class="insp">';
+    h += `<h2>${esc(m.name)}</h2>`;
+    h += `<div class="sub">${esc(id !== m.name ? id : "")}</div>`;
+    h += `<div style="margin-bottom:8px">`
+      + `<span class="chip ${m.layer}">${m.layer}</span>`
+      + (m.library ? `<span class="chip">${esc(m.library)}</span>` : "")
+      + (m.has_interface ? `<span class="chip" style="color:var(--ok);border-color:var(--ok)">.mli</span>` : "")
+      + (m.is_entry ? `<span class="chip" style="color:var(--purple);border-color:var(--purple)">entry</span>` : "")
+      + (m.is_abstract ? `<span class="chip" style="color:var(--cyan);border-color:var(--cyan)">abstract</span>` : "")
+      + `</div>`;
+    h += `<div class="sub"><a class="fp" href="#">${esc(m.file)}</a> · ${m.loc} LOC${cyc ? ` · <span style="color:var(--danger)">cycle #${cyc.id}</span>` : ""}</div>`;
+
+    h += `<div style="margin:8px 0"><button id="focusbtn" ${outs.length + ins.length === 0 ? "disabled" : ""}>⌖ Focus neighborhood</button></div>`;
+
+    if (met) {
+      h += `<h3>Martin metrics</h3><div class="kv">`
+        + cell("Ca (used by)", met.ca) + cell("Ce (depends on)", met.ce)
+        + cell("I instability", met.instability.toFixed(2)) + cell("A abstractness", met.abstractness.toFixed(2))
+        + cell("D distance", met.distance.toFixed(2)) + cell("Zone", `<span class="chip ${zoneClass(met.zone)}">${met.zone}</span>`, true)
+        + `</div>`;
+    }
+
+    h += `<h3>Depends on (${outs.length})</h3>`;
+    h += outs.length ? outs.map((e) =>
+      `<div class="lrow" data-nav="${esc(e.target)}"><span class="where">${kindMark(e.kind)}</span><span class="what" style="cursor:pointer;color:var(--accent)">${esc(e.target)}</span><span class="badge">${e.weight}</span></div>`).join("")
+      : '<div class="empty-note">nothing</div>';
+
+    h += `<h3>Used by (${ins.length})</h3>`;
+    h += ins.length ? ins.map((e) =>
+      `<div class="lrow" data-nav="${esc(e.source)}"><span class="where">${kindMark(e.kind)}</span><span class="what" style="cursor:pointer;color:var(--cyan)">${esc(e.source)}</span><span class="badge">${e.weight}</span></div>`).join("")
+      : '<div class="empty-note">nothing</div>';
+
+    if (isss.length) {
+      h += `<h3>Architecture issues (${isss.length})</h3>`;
+      h += isss.map((i) => `<div class="lrow sev-${i.severity}" title="${esc(i.message)}"><span class="badge ${i.severity === "error" ? "err" : i.severity === "warning" ? "warn" : ""}">${i.severity}</span><span class="what">${esc(i.kind)}: ${esc(i.message)}</span></div>`).join("");
+    }
+    if (fnds.length) {
+      h += `<h3>Pattern findings (${fnds.length})</h3>`;
+      h += fnds.map((f) => `<div class="lrow"><span class="badge fnd">${f.level}</span><span class="what">${esc(f.pattern)} — ${esc(f.message)}</span><span class="where">${esc(f.file)}:${f.line}</span></div>`).join("");
+    }
+
+    const ents = m.entities || { types: [], functions: [] };
+    if ((ents.types && ents.types.length) || (ents.functions && ents.functions.length)) {
+      h += `<h3>Types (${ents.types.length})</h3>`;
+      h += ents.types.map((t) => `<div class="ent"><span class="t">${esc(t.name)}</span><span class="m">${t.kind}${t.abstract ? " abstract" : ""} :${t.line}</span></div>`).join("");
+      h += `<h3>Functions (${ents.functions.length})</h3>`;
+      h += ents.functions.map((f) => `<div class="ent"><span class="f">${esc(f.name)}</span><span class="m">/${f.arity} cc=${f.complexity}${f.raises ? " ⚠raises" : ""} :${f.line}</span></div>`).join("");
+    }
+    h += "</div>";
+    right.innerHTML = h;
+    const fb = $("focusbtn");
+    if (fb) fb.onclick = toggleFocusMode;
+    right.querySelectorAll("[data-nav]").forEach((el) => {
+      el.addEventListener("click", () => select(el.getAttribute("data-nav")));
+    });
+    const fp = right.querySelector("a.fp");
+    if (fp) fp.addEventListener("click", (ev) => { ev.preventDefault(); });
+  }
+
+  function renderGroupInspector(name) {
+    const right = $("right");
+    const defs = groupDefs().filter((g) => g.name === name);
+    if (!defs.length) { renderInspector(null); return; }
+    const g = defs[0];
+    const libs = (SNAP.libraries || []).filter((l) => l.name === name);
+    let h = '<div class="insp">';
+    h += `<h2>${esc(name)}</h2><div class="sub">${g.modules.length} modules · ${g.loc} LOC</div>`;
+    if (libs.length) {
+      h += `<h3>Dune library</h3><div>Deps: ${libs[0].depends_on.length ? libs[0].depends_on.map(esc).join(", ") : "—"}</div>`;
+    }
+    h += `<div style="margin:8px 0"><button id="drillbtn">⤢ Drill into ${esc(name)}</button></div>`;
+    h += `<h3>Modules</h3>`;
+    h += g.modules.map((m) =>
+      `<div class="lrow" data-nav="${esc(m.id)}"><span class="what" style="cursor:pointer;color:var(--accent)">${esc(m.id)}</span><span class="loc">${m.loc}</span></div>`).join("");
+    h += "</div>";
+    right.innerHTML = h;
+    $("drillbtn").onclick = () => drill(name);
+    right.querySelectorAll("[data-nav]").forEach((el) => {
+      el.addEventListener("click", () => select(el.getAttribute("data-nav")));
+    });
+  }
+
+  function renderEdgeInspector(e) {
+    const right = $("right");
+    let h = '<div class="insp">';
+    h += `<h2>${esc(e.source)} → ${esc(e.target)}</h2>`;
+    h += `<div class="sub">kind <b>${e.kind}</b> · weight ${e.weight}${e.cross_library ? " · cross-library" : ""}${e.cross_layer ? " · cross-layer" : ""}</div>`;
+    h += `<h3>Why — evidence (${e.locations ? e.locations.length : 0})</h3>`;
+    h += (e.locations || []).map((l) =>
+      `<div class="lrow"><span class="where">${esc(l.file)}:${l.line}:${l.column}</span><span class="what">${kindLabelFromOccurrence(l.occurrence)}</span></div>`).join("");
+    h += (e.locations && e.locations.length) ? "" : '<div class="empty-note">no source locations recorded</div>';
+    h += `<h3>Navigate</h3>
+      <div class="lrow" data-nav="${esc(e.source)}"><span class="what" style="color:var(--accent);cursor:pointer">→ ${esc(e.source)}</span></div>
+      <div class="lrow" data-nav="${esc(e.target)}"><span class="what" style="color:var(--cyan);cursor:pointer">→ ${esc(e.target)}</span></div>`;
+    h += "</div>";
+    right.innerHTML = h;
+    right.querySelectorAll("[data-nav]").forEach((el) => {
+      el.addEventListener("click", () => select(el.getAttribute("data-nav")));
+    });
+  }
+
+  function kindMark(kind) {
+    return { open: "open", include: "incl", functor_application: "F(A)", qualified_reference: "ref" }[kind] || kind;
+  }
+  function kindLabelFromOccurrence(occ) {
+    return occ ? `<code style="color:var(--muted)">${esc(occ)}</code>` : "";
+  }
+  function zoneClass(zone) { return zone === "zone of pain" ? "zone_pain" : zone === "zone of uselessness" ? "zone_useless" : "zone_balanced"; }
+  function cell(l, v, html) { return `<div class="cell"><div class="l">${l}</div><div class="v">${html ? v : esc(String(v))}</div></div>`; }
+  function sevRank(i) { return { error: 0, warning: 1, info: 2 }[i.severity] ?? 3; }
+  function esc(s) {
+    return String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
+  // ------------------------------------------------------------------
+  // Graph events
+  // ------------------------------------------------------------------
+  cy.on("tap", "node", (ev) => {
+    const d = ev.target.data();
+    if (d.kind === "group") select(d.id);
+    else if (d.kind === "ghost") select(d.mid);
+    else select(d.mid || d.id);
+  });
+  cy.on("tap", "edge", (ev) => {
+    const e = ev.target;
+    if (S.mode === "overview") return;
+    const src = e.source().id(), tgt = e.target().id();
+    const real = (SNAP.edges || []).find((x) => x.source === src && x.target === tgt);
+    if (real) { S.selected = null; renderEdgeInspector(real); cy.elements().unselect(); updateHash(); }
+  });
+  // Cytoscape core has no built-in double-tap: emulate with tap timing.
+  let lastTap = 0, lastTapId = null;
+  cy.on("tap", "node", (ev) => {
+    const now = Date.now(), id = ev.target.id();
+    if (now - lastTap < 350 && lastTapId === id) {
+      const d = ev.target.data();
+      if (d.kind === "group") drill(d.gid);
+      else if (d.mid) { S.selected = d.mid; toggleFocusMode(); }
+    }
+    lastTap = now; lastTapId = id;
+  });
+
+  document.addEventListener("keydown", (ev) => {
+    if (ev.key === "Escape") {
+      if (S.focusMode) { S.focusMode = false; rebuild(); }
+      else if (S.selected || S.selectedEdge) { select(null); cy.elements().unselect(); }
+    }
+    if ((ev.metaKey || ev.ctrlKey) && ev.key.toLowerCase() === "k") { ev.preventDefault(); $("search").focus(); $("search").select(); }
+    if (ev.key === "/" && document.activeElement !== $("search")) { ev.preventDefault(); $("search").focus(); }
+  });
+
+  // ------------------------------------------------------------------
+  // Toolbar wiring
+  // ------------------------------------------------------------------
+  $("groupby").addEventListener("change", () => {
+    S.group = $("groupby").value;
+    if (S.mode === "module" && S.group === "none") { /* keep current canvas */ }
+    goOverview();
+    renderTree();
+    renderTabs();
+  });
+  $("layout").addEventListener("change", () => { S.layout = $("layout").value; rebuild(); });
+  $("cycleshl").addEventListener("change", () => { S.cycles = $("cycleshl").checked; applyHighlights(); renderLegend(); });
+  $("reset").addEventListener("click", () => {
+    S.focusMode = false; S.cycles = false; $("cycleshl").checked = false;
+    goOverview();
+  });
+
+  function renderCrumbs() {
+    const c = $("crumbs");
+    let h = `<span class="c" data-crumb="root">◫ ${esc(SNAP.project ? SNAP.project.name : "project")}</span>`;
+    if (S.mode === "module" && S.focusGroup != null) h += `<span class="sep">▸</span><span>${esc(S.focusGroup)}</span>`;
+    if (S.focusMode && S.selected) h += `<span class="sep">▸</span><span>⌖ ${esc(S.selected)}</span>`;
+    c.innerHTML = h;
+    c.style.display = "flex";
+    c.querySelectorAll("[data-crumb]").forEach((el) => el.addEventListener("click", goOverview));
+  }
+
+  function renderLegend() {
+    const rows = Object.entries(EDGE_STYLE).map(([k, v]) =>
+      `<div class="row"><span class="sw" style="border-color:${v.color};border-top-style:${v.style}"></span>${k.replace("_", " ")}</div>`).join("");
+    const lr = ["domain", "ports", "adapters", "infrastructure", "api"].map((l) =>
+      `<div class="row"><span class="dot" style="background:${LAYER_COLOR[l]}"></span>${l}</div>`).join("");
+    $("legend").innerHTML =
+      `<div style="display:flex;gap:18px"><div>${rows}</div><div>${lr}</div></div>`
+      + (S.cycles ? `<div class="row" style="color:var(--danger)">● cycle members highlighted</div>` : "");
+  }
+
+  // ------------------------------------------------------------------
+  // Left panel: tabs
+  // ------------------------------------------------------------------
+  const TABS = [
+    ["tree", "Modules"], ["cycles", "Cycles", (SNAP.cycles || []).length],
+    ["layers", "Layers"], ["metrics", "Metrics"], ["issues", "Issues", (SNAP.issues || []).length],
+    ["findings", "Patterns", (SNAP.issues || []).length >= 0 ? countFindings() : 0],
+  ];
+  function countFindings() { return modules.reduce((a, m) => a + ((m.findings || []).length), 0); }
+
+  function renderTabs() {
+    $("tabs").innerHTML = TABS.map(([id, label, n]) =>
+      `<div class="t${S.tab === id ? " on" : ""}" data-tab="${id}">${label}${n ? ` <span class="n">${n}</span>` : ""}</div>`).join("");
+    $("tabs").querySelectorAll("[data-tab]").forEach((el) =>
+      el.addEventListener("click", () => setTab(el.getAttribute("data-tab"))));
+    document.querySelectorAll(".tabbody").forEach((el) => el.classList.remove("on"));
+    const body = $("tab-" + S.tab);
+    if (body) body.classList.add("on");
+  }
+
+  function setTab(id) {
+    if (!TABS.some((t) => t[0] === id)) return;
+    S.tab = id;
+    renderTabs();
+    updateHash();
+  }
+
+  // --- Tree ---
+  function renderTree() {
+    const el = $("tab-tree");
+    if (S.group === "none") {
+      el.innerHTML = modules.map((m) => treeRow(m)).join("");
+    } else {
+      el.innerHTML = groupDefs().map((g) => `
+        <div class="grp${S.collapsed.has(g.name) ? " closed" : ""}" data-grp="${esc(g.name)}">
+          <div class="grp-h"><span>${esc(g.name)}</span><span class="cnt">${g.modules.length} · ${g.loc} loc</span></div>
+          <div class="grp-body">${g.modules.map(treeRow).join("")}</div>
+        </div>`).join("");
+      el.querySelectorAll(".grp-h").forEach((h) => h.addEventListener("click", () => {
+        const name = h.parentElement.getAttribute("data-grp");
+        S.collapsed.has(name) ? S.collapsed.delete(name) : S.collapsed.add(name);
+        renderTree();
+      }));
+    }
+    el.querySelectorAll(".mrow").forEach((r) =>
+      r.addEventListener("click", () => select(r.getAttribute("data-nav"))));
+    highlightTreeRow(S.selected);
+  }
+  function treeRow(m) {
+    const cyc = m.cycle_id != null;
+    const nf = (m.findings || []).length;
+    const ni = (issuesByNode.get(m.id) || []).filter((i) => i.subject === m.id).length;
+    return `<div class="mrow" data-nav="${esc(m.id)}" data-mod="${esc(m.id)}">
+      <span class="dot" style="width:9px;height:9px;border-radius:50%;display:inline-block;background:${LAYER_COLOR[m.layer] || "#6e7681"};flex:none"></span>
+      <span class="nm" title="${esc(m.id)}">${esc(m.name)}</span>
+      ${ni ? `<span class="badge err">${ni}</span>` : ""}
+      ${cyc ? `<span class="badge cyc">↻</span>` : ""}
+      ${nf ? `<span class="badge fnd">${nf}</span>` : ""}
+      <span class="loc">${m.loc}</span>
+    </div>`;
+  }
+  function highlightTreeRow(id) {
+    document.querySelectorAll(".mrow").forEach((r) =>
+      r.classList.toggle("sel", r.getAttribute("data-mod") === id));
+  }
+
+  // --- Cycles ---
+  function renderCyclesTab() {
+    const el = $("tab-cycles");
+    const cs = SNAP.cycles || [];
+    if (!cs.length) { el.innerHTML = '<div class="empty-note" style="padding:12px">No circular dependencies. 🎉</div>'; return; }
+    el.innerHTML = cs.map((c) => `
+      <div style="padding:8px 12px;border-bottom:1px solid #21262d">
+        <div style="display:flex;gap:6px;align-items:center;margin-bottom:4px">
+          <span class="badge err">↻ cycle #${c.id}</span>
+          ${c.cross_library ? '<span class="badge warn">cross-library</span>' : ""}
+          <span style="color:var(--muted)">${c.members.length} modules</span>
+          <button style="margin-left:auto" data-cyc="${c.id}">Show</button>
+        </div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);word-break:break-all">${esc(c.members.join(" → "))} → …</div>
+      </div>`).join("");
+    el.querySelectorAll("[data-cyc]").forEach((b) => b.addEventListener("click", () => {
+      const c = cycleById.get(Number(b.getAttribute("data-cyc")));
+      S.cycles = true; $("cycleshl").checked = true;
+      drill(groupOf(byId.get(c.members[0])));
+      select(c.members[0]);
+      applyHighlights(); renderLegend();
+    }));
+  }
+
+  // --- Layers ---
+  function renderLayersTab() {
+    const el = $("tab-layers");
+    const stats = new Map();
+    for (const m of modules) {
+      if (!stats.has(m.layer)) stats.set(m.layer, { n: 0, loc: 0 });
+      const s = stats.get(m.layer); s.n++; s.loc += m.loc;
+    }
+    const viol = (SNAP.issues || []).filter((i) => i.kind === "layer_violation");
+    let h = '<div style="padding:10px 12px">';
+    h += '<table class="tbl"><tr><th>Layer</th><th class="num">Modules</th><th class="num">LOC</th></tr>';
+    for (const [l, s] of [...stats].sort((a, b) => b[1].n - a[1].n)) {
+      h += `<tr><td><span class="dot" style="background:${LAYER_COLOR[l] || "#6e7681"};width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:6px"></span>${l}</td><td class="num">${s.n}</td><td class="num">${s.loc}</td></tr>`;
+    }
+    h += "</table>";
+    h += `<h3 style="margin:14px 0 6px;font-size:11px;color:var(--muted);text-transform:uppercase">Layer violations (${viol.length})</h3>`;
+    h += viol.length ? viol.map((v) => `<div class="lrow sev-warning" data-nav="${esc(v.related[0] || v.subject)}"><span class="what">${esc(v.message)}</span></div>`).join("")
+      : '<div class="empty-note">none — dependencies respect layer boundaries</div>';
+    h += "</div>";
+    el.innerHTML = h;
+    el.querySelectorAll("[data-nav]").forEach((r) => r.addEventListener("click", () => select(r.getAttribute("data-nav"))));
+  }
+
+  // --- Metrics (table + scatter) ---
+  let metricsSort = { key: "id", dir: 1 };
+  function renderMetricsTab() {
+    const el = $("tab-metrics");
+    const withM = modules.filter((m) => m.metrics);
+    let h = '<div style="padding:10px 12px">';
+    h += '<div id="scatterwrap" style="margin-bottom:10px"></div>';
+    h += '<table class="tbl" id="mtable"><thead><tr>'
+      + ["id", "ca", "ce", "instability", "abstractness", "distance", "zone"].map((k) =>
+          `<th data-sort="${k}">${k === "id" ? "module" : k === "ca" ? "Ca" : k === "ce" ? "Ce" : k === "instability" ? "I" : k === "abstractness" ? "A" : k === "distance" ? "D" : "zone"}</th>`).join("")
+      + "</tr></thead><tbody></tbody></table></div>";
+    el.innerHTML = h;
+    drawScatter(withM);
+    renderMetricsRows(withM);
+    el.querySelectorAll("th[data-sort]").forEach((th) => th.addEventListener("click", () => {
+      const k = th.getAttribute("data-sort");
+      if (metricsSort.key === k) metricsSort.dir *= -1; else { metricsSort.key = k; metricsSort.dir = 1; }
+      renderMetricsRows(withM);
+    }));
+  }
+  function renderMetricsRows(withM) {
+    const rows = withM.slice().sort((a, b) => {
+      const k = metricsSort.key;
+      const va = k === "id" ? a.id : k === "zone" ? a.metrics.zone : a.metrics[k];
+      const vb = k === "id" ? b.id : k === "zone" ? b.metrics.zone : b.metrics[k];
+      if (typeof va === "string") return va.localeCompare(vb) * metricsSort.dir;
+      return (va - vb) * metricsSort.dir;
+    });
+    $("mtable").querySelector("tbody").innerHTML = rows.map((m) => `
+      <tr class="click" data-nav="${esc(m.id)}">
+        <td style="font-family:var(--mono);font-size:11px">${esc(m.id)}</td>
+        <td class="num">${m.metrics.ca}</td><td class="num">${m.metrics.ce}</td>
+        <td class="num">${m.metrics.instability.toFixed(2)}</td><td class="num">${m.metrics.abstractness.toFixed(2)}</td>
+        <td class="num">${m.metrics.distance.toFixed(2)}</td>
+        <td><span class="chip ${zoneClass(m.metrics.zone)}">${m.metrics.zone.replace("zone of ", "")}</span></td>
+      </tr>`).join("");
+    $("mtable").querySelectorAll("[data-nav]").forEach((r) =>
+      r.addEventListener("click", () => select(r.getAttribute("data-nav"))));
+  }
+  function drawScatter(withM) {
+    const wrap = $("scatterwrap");
+    if (!withM.length) { wrap.innerHTML = '<div class="empty-note">no metrics computed</div>'; return; }
+    const W = 288, H = 220, P = 30;
+    const x = (v) => P + v * (W - 2 * P), y = (v) => H - P - v * (H - 2 * P);
+    let s = `<svg id="scatter" viewBox="0 0 ${W} ${H}" width="100%">`;
+    s += `<line x1="${x(0)}" y1="${y(0)}" x2="${x(1)}" y2="${y(1)}" stroke="#30363d" stroke-dasharray="4 3"/>`;
+    s += `<text class="axis" x="${W / 2}" y="${H - 8}" text-anchor="middle">I (instability) →</text>`;
+    s += `<text class="axis" x="10" y="${H / 2}" text-anchor="middle" transform="rotate(-90 10 ${H / 2})">A (abstractness) →</text>`;
+    for (const m of withM) {
+      const c = m.metrics.zone === "zone of pain" ? "#f85149" : m.metrics.zone === "zone of uselessness" ? "#d29922" : "#3fb950";
+      s += `<circle class="pt" data-nav="${esc(m.id)}" cx="${x(m.metrics.instability)}" cy="${y(m.metrics.abstractness)}" r="${Math.min(4 + Math.sqrt(m.loc) * 0.4, 11)}" fill="${c}" fill-opacity="0.75" stroke="#0d1117"><title>${esc(m.id)} (I=${m.metrics.instability}, A=${m.metrics.abstractness}, ${m.loc} loc)</title></circle>`;
+    }
+    s += "</svg>";
+    wrap.innerHTML = s;
+    wrap.querySelectorAll("[data-nav]").forEach((p) => p.addEventListener("click", () => select(p.getAttribute("data-nav"))));
+  }
+
+  // --- Issues ---
+  function renderIssuesTab() {
+    const el = $("tab-issues");
+    const is = (SNAP.issues || []).slice().sort((a, b) => sevRank(a) - sevRank(b));
+    if (!is.length) { el.innerHTML = '<div class="empty-note" style="padding:12px">No architecture issues. 🎉</div>'; return; }
+    const byKind = new Map();
+    for (const i of is) (byKind.get(i.kind) || byKind.set(i.kind, []).get(i.kind)).push(i);
+    el.innerHTML = [...byKind].map(([kind, list]) => `
+      <div class="grp"><div class="grp-h"><span>${kind.replaceAll("_", " ")}</span><span class="cnt">${list.length}</span></div>
+      <div class="grp-body">${list.map((i) => `
+        <div class="lrow sev-${i.severity}" ${byId.has(i.subject) ? `data-nav="${esc(i.subject)}" style="cursor:pointer"` : ""}>
+          <span class="badge ${i.severity === "error" ? "err" : i.severity === "warning" ? "warn" : ""}">${i.severity[0]}</span>
+          <span class="what">${esc(i.message)}</span>
+        </div>`).join("")}</div></div>`).join("");
+    el.querySelectorAll("[data-nav]").forEach((r) => r.addEventListener("click", () => select(r.getAttribute("data-nav"))));
+  }
+
+  // --- Findings ---
+  function renderFindingsTab() {
+    const el = $("tab-findings");
+    const all = [];
+    for (const m of modules) for (const f of m.findings || []) all.push([m, f]);
+    if (!all.length) { el.innerHTML = '<div class="empty-note" style="padding:12px">No pattern findings. 🎉</div>'; return; }
+    const byPat = new Map();
+    for (const [m, f] of all) (byPat.get(f.pattern) || byPat.set(f.pattern, []).get(f.pattern)).push([m, f]);
+    el.innerHTML = [...byPat].sort((a, b) => b[1].length - a[1].length).map(([pat, list]) => `
+      <div class="grp"><div class="grp-h"><span>${pat.replaceAll("_", " ")}</span><span class="cnt">${list.length}</span></div>
+      <div class="grp-body">${list.map(([m, f]) => `
+        <div class="lrow" data-nav="${esc(m.id)}" style="cursor:pointer">
+          <span class="badge fnd">${f.level[0]}</span>
+          <span class="what">${esc(f.target || m.id)}</span>
+          <span class="where">${esc(f.file)}:${f.line}</span>
+        </div>`).join("")}</div></div>`).join("");
+    el.querySelectorAll("[data-nav]").forEach((r) => r.addEventListener("click", () => select(r.getAttribute("data-nav"))));
+  }
+
+  function renderAllTabs() {
+    renderTree(); renderCyclesTab(); renderLayersTab(); renderMetricsTab(); renderIssuesTab(); renderFindingsTab();
+  }
+
+  // ------------------------------------------------------------------
+  // Search
+  // ------------------------------------------------------------------
+  const MAXRESULTS = 40;
+  function doSearch(q) {
+    q = q.trim().toLowerCase();
+    const box = $("results");
+    $("searchclr").style.display = q ? "block" : "none";
+    if (!q) { box.style.display = "none"; return; }
+    const out = [];
+    const push = (type, html, nav) => { if (out.length < MAXRESULTS) out.push({ type, html, nav }); };
+    for (const m of modules) {
+      if (m.id.toLowerCase().includes(q) || m.name.toLowerCase().includes(q) || (m.library || "").toLowerCase().includes(q)) {
+        push("module", `<span style="font-family:var(--mono)">${esc(m.id)}</span> <span class="rt">${m.layer} · ${m.loc} loc</span>`, m.id);
+      }
+    }
+    for (const m of modules) {
+      for (const t of (m.entities && m.entities.types) || []) {
+        if (t.name.toLowerCase().includes(q)) push("type", `<span style="font-family:var(--mono);color:var(--cyan)">${esc(t.name)}</span> <span class="rt">in ${esc(m.id)}</span>`, m.id);
+      }
+      for (const f of (m.entities && m.entities.functions) || []) {
+        if (f.name.toLowerCase().includes(q)) push("fun", `<span style="font-family:var(--mono)">${esc(f.name)}</span> <span class="rt">in ${esc(m.id)}</span>`, m.id);
+      }
+    }
+    for (const m of modules) for (const f of m.findings || []) {
+      if (f.pattern.includes(q) || (f.message || "").toLowerCase().includes(q)) {
+        push("finding", `<span style="color:var(--purple)">${esc(f.pattern)}</span> <span class="rt">${esc(m.id)} :${f.line}</span>`, m.id);
+      }
+    }
+    for (const i of SNAP.issues || []) {
+      if (i.kind.includes(q) || i.message.toLowerCase().includes(q) || i.subject.toLowerCase().includes(q)) {
+        push("issue", `<span style="color:var(--danger)">${esc(i.kind)}</span> <span class="rt">${esc(i.subject)}</span>`, byId.has(i.subject) ? i.subject : null);
+      }
+    }
+    if (!out.length) { box.innerHTML = '<div class="r"><span class="rt">no matches</span></div>'; box.style.display = "block"; return; }
+    box.innerHTML = out.map((r, i) => `<div class="r${i === 0 ? " sel" : ""}" data-i="${i}"><span class="rt">${r.type}</span><span style="flex:1">${r.html}</span></div>`).join("");
+    box.style.display = "block";
+    box.querySelectorAll(".r[data-i]").forEach((el) => el.addEventListener("mousedown", (ev) => {
+      ev.preventDefault();
+      const r = out[Number(el.getAttribute("data-i"))];
+      if (r.nav) { select(r.nav); box.style.display = "none"; $("search").blur(); }
+    }));
+    box._first = out[0];
+  }
+  $("search").addEventListener("input", () => doSearch($("search").value));
+  $("search").addEventListener("focus", () => doSearch($("search").value));
+  $("search").addEventListener("blur", () => setTimeout(() => { $("results").style.display = "none"; }, 150));
+  $("search").addEventListener("keydown", (ev) => {
+    if (ev.key === "Enter") {
+      const r = $("results")._first;
+      if (r && r.nav) { select(r.nav); $("results").style.display = "none"; $("search").blur(); }
+    }
+  });
+  $("searchclr").addEventListener("click", () => { $("search").value = ""; doSearch(""); $("search").focus(); });
+
+  // ------------------------------------------------------------------
+  // Hash deep links: #/module/<id> | #/group/<name> | #/tab/<id> | #/view/<group>/<lib>
+  // ------------------------------------------------------------------
+  function updateHash() {
+    const parts = [];
+    parts.push("view/" + S.group + "/" + (S.mode === "module" && S.focusGroup != null ? encodeURIComponent(S.focusGroup) : "-"));
+    if (S.tab !== "tree") parts.push("tab/" + S.tab);
+    if (S.selected && byId.has(S.selected)) parts.push("module/" + encodeURIComponent(S.selected));
+    const h = "#/" + parts.join("/");
+    if (location.hash !== h) history.replaceState(null, "", h);
+  }
+  function applyHash() {
+    const parts = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean);
+    if (!parts.length) return;
+    let i = 0;
+    while (i < parts.length) {
+      const [k, v] = [parts[i], parts[i + 1]];
+      if (k === "view" && v) {
+        S.group = v;
+        $("groupby").value = ["library", "layer", "directory", "none"].includes(v) ? v : "library";
+        const g = parts[i + 2] && parts[i + 2] !== "-" ? decodeURIComponent(parts[i + 2]) : null;
+        if (g) { S.mode = "module"; S.focusGroup = g; } else { S.mode = "overview"; S.focusGroup = null; }
+        i += 3;
+      } else if (k === "module" && v) { const id = decodeURIComponent(v); if (byId.has(id)) S.selected = id; i += 2; }
+      else if (k === "tab" && v) { S.tab = v; i += 2; }
+      else i += 2;
+    }
+  }
+  window.addEventListener("hashchange", () => {
+    applyHash();
+    rebuild(); renderTabs(); renderTree();
+    if (S.selected && byId.has(S.selected)) select(S.selected); else renderInspector(null);
+  });
+
+  // ------------------------------------------------------------------
+  // Status bar & boot
+  // ------------------------------------------------------------------
+  function renderStatus() {
+    const s = SNAP.summary || {};
+    $("projmeta").innerHTML = `<b>${esc((SNAP.project && SNAP.project.name) || "")}</b><br>${esc((SNAP.project && SNAP.project.generated_at) || "")}`;
+    $("status").innerHTML =
+      `<span><b>${s.modules ?? 0}</b> modules</span><span class="sep">|</span>` +
+      `<span><b>${s.edges ?? 0}</b> edges</span><span class="sep">|</span>` +
+      `<span><b>${s.cycles ?? 0}</b> cycles</span><span class="sep">|</span>` +
+      `<span><b>${s.issues ?? 0}</b> issues</span><span class="sep">|</span>` +
+      `<span><b>${s.findings ?? 0}</b> findings</span><span class="sep">|</span>` +
+      `<span><b>${s.files ?? 0}</b> files · <b>${(s.elapsed_seconds ?? 0).toFixed(2)}s</b></span>` +
+      `<span class="right hint">click: inspect · dblclick: focus/drill · / search · Esc reset</span>`;
+  }
+
+  function boot() {
+    applyHash();
+    renderStatus();
+    renderTabs();
+    renderAllTabs();
+    rebuild();
+    if (S.selected && byId.has(S.selected)) select(S.selected);
+  }
+  boot();
+})();
+</script>
+</body>
+</html>

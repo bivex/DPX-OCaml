@@ -48,8 +48,8 @@ from pattern_detector.domain.architecture.models import (
     ArchEdge,
     ArchLayer,
     ComponentGraph,
-    IssueSeverity,
     EdgeKind,
+    IssueSeverity,
     ModuleNode,
     infer_layer,
 )

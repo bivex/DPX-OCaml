@@ -6,7 +6,10 @@ import re
 
 from pattern_detector.domain.code_model import CodeModel
 from pattern_detector.domain.detection import Detection
-from pattern_detector.domain.rules.base import BasePatternRule, strip_comments_and_strings
+from pattern_detector.domain.rules.base import (
+    BasePatternRule,
+    strip_comments_and_strings,
+)
 from pattern_detector.domain.value_objects import Evidence, PatternType
 
 _THROW_REGEX = re.compile(r"\bfailwith\s+|\braise\s+(?!Exit\b)|\braise_notrace\s+")

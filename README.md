@@ -121,7 +121,35 @@ manifests exist. The `html` export is a single self-contained interactive file �
 zoom, drag, click-to-highlight neighborhoods — with no CDN dependencies. Scans
 500 modules in well under a second.
 
----
+### 🗺️ Architecture Viewer (`dpx viewer`)
+
+Interactive, **fully offline** architecture map of an OCaml project — "Google
+Maps for architecture": start at the project overview, drill into a
+Dune library → module → entity, and ask the graph *why is this arrow here?*
+
+```bash
+uv run dpx viewer .            # writes ./dpx_viewer/{architecture.json, dpx_viewer.html}
+uv run dpx viewer . --open     # …and opens it in the browser
+```
+
+| Option | Effect | Default |
+|---|---|---|
+| `-o, --out` | output directory | `./dpx_viewer` |
+| `-e, --exclude` | directory name(s) to skip (repeatable) | — |
+| `--no-patterns` | skip the 25-rule pattern pass (faster) | off |
+| `--open` | open the HTML in the default browser | off |
+
+- **One self-contained HTML file** — Cytoscape.js is vendored inside; no CDN,
+  no server, no JS build step. Open it via `file://`, mail it, attach it to a PR.
+- **`architecture.json`** — a normalized, versioned snapshot (modules, edges,
+  cycles, Martin metrics, issues, pattern findings) that external tooling can
+  consume; see [`docs/VIEWER_SPEC.md`](docs/VIEWER_SPEC.md) for the schema.
+- **WHY evidence on every edge** — each dependency arrow carries its
+  `file:line:col` occurrences (`open`, include, functor application, qualified
+  reference), capped at 50 per edge.
+- Overview → drill-down with breadcrumbs, focus-neighborhood mode, cycle
+  highlighting, layers, Martin-metrics scatter (zone of pain), ⌘K search and
+  deep links (`#/module/<id>`).
 
 ---
 
