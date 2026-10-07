@@ -342,13 +342,17 @@ a.fp:hover { text-decoration: underline; }
         "font-size": 9, color: "#e6edf3", "text-outline-color": "#0d1117", "text-outline-width": 2,
         "background-color": "data(color)", "border-width": 1.5, "border-color": "#0d1117",
         width: "data(size)", height: "data(size)", shape: "data(shape)",
-        "text-wrap": "ellipsis", "text-max-width": "data(labmax)",
+        "text-wrap": "wrap", "text-max-width": "data(labmax)",
         "min-zoomed-font-size": "data(labmin)", "z-index": 10,
       }},
       { selector: "node.group", style: {
+        width: "data(w)", height: "data(h)",
+        shape: "round-rectangle",
         "font-size": 11, "font-weight": "bold",
-        "text-valign": "bottom", "text-halign": "center",
-        "text-max-width": 140, "min-zoomed-font-size": 1,
+        "text-valign": "center", "text-halign": "center",
+        "text-wrap": "wrap", "text-max-width": "data(labmax)",
+        "text-overflow-wrap": "anywhere",
+        "min-zoomed-font-size": 4, "border-width": 2,
       }},
       { selector: "node.ghost", style: { opacity: 0.45, "border-style": "dashed", "min-zoomed-font-size": 14 } },
       { selector: "node:selected", style: { "border-width": 3, "border-color": "#58a6ff", "min-zoomed-font-size": 1 } },
@@ -356,13 +360,13 @@ a.fp:hover { text-decoration: underline; }
       { selector: "node.cycle", style: { "border-color": "#f85149", "border-width": 3 } },
       { selector: "edge", style: {
         width: "data(width)", "line-color": "data(color)", "line-style": "data(lstyle)",
-        "curve-style": "bezier", "arrow-scale": 0.7, "arrow-color": "data(color)",
+        "curve-style": "bezier", "arrow-scale": 0.7, "target-arrow-color": "data(color)",
         "target-arrow-shape": "triangle", opacity: 0.75,
       }},
       { selector: "edge.dim", style: { opacity: 0.06 } },
-      { selector: "edge.hl-in", style: { opacity: 1, width: 3.4, "line-color": "#39c5cf", "arrow-color": "#39c5cf" } },
-      { selector: "edge.hl-out", style: { opacity: 1, width: 3.4, "line-color": "#d29922", "arrow-color": "#d29922" } },
-      { selector: "edge.hl-cycle", style: { opacity: 1, width: 3.2, "line-color": "#f85149", "arrow-color": "#f85149" } },
+      { selector: "edge.hl-in", style: { opacity: 1, width: 3.4, "line-color": "#39c5cf", "target-arrow-color": "#39c5cf" } },
+      { selector: "edge.hl-out", style: { opacity: 1, width: 3.4, "line-color": "#d29922", "target-arrow-color": "#d29922" } },
+      { selector: "edge.hl-cycle", style: { opacity: 1, width: 3.2, "line-color": "#f85149", "target-arrow-color": "#f85149" } },
     ],
     elements: [],
   });
@@ -373,13 +377,23 @@ a.fp:hover { text-decoration: underline; }
   function overviewElements() {
     const defs = groupDefs();
     if (!defs.length) return [];
-    const els = defs.map((g) => ({
-      group: "nodes", data: {
-        id: "group:" + g.name, label: g.name + "\n" + g.modules.length + " mod · " + g.loc + " loc",
-        color: layerColorOfGroup(g), size: Math.min(30 + g.modules.length * 6, 86), shape: "round-rectangle",
-        kind: "group", gid: g.name, labmin: 1, labmax: 140,
-      }, classes: "group",
-    }));
+    const els = defs.map((g) => {
+      const nameLen = Math.max(g.name.length, 10);
+      const w = Math.min(240, Math.max(120, Math.round(nameLen * 7.5 + 24)));
+      const h = Math.min(78, Math.max(52, Math.round(50 + Math.sqrt(g.modules.length) * 3.5)));
+      return {
+        group: "nodes", data: {
+          id: "group:" + g.name,
+          label: g.name + "\n" + g.modules.length + " mod · " + g.loc + " loc",
+          color: layerColorOfGroup(g),
+          w, h, size: w,
+          shape: "round-rectangle",
+          kind: "group", gid: g.name,
+          labmin: 4,
+          labmax: w - 16,
+        }, classes: "group",
+      };
+    });
     const agg = new Map();
     for (const e of SNAP.edges || []) {
       const s = byId.get(e.source), t = byId.get(e.target);
@@ -479,16 +493,37 @@ a.fp:hover { text-decoration: underline; }
 
   let layoutRun = 0;
   function rebuild() {
-    const els = S.mode === "overview" && S.group !== "none" ? overviewElements() : moduleElements(S.focusGroup);
+    const isOverview = S.mode === "overview" && S.group !== "none";
+    const els = isOverview ? overviewElements() : moduleElements(S.focusGroup);
     cy.elements().remove();
     cy.add(els.length ? els : []);
     $("empty").style.display = els.length ? "none" : "flex";
     const n = cy.nodes().length;
     const name = pickLayout(n);
-    const opts = { name, animate: false, padding: 30, fit: true };
-    if (name === "cose") { opts.nodeRepulsion = 9000; opts.nodeOverlap = 12; opts.idealEdgeLength = 80; opts.gravity = 0.25; }
-    if (name === "breadthfirst") { opts.directed = true; opts.spacingFactor = 1.35; opts.roots = cy.nodes().filter((x) => x.indegree(false) === 0); }
-    if (name === "concentric") { opts.concentric = (x) => x.indegree(false); opts.levelWidth = () => 2; opts.minNodeSpacing = 26; }
+    const opts = { name, animate: false, padding: isOverview ? 45 : 30, fit: true };
+    if (name === "cose") {
+      if (isOverview) {
+        opts.nodeRepulsion = 16000;
+        opts.nodeOverlap = 20;
+        opts.idealEdgeLength = 100;
+        opts.gravity = 0.25;
+      } else {
+        opts.nodeRepulsion = 9000;
+        opts.nodeOverlap = 12;
+        opts.idealEdgeLength = 80;
+        opts.gravity = 0.25;
+      }
+    }
+    if (name === "breadthfirst") {
+      opts.directed = true;
+      opts.spacingFactor = isOverview ? 1.5 : 1.35;
+      opts.roots = cy.nodes().filter((x) => x.indegree(false) === 0);
+    }
+    if (name === "concentric") {
+      opts.concentric = (x) => x.indegree(false);
+      opts.levelWidth = () => 2;
+      opts.minNodeSpacing = isOverview ? 40 : 26;
+    }
     if (name === "grid") { opts.spacingFactor = 1.4; }
     const ticket = ++layoutRun;
     cy.one("layoutstop", () => { if (ticket === layoutRun) applyHighlights(); });
@@ -511,7 +546,7 @@ a.fp:hover { text-decoration: underline; }
         for (const c of SNAP.cycles || []) for (const m of c.members) cycleNodes.add(m);
         for (const n of cy.nodes()) if (cycleNodes.has(n.id())) n.addClass("cycle");
       }
-      const sel = S.selected && byId.has(S.selected) ? S.selected : null;
+      const sel = S.selected && cy.getElementById(S.selected).nonempty() ? S.selected : null;
       if (sel && cy.getElementById(sel).nonempty()) {
         const keep = new Set([sel]);
         cy.edges().forEach((e) => {
