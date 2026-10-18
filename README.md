@@ -151,6 +151,59 @@ uv run dpx viewer . --open     # …and opens it in the browser
   highlighting, layers, Martin-metrics scatter (zone of pain), ⌘K search and
   deep links (`#/module/<id>`).
 
+### 🦨 Clean Code Smell Detector (`dpx smells`)
+
+Comprehensive Clean Code Smell and antipattern detection subsystem for OCaml codebases. Analyzes AST, symbol resolution, module dependency graphs, and control flow with configurable heuristics, concrete evidence, confidence ratings, and actionable refactoring suggestions.
+
+```bash
+# Terminal report (Rich cards and summary table)
+uv run dpx smells /path/to/ocaml_project
+
+# Export strictly structured JSON finding schema
+uv run dpx smells /path/to/ocaml_project -f json -o smells.json
+
+# Fail CI/CD build if CRITICAL smells are detected
+uv run dpx smells . --fail-on-critical
+
+# Filter by category (e.g. FUNCTIONS, ERROR_HANDLING, ARCHITECTURE, TYPES, etc.)
+uv run dpx smells . -c ERROR_HANDLING -s HIGH
+
+# Custom heuristic thresholds
+uv run dpx smells . --max-func-lines 60 --max-complexity 12 --max-nesting 5
+```
+
+| Option | Values | Default | Description |
+|---|---|---|---|
+| `PATH` | file or directory | `.` | Target OCaml file (`.ml`/`.mli`) or project root |
+| `-f, --format` | `terminal` \| `json` \| `markdown` \| `html` \| `all` | `terminal` | Report output format |
+| `-s, --severity` | `LOW` \| `MEDIUM` \| `HIGH` \| `CRITICAL` | `LOW` | Minimum severity threshold |
+| `-c, --category` | 12 smell categories (see below) | all | Filter by specific category |
+| `--fail-on-critical` | flag | off | Exit with non-zero exit code if CRITICAL findings exist |
+| `--max-func-lines` | integer | `50` | Threshold for `Long_Function` |
+| `--max-complexity` | integer | `10` | Threshold for `High_Cyclomatic_Complexity` |
+| `--max-nesting` | integer | `4` | Threshold for `Deep_Nesting` |
+| `--max-args` | integer | `5` | Threshold for `Too_Many_Arguments` |
+| `--max-match-branches`| integer | `10` | Threshold for `Large_Match` |
+| `--max-module-lines` | integer | `500` | Threshold for `Large_Module` |
+| `--max-exported-values`| integer | `30` | Threshold for `Too_Many_Public_Functions` |
+| `--max-opens` | integer | `10` | Threshold for `Excessive_Open` |
+| `-o, --out` | file or directory path | stdout / auto | Output destination for exported report |
+
+#### 12 Smell Categories & Rules
+
+1. **FUNCTIONS**: `Long_Function`, `High_Cyclomatic_Complexity`, `Deep_Nesting`, `Too_Many_Arguments`, `Duplicate_Code`, `Large_Match`, `Long_Lambda`, `Multiple_Responsibilities`, `Excessive_Return_Logic`.
+2. **NAMING**: `Single_Letter_Name`, `Non_Descriptive_Name`, `Inconsistent_Naming`.
+3. **TYPES**: `Primitive_Obsession`, `Boolean_Parameter`, `Stringly_Typed`, `Tuple_Overuse`, `Large_Variant_Type`, `Weak_Error_Model`, `Partial_Function`.
+4. **CONTROL_FLOW**: `Deep_Match_Nesting`, `Complex_Boolean_Expression`, `Repeated_Conditions`, `Non_Exhaustive_Match`, `Nested_If`, `Magic_Number`, `Magic_String`.
+5. **MODULES**: `Large_Module`, `Too_Many_Public_Functions`, `Excessive_Open`, `Unused_Open`, `God_Module`, `Circular_Dependency`, `Leaky_Abstraction`, `Missing_Interface`.
+6. **DUPLICATION**: `Exact_Duplication`, `Structural_Duplication`, `Repeated_Logic`.
+7. **STATE_AND_EFFECTS**: `Unnecessary_Mutation`, `Excessive_References`, `Hidden_Side_Effect`, `Mixed_Responsibilities`, `Global_State`.
+8. **DEPENDENCIES**: `High_Coupling`, `Feature_Envy`, `Shotgun_Surgery_Risk`, `Dependency_Inversion_Violation`.
+9. **ERROR_HANDLING**: `Swallowed_Exception`, `Broad_Exception_Handler`, `Inconsistent_Error_Handling`, `Exception_For_Normal_Control_Flow`.
+10. **TESTABILITY**: `Untestable_Function`, `Missing_Boundary_Tests`, `Missing_Property_Tests`, `Test_Logic_Duplication`.
+11. **ARCHITECTURE**: `Layer_Violation`, `Abstraction_Leak`, `Wrong_Module_Ownership`, `Orphan_Module`, `Excessive_Indirection`.
+12. **REFACTORING_SAFETY**: `Text_Based_Symbol_Replacement`, `Stale_Change_Plan`, `Overlapping_Edits`, `Unresolved_Symbol`, `Public_API_Breakage`, `Behavior_Change_Risk`.
+
 ---
 
 ## 🌐 The DPX Multi-Language Static Analysis Family (33 Languages)

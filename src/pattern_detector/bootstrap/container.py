@@ -14,6 +14,12 @@ from pattern_detector.adapters.outbound.formatters.json_formatter import (
 from pattern_detector.adapters.outbound.formatters.mermaid_formatter import (
     MermaidArchitectureFormatter,
 )
+from pattern_detector.adapters.outbound.formatters.smell_formatters import (
+    SmellHtmlFormatter,
+    SmellJsonFormatter,
+    SmellMarkdownFormatter,
+    SmellTerminalFormatter,
+)
 from pattern_detector.adapters.outbound.formatters.terminal_formatter import (
     TerminalArchitectureFormatter,
 )
@@ -40,6 +46,9 @@ from pattern_detector.application.services.architecture_scan_service import (
 )
 from pattern_detector.application.services.detection_service import DetectionService
 from pattern_detector.application.services.scanning_service import ScanningService
+from pattern_detector.application.services.smell_detection_service import (
+    SmellDetectionService,
+)
 from pattern_detector.application.services.viewer_snapshot_service import (
     ViewerSnapshotService,
 )
@@ -49,12 +58,17 @@ from pattern_detector.ports.inbound.arch_scanner_port import (
     ArchOutputFormat,
     ScanArchitectureUseCase,
 )
+from pattern_detector.ports.inbound.smell_scanner_port import (
+    ScanSmellsUseCase,
+    SmellOutputFormat,
+)
 from pattern_detector.ports.outbound import (
     ParserPort,
     ResultRepositoryPort,
     SourceProviderPort,
 )
 from pattern_detector.ports.outbound.arch_exporter_port import ArchitectureExporterPort
+from pattern_detector.ports.outbound.smell_exporter_port import SmellExporterPort
 
 
 class Container:
@@ -74,6 +88,8 @@ class Container:
         self._arch_service: ScanArchitectureUseCase | None = None
         self._arch_exporters: dict[ArchOutputFormat, ArchitectureExporterPort] | None = None
         self._viewer_service: ViewerSnapshotService | None = None
+        self._smell_service: ScanSmellsUseCase | None = None
+        self._smell_exporters: dict[SmellOutputFormat, SmellExporterPort] | None = None
 
     @property
     def source_provider(self) -> SourceProviderPort:
@@ -160,6 +176,26 @@ class Container:
                 detector=self.detector,
             )
         return self._viewer_service
+
+    def get_smell_service(self) -> ScanSmellsUseCase:
+        """Service powering ``dpx smells`` (Clean code smells and antipattern detector)."""
+        if self._smell_service is None:
+            self._smell_service = SmellDetectionService(
+                source_provider=self.source_provider,
+                parser=self.parser,
+                arch_service=self.get_arch_service(),
+            )
+        return self._smell_service
+
+    def get_smell_exporters(self) -> dict[SmellOutputFormat, SmellExporterPort]:
+        if self._smell_exporters is None:
+            self._smell_exporters = {
+                SmellOutputFormat.TERMINAL: SmellTerminalFormatter(),
+                SmellOutputFormat.JSON: SmellJsonFormatter(),
+                SmellOutputFormat.MARKDOWN: SmellMarkdownFormatter(),
+                SmellOutputFormat.HTML: SmellHtmlFormatter(),
+            }
+        return self._smell_exporters
 
 
 def create_container() -> Container:

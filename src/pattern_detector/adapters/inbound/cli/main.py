@@ -11,6 +11,7 @@ from rich.panel import Panel
 from rich.table import Table
 
 from pattern_detector.adapters.inbound.cli.commands.arch import arch
+from pattern_detector.adapters.inbound.cli.commands.smells import smells
 from pattern_detector.adapters.inbound.cli.commands.viewer import viewer
 from pattern_detector.adapters.outbound.persistence.llm_report_formatter import (
     LlmReportFormatter,
@@ -26,6 +27,7 @@ app = typer.Typer(
     no_args_is_help=True,
 )
 app.command(name="arch")(arch)
+app.command(name="smells")(smells)
 app.command(name="viewer")(viewer)
 console = Console()
 
