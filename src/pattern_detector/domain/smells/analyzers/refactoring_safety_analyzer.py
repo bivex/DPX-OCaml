@@ -39,49 +39,76 @@ class RefactoringSafetySmellAnalyzer(BaseSmellAnalyzer):
     ) -> list[SmellDetection]:
         detections: list[SmellDetection] = []
 
+        known_names = {m.lower() for m in code_model.modules}
+        if component_graph:
+            known_names.update(lib.lower() for lib in component_graph.library_deps)
+            known_names.update(ext.lower() for ext in component_graph.external_deps)
+            known_names.update(n.lower() for n in component_graph.nodes)
+        if arch_result and arch_result.graph:
+            known_names.update(lib.lower() for lib in arch_result.graph.library_deps)
+            known_names.update(ext.lower() for ext in arch_result.graph.external_deps)
+            known_names.update(n.lower() for n in arch_result.graph.nodes)
+
+        stdlib_lower = {s.lower() for s in self._stdlib_modules()}
+
         for mod_name, mod in code_model.modules.items():
             file_path = mod.file_path
 
             # 1. Public_API_Breakage (WHEN refactoring_changes_exported_signature, SEVERITY = CRITICAL)
             # Compare .ml functions against .mli val declarations if .mli exists
             mli_path = Path(file_path).with_suffix(".mli")
-            if mli_path.exists() or str(mli_path) in sources:
-                mli_content = sources.get(str(mli_path), "")
-                if mli_content:
-                    # Find all val declarations in mli: val name : ...
-                    val_decls = re.findall(r"\bval\s+([a-zA-Z0-9_!]+)\s*:\s*([^;\n]+)", mli_content)
-                    for val_name, val_type in val_decls:
-                        if val_name not in mod.functions:
-                            detections.append(
-                                SmellDetection(
-                                    smell_id="Public_API_Breakage",
-                                    category=SmellCategory.REFACTORING_SAFETY,
-                                    severity=SmellSeverity.CRITICAL,
-                                    file=str(mli_path),
-                                    start_line=1,
-                                    end_line=1,
-                                    symbol=f"{mod_name}.{val_name}",
-                                    evidence=(
-                                        f"Public API signature breakage: '{mod_name}.mli' exports 'val {val_name}', "
-                                        f"but implementation '{mod_name}.ml' is missing this binding."
-                                    ),
-                                    threshold="exported val in .mli missing in .ml",
-                                    confidence=0.99,
-                                    suggested_refactoring="Implement missing function in .ml or deprecate/remove from .mli with version bump.",
-                                )
+            ml_path = Path(file_path).with_suffix(".ml")
+            if str(mli_path) in sources:
+                mli_content = sources[str(mli_path)]
+                ml_content = sources.get(str(ml_path), mod.raw_source)
+                includes = re.findall(r"\binclude\s+([A-Z][a-zA-Z0-9_]*)", ml_content)
+                val_decls = re.findall(r"\bval\s+([a-zA-Z0-9_!]+)\s*:\s*([^;\n]+)", mli_content)
+                for val_name, val_type in val_decls:
+                    has_in_fn = val_name in mod.functions
+                    has_in_ml = bool(
+                        re.search(rf"\b(?:let|external)\s+(?:rec\s+)?{re.escape(val_name)}\b", ml_content)
+                    )
+                    has_in_inc = any(
+                        inc.lower() in known_names
+                        and (
+                            (inc in code_model.modules and val_name in code_model.modules[inc].functions)
+                            or (inc in code_model.modules and val_name in code_model.modules[inc].raw_source)
+                        )
+                        for inc in (includes + mod.includes)
+                    )
+                    has_ppx = "deriving" in ml_content and ("_yojson" in val_name or "_sexp" in val_name)
+                    if not has_in_fn and not has_in_ml and not has_in_inc and not has_ppx:
+                        detections.append(
+                            SmellDetection(
+                                smell_id="Public_API_Breakage",
+                                category=SmellCategory.REFACTORING_SAFETY,
+                                severity=SmellSeverity.CRITICAL,
+                                file=str(mli_path),
+                                start_line=1,
+                                end_line=1,
+                                symbol=f"{mod_name}.{val_name}",
+                                evidence=(
+                                    f"Public API signature breakage: '{mod_name}.mli' exports 'val {val_name}', "
+                                    f"but implementation '{mod_name}.ml' is missing this binding."
+                                ),
+                                threshold="exported val in .mli missing in .ml",
+                                confidence=0.99,
+                                suggested_refactoring="Implement missing function in .ml or deprecate/remove from .mli with version bump.",
                             )
+                        )
 
             # 2. Unresolved_Symbol (WHEN identifier_reference_cannot_be_resolved)
             for fn_name, fn in mod.functions.items():
                 start_line = fn.location.line if fn.location else 1
                 for call_mod, call_sym in fn.calls:
+                    call_mod_lower = call_mod.lower() if call_mod else ""
                     # If call_mod is an unknown module not in standard library and not in project
                     if (
                         call_mod
-                        and call_mod not in code_model.modules
                         and call_mod not in mod.submodules
                         and call_mod not in mod.opens
-                        and call_mod not in self._stdlib_modules()
+                        and call_mod_lower not in known_names
+                        and call_mod_lower not in stdlib_lower
                     ):
                         detections.append(
                             SmellDetection(
@@ -134,4 +161,7 @@ class RefactoringSafetySmellAnalyzer(BaseSmellAnalyzer):
             "Scanf", "Sys", "Unix", "Filename", "Marshal", "Int32", "Int64", "Nativeint",
             "Float", "Complex", "Random", "Printexc", "Gc", "Lazy", "Digest",
             "Base", "Core", "Stdlib", "Lwt", "Async", "Effect", "Domain", "Domainslib",
+            "Alcotest", "QCheck", "Bos", "Fpath", "Cmdliner", "Yojson", "Fun", "Either",
+            "In_channel", "Out_channel", "Bigarray", "Dynarray", "Atomic", "Condition",
+            "Mutex", "Semaphore", "Thread", "Ephemeron", "Str", "Int", "Bool", "Unit",
         }

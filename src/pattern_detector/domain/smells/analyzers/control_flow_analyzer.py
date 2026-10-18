@@ -227,7 +227,7 @@ class ControlFlowSmellAnalyzer(BaseSmellAnalyzer):
 
     def _check_non_exhaustive_literal_match(self, body: str) -> str | None:
         # Look for match ... with where branches are numeric or string literals and there is no '| _ ->'
-        match_blocks = re.findall(r"match\s+(.*?)\s+with\s+(.*?)(?=\blet\b|\bmatch\b|\Z)", body, re.DOTALL)
+        match_blocks = re.findall(r"\bmatch\s+(.*?)\s+with\b(.*?)(?=\nlet\s+[a-zA-Z0-9_]+\s*=|\Z)", body, re.DOTALL)
         for target, block in match_blocks:
             branches = re.findall(r"\|\s*([^->\n]+)\s*->", block)
             if not branches:
